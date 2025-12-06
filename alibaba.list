@@ -23,3 +23,6 @@ IP-CIDR6,fd00::/8,no-resolve
 
 # Router managed 路由器管理域名
 DOMAIN-SUFFIX,alibaba-inc.com
+DOMAIN-SUFFIX,aliyun.com
+DOMAIN-SUFFIX,modelscope.cn
+DOMAIN-SUFFIX,alicdn.com
