@@ -20,6 +20,12 @@ const rulesets = [
     behavior: "classical",
   },
   {
+    key: "anthropic",
+    sourceName: "Anthropic",
+    group: "AI平台",
+    behavior: "classical",
+  },
+  {
     key: "gemini",
     sourceName: "Gemini",
     group: "AI平台",
@@ -28,13 +34,13 @@ const rulesets = [
   {
     key: "copilot",
     sourceName: "Copilot",
-    group: "开发平台",
+    group: "AI平台",
     behavior: "classical",
   },
   {
     key: "cursor",
     sourceName: "Cursor",
-    group: "开发平台",
+    group: "AI平台",
     behavior: "classical",
     mihomoUrl:
       "https://raw.githubusercontent.com/ZacBi/Rules/master/mihomo/ruleset/Cursor.yaml",
@@ -75,7 +81,7 @@ const rulesets = [
   {
     key: "github",
     sourceName: "GitHub",
-    group: "开发平台",
+    group: "AI平台",
     behavior: "classical",
   },
   {

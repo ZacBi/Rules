@@ -151,20 +151,6 @@ proxy-groups:
       - '澳洲节点'
       - '马来西亚节点'
       - '阿根廷节点'
-  - name: '开发平台'
-    type: select
-    proxies:
-      - '节点选择'
-      - '自动选择'
-      - '香港节点'
-      - '台湾节点'
-      - '日本节点'
-      - '新加坡节点'
-      - '美国节点'
-      - '英国节点'
-      - '澳洲节点'
-      - '马来西亚节点'
-      - '阿根廷节点'
   - name: '即时通讯'
     type: select
     proxies:
@@ -272,6 +258,12 @@ rule-providers:
     behavior: classical
     url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Claude/Claude.yaml'
     path: './ruleset/Claude.yaml'
+    interval: 86400
+  anthropic:
+    type: http
+    behavior: classical
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Anthropic/Anthropic.yaml'
+    path: './ruleset/Anthropic.yaml'
     interval: 86400
   gemini:
     type: http
@@ -398,15 +390,16 @@ rules:
   - 'RULE-SET,advertising,广告拦截'
   - 'RULE-SET,openai,AI平台'
   - 'RULE-SET,claude,AI平台'
+  - 'RULE-SET,anthropic,AI平台'
   - 'RULE-SET,gemini,AI平台'
-  - 'RULE-SET,copilot,开发平台'
-  - 'RULE-SET,cursor,开发平台'
+  - 'RULE-SET,copilot,AI平台'
+  - 'RULE-SET,cursor,AI平台'
   - 'RULE-SET,youtube,国外媒体'
   - 'RULE-SET,netflix,国外媒体'
   - 'RULE-SET,spotify,国外媒体'
   - 'RULE-SET,tiktok,国外媒体'
   - 'RULE-SET,globalmedia,国外媒体'
-  - 'RULE-SET,github,开发平台'
+  - 'RULE-SET,github,AI平台'
   - 'RULE-SET,google,国外网站'
   - 'RULE-SET,telegram,即时通讯'
   - 'RULE-SET,discord,即时通讯'

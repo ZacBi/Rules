@@ -126,23 +126,6 @@ const SHARED = {
       ]
     },
     {
-      "name": "开发平台",
-      "type": "select",
-      "proxies": [
-        "节点选择",
-        "自动选择",
-        "香港节点",
-        "台湾节点",
-        "日本节点",
-        "新加坡节点",
-        "美国节点",
-        "英国节点",
-        "澳洲节点",
-        "马来西亚节点",
-        "阿根廷节点"
-      ]
-    },
-    {
       "name": "即时通讯",
       "type": "select",
       "proxies": [
@@ -284,6 +267,15 @@ const SHARED = {
       "surgeUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Claude/Claude.list"
     },
     {
+      "key": "anthropic",
+      "sourceName": "Anthropic",
+      "group": "AI平台",
+      "behavior": "classical",
+      "mihomoUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Anthropic/Anthropic.yaml",
+      "mihomoPath": "./ruleset/Anthropic.yaml",
+      "surgeUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Anthropic/Anthropic.list"
+    },
+    {
       "key": "gemini",
       "sourceName": "Gemini",
       "group": "AI平台",
@@ -295,7 +287,7 @@ const SHARED = {
     {
       "key": "copilot",
       "sourceName": "Copilot",
-      "group": "开发平台",
+      "group": "AI平台",
       "behavior": "classical",
       "mihomoUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Copilot/Copilot.yaml",
       "mihomoPath": "./ruleset/Copilot.yaml",
@@ -304,7 +296,7 @@ const SHARED = {
     {
       "key": "cursor",
       "sourceName": "Cursor",
-      "group": "开发平台",
+      "group": "AI平台",
       "behavior": "classical",
       "mihomoUrl": "https://raw.githubusercontent.com/ZacBi/Rules/master/mihomo/ruleset/Cursor.yaml",
       "mihomoPath": "./ruleset/Cursor.yaml",
@@ -358,7 +350,7 @@ const SHARED = {
     {
       "key": "github",
       "sourceName": "GitHub",
-      "group": "开发平台",
+      "group": "AI平台",
       "behavior": "classical",
       "mihomoUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub.yaml",
       "mihomoPath": "./ruleset/GitHub.yaml",
