@@ -129,7 +129,7 @@ const rulesets = [
   },
   {
     key: "china",
-    sourceName: "China",
+    sourceName: "ChinaMax",
     group: "国内网站",
     behavior: "classical",
   },

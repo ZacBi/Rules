@@ -447,12 +447,12 @@ const SHARED = {
     },
     {
       "key": "china",
-      "sourceName": "China",
+      "sourceName": "ChinaMax",
       "group": "国内网站",
       "behavior": "classical",
-      "mihomoUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/China/China.yaml",
-      "mihomoPath": "./ruleset/China.yaml",
-      "surgeUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/China/China.list"
+      "mihomoUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax.yaml",
+      "mihomoPath": "./ruleset/ChinaMax.yaml",
+      "surgeUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ChinaMax/ChinaMax.list"
     }
   ]
 };

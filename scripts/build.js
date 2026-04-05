@@ -282,8 +282,6 @@ function main() {
   const surgePrivatePolicyPath = process.env.SURGE_POLICY_PATH;
   const overwriteScript = renderOverwriteScript();
   writeFile("mihomo/overwrite.js", overwriteScript);
-  writeFile("scripts/overwrite.js", overwriteScript);
-  writeFile("overwrite.js", overwriteScript);
   writeFile("mihomo/mihomo-public.yaml", renderMihomoYaml("__MIHOMO_SUBSCRIPTION_URL__"));
   writeFile(
     "mihomo/mihomo-private.example.yaml",

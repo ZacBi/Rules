@@ -4,3 +4,5 @@ private.env
 private.env.local
 *.local.yaml
 *.local.conf
+
+.claude/
