@@ -173,52 +173,50 @@ function renderMihomoYaml(subscriptionUrl) {
   ];
 
   for (const group of strategyGroups) {
-    lines.push(`  - name: ${singleQuote(group.name)}`);
-    lines.push(`    type: ${group.type}`);
     if (group.mode === "all-proxies") {
-      lines.push("    use:");
-      lines.push("      - airport");
-      lines.push(`    url: ${singleQuote(defaultHealthCheck.url)}`);
-      lines.push(`    interval: ${defaultHealthCheck.interval}`);
-      lines.push(`    tolerance: ${defaultHealthCheck.tolerance}`);
+      lines.push(`  - name: ${singleQuote(group.name)}
+    type: ${group.type}
+    use:
+      - airport
+    url: ${singleQuote(defaultHealthCheck.url)}
+    interval: ${defaultHealthCheck.interval}
+    tolerance: ${defaultHealthCheck.tolerance}`);
     } else {
-      lines.push("    proxies:");
-      for (const proxy of uniq(group.proxies)) {
-        lines.push(`      - ${singleQuote(proxy)}`);
-      }
+      const proxies = uniq(group.proxies).map((p) => `      - ${singleQuote(p)}`).join("\n");
+      lines.push(`  - name: ${singleQuote(group.name)}
+    type: ${group.type}
+    proxies:\n${proxies}`);
     }
   }
 
   for (const region of regions) {
-    lines.push(`  - name: ${singleQuote(region.groupName)}`);
-    lines.push("    type: url-test");
-    lines.push("    hidden: true");
-    lines.push("    use:");
-    lines.push("      - airport");
-    lines.push(`    filter: ${singleQuote(`(?i)(${region.match})`)}`);
-    lines.push(`    url: ${singleQuote(defaultHealthCheck.url)}`);
-    lines.push(`    interval: ${defaultHealthCheck.interval}`);
-    lines.push(`    tolerance: ${defaultHealthCheck.tolerance}`);
+    lines.push(`  - name: ${singleQuote(region.groupName)}
+    type: url-test
+    hidden: true
+    use:
+      - airport
+    filter: ${singleQuote(`(?i)(${region.match})`)}
+    url: ${singleQuote(defaultHealthCheck.url)}
+    interval: ${defaultHealthCheck.interval}
+    tolerance: ${defaultHealthCheck.tolerance}`);
   }
 
   for (const group of businessGroups) {
-    lines.push(`  - name: ${singleQuote(group.name)}`);
-    lines.push(`    type: ${group.type}`);
-    lines.push("    proxies:");
-    for (const proxy of uniq(group.proxies)) {
-      lines.push(`      - ${singleQuote(proxy)}`);
-    }
+    const proxies = uniq(group.proxies).map((p) => `      - ${singleQuote(p)}`).join("\n");
+    lines.push(`  - name: ${singleQuote(group.name)}
+    type: ${group.type}
+    proxies:\n${proxies}`);
   }
 
   lines.push("");
   lines.push("rule-providers:");
   for (const ruleset of rulesets) {
-    lines.push(`  ${ruleset.key}:`);
-    lines.push("    type: http");
-    lines.push(`    behavior: ${ruleset.behavior}`);
-    lines.push(`    url: ${singleQuote(ruleset.mihomoUrl)}`);
-    lines.push(`    path: ${singleQuote(ruleset.mihomoPath)}`);
-    lines.push("    interval: 86400");
+    lines.push(`  ${ruleset.key}:
+    type: http
+    behavior: ${ruleset.behavior}
+    url: ${singleQuote(ruleset.mihomoUrl)}
+    path: ${singleQuote(ruleset.mihomoPath)}
+    interval: 86400`);
   }
 
   lines.push("");
