@@ -32,6 +32,17 @@ const rulesets = [
     behavior: "classical",
   },
   {
+    key: "cursor",
+    sourceName: "Cursor",
+    group: "开发平台",
+    behavior: "classical",
+    mihomoUrl:
+      "https://raw.githubusercontent.com/ZacBi/Rules/master/mihomo/ruleset/Cursor.yaml",
+    mihomoPath: "./ruleset/Cursor.yaml",
+    surgeUrl:
+      "https://raw.githubusercontent.com/ZacBi/Rules/master/mihomo/ruleset/Cursor.list",
+  },
+  {
     key: "youtube",
     sourceName: "YouTube",
     group: "国外媒体",
@@ -141,9 +152,13 @@ function withDerivedUrls(entry) {
   const mihomoFile = entry.mihomoFile || entry.sourceName;
   return {
     ...entry,
-    mihomoUrl: `${base}/Clash/${entry.sourceName}/${mihomoFile}.yaml`,
-    mihomoPath: `./ruleset/${mihomoFile}.yaml`,
-    surgeUrl: `${base}/Surge/${entry.sourceName}/${entry.sourceName}.list`,
+    mihomoUrl:
+      entry.mihomoUrl ??
+      `${base}/Clash/${entry.sourceName}/${mihomoFile}.yaml`,
+    mihomoPath: entry.mihomoPath ?? `./ruleset/${mihomoFile}.yaml`,
+    surgeUrl:
+      entry.surgeUrl ??
+      `${base}/Surge/${entry.sourceName}/${entry.sourceName}.list`,
   };
 }
 

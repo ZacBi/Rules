@@ -285,6 +285,12 @@ rule-providers:
     url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Copilot/Copilot.yaml'
     path: './ruleset/Copilot.yaml'
     interval: 86400
+  cursor:
+    type: http
+    behavior: classical
+    url: 'https://raw.githubusercontent.com/ZacBi/Rules/master/mihomo/ruleset/Cursor.yaml'
+    path: './ruleset/Cursor.yaml'
+    interval: 86400
   youtube:
     type: http
     behavior: classical
@@ -394,6 +400,7 @@ rules:
   - 'RULE-SET,claude,AI平台'
   - 'RULE-SET,gemini,AI平台'
   - 'RULE-SET,copilot,开发平台'
+  - 'RULE-SET,cursor,开发平台'
   - 'RULE-SET,youtube,国外媒体'
   - 'RULE-SET,netflix,国外媒体'
   - 'RULE-SET,spotify,国外媒体'

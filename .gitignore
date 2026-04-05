@@ -6,3 +6,4 @@ private.env.local
 *.local.conf
 
 .claude/
+.DS_Store

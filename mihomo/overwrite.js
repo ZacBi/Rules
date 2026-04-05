@@ -302,6 +302,15 @@ const SHARED = {
       "surgeUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Copilot/Copilot.list"
     },
     {
+      "key": "cursor",
+      "sourceName": "Cursor",
+      "group": "开发平台",
+      "behavior": "classical",
+      "mihomoUrl": "https://raw.githubusercontent.com/ZacBi/Rules/master/mihomo/ruleset/Cursor.yaml",
+      "mihomoPath": "./ruleset/Cursor.yaml",
+      "surgeUrl": "https://raw.githubusercontent.com/ZacBi/Rules/master/mihomo/ruleset/Cursor.list"
+    },
+    {
       "key": "youtube",
       "sourceName": "YouTube",
       "group": "国外媒体",
