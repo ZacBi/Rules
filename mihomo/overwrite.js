@@ -126,6 +126,42 @@ const SHARED = {
       ]
     },
     {
+      "name": "开发工具与镜像",
+      "type": "select",
+      "proxies": [
+        "节点选择",
+        "自动选择",
+        "香港节点",
+        "台湾节点",
+        "日本节点",
+        "新加坡节点",
+        "美国节点",
+        "英国节点",
+        "澳洲节点",
+        "马来西亚节点",
+        "阿根廷节点",
+        "DIRECT"
+      ]
+    },
+    {
+      "name": "学习与研究",
+      "type": "select",
+      "proxies": [
+        "节点选择",
+        "自动选择",
+        "香港节点",
+        "台湾节点",
+        "日本节点",
+        "新加坡节点",
+        "美国节点",
+        "英国节点",
+        "澳洲节点",
+        "马来西亚节点",
+        "阿根廷节点",
+        "DIRECT"
+      ]
+    },
+    {
       "name": "即时通讯",
       "type": "select",
       "proxies": [
@@ -298,9 +334,9 @@ const SHARED = {
       "sourceName": "Cursor",
       "group": "AI平台",
       "behavior": "classical",
-      "mihomoUrl": "https://raw.githubusercontent.com/ZacBi/Rules/master/mihomo/ruleset/Cursor.yaml",
+      "mihomoUrl": "https://raw.githubusercontent.com/YOUR_GITHUB_USER/Rules/master/mihomo/ruleset/Cursor.yaml",
       "mihomoPath": "./ruleset/Cursor.yaml",
-      "surgeUrl": "https://raw.githubusercontent.com/ZacBi/Rules/master/mihomo/ruleset/Cursor.list"
+      "surgeUrl": "https://raw.githubusercontent.com/YOUR_GITHUB_USER/Rules/master/mihomo/ruleset/Cursor.list"
     },
     {
       "key": "youtube",
@@ -355,6 +391,69 @@ const SHARED = {
       "mihomoUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub.yaml",
       "mihomoPath": "./ruleset/GitHub.yaml",
       "surgeUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/GitHub/GitHub.list"
+    },
+    {
+      "key": "npmjs",
+      "sourceName": "Npmjs",
+      "group": "开发工具与镜像",
+      "behavior": "classical",
+      "mihomoUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Npmjs/Npmjs.yaml",
+      "mihomoPath": "./ruleset/Npmjs.yaml",
+      "surgeUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Npmjs/Npmjs.list"
+    },
+    {
+      "key": "docker",
+      "sourceName": "Docker",
+      "group": "开发工具与镜像",
+      "behavior": "classical",
+      "mihomoUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Docker/Docker.yaml",
+      "mihomoPath": "./ruleset/Docker.yaml",
+      "surgeUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Docker/Docker.list"
+    },
+    {
+      "key": "python",
+      "sourceName": "Python",
+      "group": "开发工具与镜像",
+      "behavior": "classical",
+      "mihomoUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Python/Python.yaml",
+      "mihomoPath": "./ruleset/Python.yaml",
+      "surgeUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Python/Python.list"
+    },
+    {
+      "key": "gitlab",
+      "sourceName": "GitLab",
+      "group": "开发工具与镜像",
+      "behavior": "classical",
+      "mihomoUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitLab/GitLab.yaml",
+      "mihomoPath": "./ruleset/GitLab.yaml",
+      "surgeUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/GitLab/GitLab.list"
+    },
+    {
+      "key": "scholar",
+      "sourceName": "Scholar",
+      "group": "学习与研究",
+      "behavior": "classical",
+      "mihomoUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Scholar/Scholar.yaml",
+      "mihomoPath": "./ruleset/Scholar.yaml",
+      "surgeUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Scholar/Scholar.list"
+    },
+    {
+      "key": "wikipedia",
+      "sourceName": "Wikipedia",
+      "group": "学习与研究",
+      "behavior": "classical",
+      "mihomoUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Wikipedia/Wikipedia.yaml",
+      "mihomoPath": "./ruleset/Wikipedia.yaml",
+      "surgeUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Wikipedia/Wikipedia.list"
+    },
+    {
+      "key": "stackexchange",
+      "sourceName": "Stackexchange",
+      "group": "学习与研究",
+      "behavior": "classical",
+      "mihomoUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Stackexchange/Stackexchange.yaml",
+      "mihomoPath": "./ruleset/Stackexchange.yaml",
+      "surgeUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Stackexchange/Stackexchange.list"
     },
     {
       "key": "google",
@@ -456,6 +555,11 @@ const SHARED = {
       "mihomoPath": "./ruleset/ChinaMax_Domain.yaml",
       "surgeUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ChinaMax/ChinaMax.list"
     }
+  ],
+  "programmerInlineRules": [
+    "DOMAIN,localhost,DIRECT",
+    "IP-CIDR,127.0.0.0/8,DIRECT,no-resolve",
+    "IP-CIDR6,::1/128,DIRECT,no-resolve"
   ]
 };
 
@@ -529,9 +633,11 @@ function buildRuleProviders() {
 }
 
 function buildRules() {
-  const ordered = SHARED.rulesets.map((ruleset) => `RULE-SET,${ruleset.key},${ruleset.group}`);
-  ordered.push("MATCH,漏网之鱼");
-  return ordered;
+  return [
+    ...(SHARED.programmerInlineRules || []),
+    ...SHARED.rulesets.map((ruleset) => `RULE-SET,${ruleset.key},${ruleset.group}`),
+    "MATCH,漏网之鱼",
+  ];
 }
 
 const main = (config) => {

@@ -1,5 +1,13 @@
 "use strict";
 
+/**
+ * Raw 地址里的 GitHub owner/repo（仅影响本仓库托管的规则集，如 Cursor）。
+ * 发布前可执行：`RULES_GITHUB_REPO=你的用户名/Rules node scripts/build.js`
+ * 不设则使用占位符，避免在公开仓库里硬编码个人 GitHub 账号。
+ */
+const RULES_GITHUB_REPO = process.env.RULES_GITHUB_REPO || "YOUR_GITHUB_USER/Rules";
+const RULES_RAW_BASE = `https://raw.githubusercontent.com/${RULES_GITHUB_REPO}/master`;
+
 const rulesets = [
   {
     key: "advertising",
@@ -42,11 +50,9 @@ const rulesets = [
     sourceName: "Cursor",
     group: "AI平台",
     behavior: "classical",
-    mihomoUrl:
-      "https://raw.githubusercontent.com/ZacBi/Rules/master/mihomo/ruleset/Cursor.yaml",
+    mihomoUrl: `${RULES_RAW_BASE}/mihomo/ruleset/Cursor.yaml`,
     mihomoPath: "./ruleset/Cursor.yaml",
-    surgeUrl:
-      "https://raw.githubusercontent.com/ZacBi/Rules/master/mihomo/ruleset/Cursor.list",
+    surgeUrl: `${RULES_RAW_BASE}/mihomo/ruleset/Cursor.list`,
   },
   {
     key: "youtube",
@@ -82,6 +88,48 @@ const rulesets = [
     key: "github",
     sourceName: "GitHub",
     group: "AI平台",
+    behavior: "classical",
+  },
+  {
+    key: "npmjs",
+    sourceName: "Npmjs",
+    group: "开发工具与镜像",
+    behavior: "classical",
+  },
+  {
+    key: "docker",
+    sourceName: "Docker",
+    group: "开发工具与镜像",
+    behavior: "classical",
+  },
+  {
+    key: "python",
+    sourceName: "Python",
+    group: "开发工具与镜像",
+    behavior: "classical",
+  },
+  {
+    key: "gitlab",
+    sourceName: "GitLab",
+    group: "开发工具与镜像",
+    behavior: "classical",
+  },
+  {
+    key: "scholar",
+    sourceName: "Scholar",
+    group: "学习与研究",
+    behavior: "classical",
+  },
+  {
+    key: "wikipedia",
+    sourceName: "Wikipedia",
+    group: "学习与研究",
+    behavior: "classical",
+  },
+  {
+    key: "stackexchange",
+    sourceName: "Stackexchange",
+    group: "学习与研究",
     behavior: "classical",
   },
   {

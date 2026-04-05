@@ -31,6 +31,16 @@ const businessGroups = [
     proxies: ["节点选择", "自动选择", ...regionGroupNames],
   },
   {
+    name: "开发工具与镜像",
+    type: "select",
+    proxies: ["节点选择", "自动选择", ...regionGroupNames, "DIRECT"],
+  },
+  {
+    name: "学习与研究",
+    type: "select",
+    proxies: ["节点选择", "自动选择", ...regionGroupNames, "DIRECT"],
+  },
+  {
     name: "即时通讯",
     type: "select",
     proxies: ["节点选择", "自动选择", ...regionGroupNames],
