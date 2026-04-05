@@ -448,10 +448,11 @@ const SHARED = {
     {
       "key": "china",
       "sourceName": "ChinaMax",
+      "mihomoFile": "ChinaMax_Domain",
       "group": "国内网站",
-      "behavior": "classical",
-      "mihomoUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax.yaml",
-      "mihomoPath": "./ruleset/ChinaMax.yaml",
+      "behavior": "domain",
+      "mihomoUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax_Domain.yaml",
+      "mihomoPath": "./ruleset/ChinaMax_Domain.yaml",
       "surgeUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ChinaMax/ChinaMax.list"
     }
   ]
@@ -475,6 +476,7 @@ function buildRegionGroups(allProxyNames) {
     return {
       name: region.groupName,
       type: "url-test",
+      hidden: true,
       proxies: matched.length ? uniq(matched) : ["节点选择"],
       url: SHARED.defaultHealthCheck.url,
       interval: SHARED.defaultHealthCheck.interval,

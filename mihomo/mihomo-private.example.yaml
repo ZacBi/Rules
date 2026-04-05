@@ -44,6 +44,7 @@ proxy-groups:
       - 'DIRECT'
   - name: '香港节点'
     type: url-test
+    hidden: true
     use:
       - airport
     filter: '(?i)(香港|HK|Hong\s*Kong)'
@@ -52,6 +53,7 @@ proxy-groups:
     tolerance: 50
   - name: '台湾节点'
     type: url-test
+    hidden: true
     use:
       - airport
     filter: '(?i)(台湾|TW|Taiwan|Taipei)'
@@ -60,6 +62,7 @@ proxy-groups:
     tolerance: 50
   - name: '日本节点'
     type: url-test
+    hidden: true
     use:
       - airport
     filter: '(?i)(日本|JP|Japan|Tokyo|Osaka)'
@@ -68,6 +71,7 @@ proxy-groups:
     tolerance: 50
   - name: '新加坡节点'
     type: url-test
+    hidden: true
     use:
       - airport
     filter: '(?i)(新加坡|狮城|SG|Singapore)'
@@ -76,6 +80,7 @@ proxy-groups:
     tolerance: 50
   - name: '美国节点'
     type: url-test
+    hidden: true
     use:
       - airport
     filter: '(?i)(美国|US|USA|United\s*States|America|Los\s*Angeles|San\s*Jose|Seattle)'
@@ -84,6 +89,7 @@ proxy-groups:
     tolerance: 50
   - name: '英国节点'
     type: url-test
+    hidden: true
     use:
       - airport
     filter: '(?i)(英国|UK|United\s*Kingdom|Britain|England|London|Manchester)'
@@ -92,6 +98,7 @@ proxy-groups:
     tolerance: 50
   - name: '澳洲节点'
     type: url-test
+    hidden: true
     use:
       - airport
     filter: '(?i)(澳洲|澳大利亚|AU|Australia|Sydney|Melbourne|Perth)'
@@ -100,6 +107,7 @@ proxy-groups:
     tolerance: 50
   - name: '马来西亚节点'
     type: url-test
+    hidden: true
     use:
       - airport
     filter: '(?i)(马来西亚|MY|Malaysia|Kuala\s*Lumpur)'
@@ -108,6 +116,7 @@ proxy-groups:
     tolerance: 50
   - name: '阿根廷节点'
     type: url-test
+    hidden: true
     use:
       - airport
     filter: '(?i)(阿根廷|AR|Argentina|Buenos\s*Aires)'
@@ -374,9 +383,9 @@ rule-providers:
     interval: 86400
   china:
     type: http
-    behavior: classical
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax.yaml'
-    path: './ruleset/ChinaMax.yaml'
+    behavior: domain
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax_Domain.yaml'
+    path: './ruleset/ChinaMax_Domain.yaml'
     interval: 86400
 
 rules:

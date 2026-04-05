@@ -64,6 +64,7 @@ function buildRegionGroups(allProxyNames) {
     return {
       name: region.groupName,
       type: "url-test",
+      hidden: true,
       proxies: matched.length ? uniq(matched) : ["节点选择"],
       url: SHARED.defaultHealthCheck.url,
       interval: SHARED.defaultHealthCheck.interval,
@@ -191,6 +192,7 @@ function renderMihomoYaml(subscriptionUrl) {
   for (const region of regions) {
     lines.push(`  - name: ${singleQuote(region.groupName)}`);
     lines.push("    type: url-test");
+    lines.push("    hidden: true");
     lines.push("    use:");
     lines.push("      - airport");
     lines.push(`    filter: ${singleQuote(`(?i)(${region.match})`)}`);

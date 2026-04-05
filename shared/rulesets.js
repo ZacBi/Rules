@@ -130,17 +130,19 @@ const rulesets = [
   {
     key: "china",
     sourceName: "ChinaMax",
+    mihomoFile: "ChinaMax_Domain",
     group: "国内网站",
-    behavior: "classical",
+    behavior: "domain",
   },
 ];
 
 function withDerivedUrls(entry) {
   const base = "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule";
+  const mihomoFile = entry.mihomoFile || entry.sourceName;
   return {
     ...entry,
-    mihomoUrl: `${base}/Clash/${entry.sourceName}/${entry.sourceName}.yaml`,
-    mihomoPath: `./ruleset/${entry.sourceName}.yaml`,
+    mihomoUrl: `${base}/Clash/${entry.sourceName}/${mihomoFile}.yaml`,
+    mihomoPath: `./ruleset/${mihomoFile}.yaml`,
     surgeUrl: `${base}/Surge/${entry.sourceName}/${entry.sourceName}.list`,
   };
 }
