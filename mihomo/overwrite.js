@@ -336,7 +336,8 @@ const SHARED = {
       "behavior": "classical",
       "mihomoUrl": "https://raw.githubusercontent.com/YOUR_GITHUB_USER/Rules/master/mihomo/ruleset/Cursor.yaml",
       "mihomoPath": "./ruleset/Cursor.yaml",
-      "surgeUrl": "https://raw.githubusercontent.com/YOUR_GITHUB_USER/Rules/master/mihomo/ruleset/Cursor.list"
+      "surgeUrl": "https://raw.githubusercontent.com/YOUR_GITHUB_USER/Rules/master/mihomo/ruleset/Cursor.list",
+      "surgeLocalRelativeToSurgeDir": "../mihomo/ruleset/Cursor.list"
     },
     {
       "key": "youtube",

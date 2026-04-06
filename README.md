@@ -103,9 +103,21 @@ node scripts/airport-subscribe-to-surge-policy-list.js --url 'https://…' > sur
 node scripts/surge-inject-policy-path.js --absolute surge/airport-surge-policies.txt < surge/surge-public.conf > surge/surge-private.local.conf
 ```
 
-脚本默认浏览器 UA；`--user-agent-clash` 仅在你会自行处理 YAML→Surge 时使用。含 `ss://` / `vmess://` 等需 subconverter 或自行扩展脚本。Surge AnyTLS 版本要求见脚本注释与 [Surge 手册](https://manual.nssurge.com/policy/proxy.html)。
+脚本默认浏览器 UA；`--user-agent-clash` 仅在你会自行处理 YAML→Surge 时使用。订阅里常见的「剩余流量 / 重置 / 到期」等信息行会被跳过，以免节点名含全角标点或空格导致 Surge 报无效节点；若要保留可加 `--keep-noise`。含 `ss://` / `vmess://` 等需 subconverter 或自行扩展脚本。Surge AnyTLS 版本要求见脚本注释与 [Surge 手册](https://manual.nssurge.com/policy/proxy.html)。
 
 **与 Mihomo 的差异**：`policy-path` 需要 **Surge 语法策略列表**，不能直接把常见 Clash Base64 订阅 URL 当作 `policy-path`。
+
+**其它取得策略列表的方式**（与上脚本二选一或组合即可）：
+
+- **[BoxJs](https://docs.boxjs.app/)**：Surge / QX 等环境下的脚本面板；订阅转换常仍依赖 Sub-Converter 或机场导出 Surge，再把得到的文件或 URL 用作 `policy-path`。
+- **[subconverter](https://github.com/tindy2013/subconverter)** 或可信的在线转换前端：多协议订阅 → Surge 格式；注意勿向不可信站点提交含 token 的订阅。
+- **Surge 说明**：[使用来自代理服务商的线路](https://kb.nssurge.com/surge-knowledge-base/zh/guidelines/proxy-provider)（`policy-path` 与外置策略）。
+
+**`[Proxy]` + 远程 `#!include`（Surge Mac 6.0.0+）**：[Profile 手册 · Linked Profiles](https://manual.nssurge.com/overview/configuration.html) 允许在 `[Proxy]`（以及 `[Rule]` 等段落）内写 `#!include https://…`，由客户端拉取远程「托管/链接」片段并随上游更新。远端内容必须是 **Surge 合法配置**；按配置分离约定，被拉取的文件里通常仍需带对应 `[Proxy]` 段（或完整 profile 中的多段），而不是未转换的原始订阅体。与本仓库默认模板 **「不写 `[Proxy]`、节点全部来自 `policy-path`」** 是不同路线：若改用远程 `[Proxy]` include，请在 `[Proxy Group]` / `[Rule]` 里引用该段中定义的**节点名**（或配套上游提供的分组），并避免与同 profile 里另一套 `policy-path` 节点来源重复、混用导致难排查。含 token 的 URL 等同凭据，勿写入本仓库或公开 gist。
+
+**Proxy Group 结构**：默认是「单份 `policy-path` + 按节点名正则分地区的 `url-test` + 业务 select」。若要减少地区组、多订阅多 `policy-path`、或只保留极简 select，请改 `shared/regions.js` / `shared/groups.js` 后重新 `node scripts/build.js`，或用 `#!include` 本地覆写；详见项目内 `.claude/skills/surge-rules-workflow/SKILL.md`。
+
+Surge 应用里的 **「关联配置副本」** 是客户端对配置片段的管理方式，**不是**本仓库用脚本生成的 `#!include` 配置分离；二者不要混称。本仓库仍用 `surge-public.conf`（或注入后的 `surge-private.local.conf`）即可。若要把某段拆到单独文件，属于 Surge 的 [配置分离](https://kb.nssurge.com/surge-knowledge-base/zh/guidelines/detached-profile)，需自行在 Surge 或编辑器里操作，**无专用生成脚本**。
 
 **模板内可选能力**（详见生成文件内注释）：`enhanced-mode-by-rule`、Smart / `url-test` 与 `#!REQUIREMENT`、`[Host]` 示例、`external-controller` 示例、[surge-local-overrides.example.conf](surge/surge-local-overrides.example.conf) 的 `#!include` 叠规则。
 

@@ -9,6 +9,7 @@
  *   node scripts/airport-subscribe-to-surge-policy-list.js --url 'https://...' --user-agent-clash
  *   curl -fsS 'https://...' | node scripts/airport-subscribe-to-surge-policy-list.js
  *   node scripts/airport-subscribe-to-surge-policy-list.js --self-test
+ *   node scripts/airport-subscribe-to-surge-policy-list.js --url '...' --keep-noise
  *
  * Note: Some subscription URLs return Base64 anytls:// lines to a browser-like User-Agent,
  * but return a full Clash YAML profile when User-Agent looks like Clash (e.g. ClashMeta).
@@ -31,10 +32,11 @@ const UA_CLASH = "ClashForWindows/0.20.39";
 
 function usage() {
   console.error(`Usage:
-  node scripts/airport-subscribe-to-surge-policy-list.js --url <subscription-url> [--insecure] [--user-agent-clash]
+  node scripts/airport-subscribe-to-surge-policy-list.js --url <subscription-url> [--insecure] [--retries N] [--user-agent-clash]
   node scripts/airport-subscribe-to-surge-policy-list.js --url <url> --user-agent 'CustomUA/1.0'
   curl -fsS <url> | node scripts/airport-subscribe-to-surge-policy-list.js
-  node scripts/airport-subscribe-to-surge-policy-list.js --self-test`);
+  node scripts/airport-subscribe-to-surge-policy-list.js --self-test
+  (optional) --keep-noise  — keep subscription info lines (traffic/reset/expire); default skips them for Surge compatibility`);
 }
 
 function looksLikeBase64Subscription(s) {
@@ -58,14 +60,33 @@ function decodeSubscriptionBody(raw) {
   return trimmed;
 }
 
+/**
+ * Airports often prepend anytls:// links whose #fragment is account status (traffic, reset, expiry).
+ * Those names contain full-width punctuation and spaces; Surge external policy lists may reject them.
+ */
+function isSubscriptionInfoFrag(frag) {
+  const s = frag.trim();
+  if (!s) return false;
+  if (/剩余流量|距离下次重置|套餐到期|流量[:：]|重置[:：]|到期[:：]/.test(s)) return true;
+  if (/[\d.]+\s*GB\b/i.test(s) && /流量|GB/i.test(s)) return true;
+  if (/\d{4}-\d{2}-\d{2}/.test(s) && /到期|expire/i.test(s)) return true;
+  return false;
+}
+
 function sanitizePolicyName(name, index) {
   let n = name.replace(/\r$/, "").trim() || `node-${index + 1}`;
+  n = n
+    .replace(/\uFF1A/g, "-")
+    .replace(/\uFF0C/g, "·")
+    .replace(/\u3002/g, ".")
+    .replace(/\s+/g, "_");
   n = n.replace(/,/g, "·").replace(/=/g, "-");
   if (n.length > 120) n = n.slice(0, 117) + "...";
   return n;
 }
 
-function anytlsUriToSurgeLine(line, index, usedNames) {
+function anytlsUriToSurgeLine(line, index, usedNames, options = {}) {
+  const { keepNoise = false } = options;
   const raw = line.trim();
   if (!raw.toLowerCase().startsWith("anytls://")) return null;
   let u;
@@ -80,6 +101,7 @@ function anytlsUriToSurgeLine(line, index, usedNames) {
   const sni = u.searchParams.get("sni") || "";
   const insecure = u.searchParams.get("insecure") === "1";
   let frag = u.hash ? decodeURIComponent(u.hash.slice(1)) : "";
+  if (!keepNoise && isSubscriptionInfoFrag(frag)) return null;
   let baseName = sanitizePolicyName(frag, index);
   let name = baseName;
   let n = 2;
@@ -94,13 +116,13 @@ function anytlsUriToSurgeLine(line, index, usedNames) {
   return lineOut;
 }
 
-function bodyToSurgePolicyLines(decodedText) {
+function bodyToSurgePolicyLines(decodedText, options = {}) {
   const usedNames = new Set();
   const lines = decodedText.split(/\r?\n/);
   const out = [];
   let i = 0;
   for (const line of lines) {
-    const surge = anytlsUriToSurgeLine(line, i, usedNames);
+    const surge = anytlsUriToSurgeLine(line, i, usedNames, options);
     if (surge) {
       out.push(surge);
       i++;
@@ -119,7 +141,30 @@ function looksLikeClashProfileYaml(s) {
   return s.trimStart().startsWith("mixed-port:");
 }
 
-async function fetchSubscription(url, { insecureTls = false, userAgent = UA_BROWSER } = {}) {
+const FETCH_TIMEOUT_MS = 45_000;
+
+function sleep(ms) {
+  return new Promise((r) => setTimeout(r, ms));
+}
+
+function isRetryableFetchError(err) {
+  const code = err && (err.code || err.cause?.code);
+  const msg = `${err && err.message} ${err && err.cause && err.cause.message}`.toLowerCase();
+  return (
+    code === "ECONNRESET" ||
+    code === "ETIMEDOUT" ||
+    code === "ECONNREFUSED" ||
+    code === "ENOTFOUND" ||
+    code === "UND_ERR_SOCKET" ||
+    msg.includes("econnreset") ||
+    msg.includes("etimedout") ||
+    msg.includes("socket hang up") ||
+    msg.includes("network error") ||
+    msg.includes("timeout")
+  );
+}
+
+async function fetchSubscriptionOnce(url, { insecureTls = false, userAgent = UA_BROWSER } = {}) {
   if (insecureTls) {
     const https = await import("node:https");
     return new Promise((resolve, reject) => {
@@ -146,25 +191,64 @@ async function fetchSubscription(url, { insecureTls = false, userAgent = UA_BROW
           });
         }
       );
+      req.setTimeout(FETCH_TIMEOUT_MS, () => {
+        req.destroy(new Error(`timeout after ${FETCH_TIMEOUT_MS}ms`));
+      });
       req.on("error", reject);
       req.end();
     });
   }
+  /** Undici's default connect timeout is 10s; AbortSignal.timeout does not raise it. */
+  let dispatcher;
+  try {
+    const { Agent } = await import("node:undici");
+    dispatcher = new Agent({
+      connectTimeout: FETCH_TIMEOUT_MS,
+      headersTimeout: FETCH_TIMEOUT_MS,
+      bodyTimeout: FETCH_TIMEOUT_MS,
+    });
+  } catch {
+    dispatcher = undefined;
+  }
   let res;
   try {
-    res = await fetch(url, {
+    const init = {
       headers: {
         "User-Agent": userAgent,
         Accept: "*/*",
       },
       redirect: "follow",
-    });
+    };
+    if (dispatcher) init.dispatcher = dispatcher;
+    if (typeof AbortSignal !== "undefined" && AbortSignal.timeout) {
+      init.signal = AbortSignal.timeout(FETCH_TIMEOUT_MS);
+    }
+    res = await fetch(url, init);
   } catch (e) {
     const detail = e.cause ? `${e.message}: ${e.cause.message || e.cause}` : e.message;
-    throw new Error(`fetch failed (${detail}). Try --insecure if TLS is intercepted or cert chain is unusual.`);
+    const err = new Error(`fetch failed (${detail})`);
+    err.cause = e;
+    throw err;
   }
   if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
   return res.text();
+}
+
+async function fetchSubscription(url, { insecureTls = false, userAgent = UA_BROWSER, retries = 3 } = {}) {
+  let lastErr;
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      return await fetchSubscriptionOnce(url, { insecureTls, userAgent });
+    } catch (e) {
+      lastErr = e;
+      const retryable = isRetryableFetchError(e);
+      if (!retryable || attempt === retries) break;
+      await sleep(300 * attempt * attempt);
+    }
+  }
+  const tail =
+    "Try: --insecure (TLS inspection / odd chains), or pipe: curl -fsSL --connect-timeout 30 'URL' | node scripts/airport-subscribe-to-surge-policy-list.js";
+  throw new Error(`${lastErr && lastErr.message}. ${tail}`);
 }
 
 function selfTest() {
@@ -186,7 +270,24 @@ function selfTest() {
     console.error("Self-test failed:", lines);
     process.exit(1);
   }
-  console.error("Self-test OK (2 AnyTLS policies parsed).");
+
+  const withNoise = [
+    "anytls://aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee@example.com:443?sni=example.com#剩余流量：80.09 GB",
+    "anytls://11111111-1111-1111-1111-111111111111@example.com:443?sni=example.com#Test-A",
+  ].join("\n");
+  const noiseDecoded = decodeSubscriptionBody(Buffer.from(withNoise, "utf8").toString("base64"));
+  const noiseSkipped = bodyToSurgePolicyLines(noiseDecoded);
+  const noiseKept = bodyToSurgePolicyLines(noiseDecoded, { keepNoise: true });
+  if (noiseSkipped.length !== 1 || !noiseSkipped[0].includes("Test-A")) {
+    console.error("Self-test failed (expected info-frag line skipped):", noiseSkipped);
+    process.exit(1);
+  }
+  if (noiseKept.length !== 2) {
+    console.error("Self-test failed (--keep-noise):", noiseKept);
+    process.exit(1);
+  }
+
+  console.error("Self-test OK (2 policies + noise-skip checks).");
   lines.forEach((l) => console.log(l));
 }
 
@@ -198,8 +299,14 @@ async function main() {
   }
   const urlIdx = args.indexOf("--url");
   const insecureTls = args.includes("--insecure");
+  const keepNoise = args.includes("--keep-noise");
   const uaClash = args.includes("--user-agent-clash");
   const uaIdx = args.indexOf("--user-agent");
+  const retriesIdx = args.indexOf("--retries");
+  const retries =
+    retriesIdx !== -1 && args[retriesIdx + 1] && /^\d+$/.test(args[retriesIdx + 1])
+      ? Math.min(10, Math.max(1, parseInt(args[retriesIdx + 1], 10)))
+      : 3;
   const userAgent =
     uaIdx !== -1 && args[uaIdx + 1]
       ? args[uaIdx + 1]
@@ -208,7 +315,7 @@ async function main() {
         : UA_BROWSER;
   let raw = "";
   if (urlIdx !== -1 && args[urlIdx + 1]) {
-    raw = await fetchSubscription(args[urlIdx + 1], { insecureTls, userAgent });
+    raw = await fetchSubscription(args[urlIdx + 1], { insecureTls, userAgent, retries });
   } else if (!stdin.isTTY) {
     raw = await readStdin();
   } else {
@@ -216,7 +323,7 @@ async function main() {
     process.exit(1);
   }
   const decoded = decodeSubscriptionBody(raw);
-  const lines = bodyToSurgePolicyLines(decoded);
+  const lines = bodyToSurgePolicyLines(decoded, { keepNoise });
   if (lines.length === 0) {
     if (looksLikeClashProfileYaml(raw)) {
       console.error(

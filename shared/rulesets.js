@@ -53,6 +53,8 @@ const rulesets = [
     mihomoUrl: `${RULES_RAW_BASE}/mihomo/ruleset/Cursor.yaml`,
     mihomoPath: "./ruleset/Cursor.yaml",
     surgeUrl: `${RULES_RAW_BASE}/mihomo/ruleset/Cursor.list`,
+    /** When RULES_GITHUB_REPO is still the placeholder, raw GitHub URL is invalid — use repo file beside surge/*.conf. */
+    surgeLocalRelativeToSurgeDir: "../mihomo/ruleset/Cursor.list",
   },
   {
     key: "youtube",
@@ -216,7 +218,18 @@ function withDerivedUrls(entry) {
   };
 }
 
+function surgeRuleSetLocation(ruleset) {
+  if (
+    ruleset.surgeLocalRelativeToSurgeDir &&
+    RULES_GITHUB_REPO === "YOUR_GITHUB_USER/Rules"
+  ) {
+    return ruleset.surgeLocalRelativeToSurgeDir;
+  }
+  return ruleset.surgeUrl;
+}
+
 module.exports = {
   rulesets: rulesets.map(withDerivedUrls),
+  surgeRuleSetLocation,
 };
 

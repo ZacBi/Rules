@@ -53,3 +53,5 @@ yarn-debug.log*
 yarn-error.log*
 
 .claude/
+.agents/
+.cursor/
