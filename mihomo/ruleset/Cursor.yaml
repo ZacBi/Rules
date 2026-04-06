@@ -1,7 +1,0 @@
-# Cursor IDE — domains from public docs / common endpoints (api*.cursor.sh, marketplace, CDN).
-# Repo-local ruleset; subscription clients fetch via rule-provider URL in shared/rulesets.js.
-payload:
-  - DOMAIN-SUFFIX,cursor.com
-  - DOMAIN-SUFFIX,cursor.sh
-  - DOMAIN-SUFFIX,cursorapi.com
-  - DOMAIN-SUFFIX,cursor-cdn.com
