@@ -1,16 +1,13 @@
 # -----------------------------------------------------------------------------
-# 私有配置与本地生成物（订阅、策略列表、环境变量）
+# 私有配置与本地实验文件
 # -----------------------------------------------------------------------------
-mihomo/mihomo-private.yaml
-surge/surge-private.conf
 private.env
 private.env.local
-*.local.yaml
-*.local.conf
-surge/airport-surge-policies.txt
-surge/surge-private.local.conf
-surge/surge-local-overrides.conf
-surge/*.local.policy.txt
+*.local.stoverride
+*.local.sgmodule
+*.local.override.js
+*.local.ruleset
+*.local.policy.txt
 
 # -----------------------------------------------------------------------------
 # Mihomo 规则集缓存：客户端从 rule-provider 拉取的 yaml/list（仓库只版本化 Cursor）
@@ -56,3 +53,6 @@ yarn-error.log*
 .agents/
 .cursor/
 .qoder/
+
+
+tests/

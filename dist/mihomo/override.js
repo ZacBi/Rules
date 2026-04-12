@@ -1,0 +1,1683 @@
+const MODULE_INDEX = {
+  "schemaVersion": 1,
+  "model": "unified-strategy-pack",
+  "defaultHealthCheck": {
+    "url": "https://www.gstatic.com/generate_204",
+    "interval": 300,
+    "tolerance": 50
+  },
+  "strategyGroups": [
+    {
+      "key": "auto",
+      "name": "自动选择",
+      "type": "url-test",
+      "mode": "all-proxies"
+    },
+    {
+      "key": "select",
+      "name": "节点选择",
+      "type": "select",
+      "proxies": [
+        "自动选择",
+        "香港节点",
+        "台湾节点",
+        "日本节点",
+        "新加坡节点",
+        "美国节点",
+        "英国节点",
+        "澳洲节点",
+        "马来西亚节点",
+        "阿根廷节点",
+        "DIRECT"
+      ]
+    }
+  ],
+  "businessGroups": [
+    {
+      "name": "国外媒体",
+      "type": "select",
+      "proxies": [
+        "节点选择",
+        "自动选择",
+        "香港节点",
+        "台湾节点",
+        "日本节点",
+        "新加坡节点",
+        "美国节点",
+        "英国节点",
+        "澳洲节点",
+        "马来西亚节点",
+        "阿根廷节点"
+      ]
+    },
+    {
+      "name": "AI平台",
+      "type": "select",
+      "proxies": [
+        "节点选择",
+        "自动选择",
+        "香港节点",
+        "台湾节点",
+        "日本节点",
+        "新加坡节点",
+        "美国节点",
+        "英国节点",
+        "澳洲节点",
+        "马来西亚节点",
+        "阿根廷节点"
+      ]
+    },
+    {
+      "name": "开发工具与镜像",
+      "type": "select",
+      "proxies": [
+        "节点选择",
+        "自动选择",
+        "香港节点",
+        "台湾节点",
+        "日本节点",
+        "新加坡节点",
+        "美国节点",
+        "英国节点",
+        "澳洲节点",
+        "马来西亚节点",
+        "阿根廷节点",
+        "DIRECT"
+      ]
+    },
+    {
+      "name": "学习与研究",
+      "type": "select",
+      "proxies": [
+        "节点选择",
+        "自动选择",
+        "香港节点",
+        "台湾节点",
+        "日本节点",
+        "新加坡节点",
+        "美国节点",
+        "英国节点",
+        "澳洲节点",
+        "马来西亚节点",
+        "阿根廷节点",
+        "DIRECT"
+      ]
+    },
+    {
+      "name": "即时通讯",
+      "type": "select",
+      "proxies": [
+        "节点选择",
+        "自动选择",
+        "香港节点",
+        "台湾节点",
+        "日本节点",
+        "新加坡节点",
+        "美国节点",
+        "英国节点",
+        "澳洲节点",
+        "马来西亚节点",
+        "阿根廷节点"
+      ]
+    },
+    {
+      "name": "微软服务",
+      "type": "select",
+      "proxies": [
+        "节点选择",
+        "自动选择",
+        "香港节点",
+        "台湾节点",
+        "日本节点",
+        "新加坡节点",
+        "美国节点",
+        "英国节点",
+        "澳洲节点",
+        "马来西亚节点",
+        "阿根廷节点",
+        "DIRECT"
+      ]
+    },
+    {
+      "name": "苹果服务",
+      "type": "select",
+      "proxies": [
+        "DIRECT",
+        "节点选择",
+        "自动选择",
+        "香港节点",
+        "台湾节点",
+        "日本节点",
+        "新加坡节点",
+        "美国节点",
+        "英国节点",
+        "澳洲节点",
+        "马来西亚节点",
+        "阿根廷节点"
+      ]
+    },
+    {
+      "name": "游戏平台",
+      "type": "select",
+      "proxies": [
+        "节点选择",
+        "自动选择",
+        "香港节点",
+        "台湾节点",
+        "日本节点",
+        "新加坡节点",
+        "美国节点",
+        "英国节点",
+        "澳洲节点",
+        "马来西亚节点",
+        "阿根廷节点"
+      ]
+    },
+    {
+      "name": "国外网站",
+      "type": "select",
+      "proxies": [
+        "节点选择",
+        "自动选择",
+        "香港节点",
+        "台湾节点",
+        "日本节点",
+        "新加坡节点",
+        "美国节点",
+        "英国节点",
+        "澳洲节点",
+        "马来西亚节点",
+        "阿根廷节点"
+      ]
+    },
+    {
+      "name": "国内网站",
+      "type": "select",
+      "proxies": [
+        "DIRECT",
+        "节点选择"
+      ]
+    },
+    {
+      "name": "广告拦截",
+      "type": "select",
+      "proxies": [
+        "REJECT",
+        "DIRECT"
+      ]
+    },
+    {
+      "name": "漏网之鱼",
+      "type": "select",
+      "proxies": [
+        "节点选择",
+        "自动选择",
+        "DIRECT"
+      ]
+    }
+  ],
+  "regions": [
+    {
+      "key": "hong_kong",
+      "name": "香港",
+      "groupName": "香港节点",
+      "match": "香港|HK|Hong\\s*Kong"
+    },
+    {
+      "key": "taiwan",
+      "name": "台湾",
+      "groupName": "台湾节点",
+      "match": "台湾|TW|Taiwan|Taipei"
+    },
+    {
+      "key": "japan",
+      "name": "日本",
+      "groupName": "日本节点",
+      "match": "日本|JP|Japan|Tokyo|Osaka"
+    },
+    {
+      "key": "singapore",
+      "name": "新加坡",
+      "groupName": "新加坡节点",
+      "match": "新加坡|狮城|SG|Singapore"
+    },
+    {
+      "key": "united_states",
+      "name": "美国",
+      "groupName": "美国节点",
+      "match": "美国|US|USA|United\\s*States|America|Los\\s*Angeles|San\\s*Jose|Seattle"
+    },
+    {
+      "key": "united_kingdom",
+      "name": "英国",
+      "groupName": "英国节点",
+      "match": "英国|UK|United\\s*Kingdom|Britain|England|London|Manchester"
+    },
+    {
+      "key": "australia",
+      "name": "澳洲",
+      "groupName": "澳洲节点",
+      "match": "澳洲|澳大利亚|AU|Australia|Sydney|Melbourne|Perth"
+    },
+    {
+      "key": "malaysia",
+      "name": "马来西亚",
+      "groupName": "马来西亚节点",
+      "match": "马来西亚|MY|Malaysia|Kuala\\s*Lumpur"
+    },
+    {
+      "key": "argentina",
+      "name": "阿根廷",
+      "groupName": "阿根廷节点",
+      "match": "阿根廷|AR|Argentina|Buenos\\s*Aires"
+    }
+  ],
+  "ruleSets": [
+    {
+      "id": "advertising",
+      "sourceName": "Advertising",
+      "group": "广告拦截",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Advertising/Advertising.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Advertising/Advertising.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/Advertising.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "openai",
+      "sourceName": "OpenAI",
+      "group": "AI平台",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/OpenAI/OpenAI.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/OpenAI.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "claude",
+      "sourceName": "Claude",
+      "group": "AI平台",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Claude/Claude.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Claude/Claude.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/Claude.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "anthropic",
+      "sourceName": "Anthropic",
+      "group": "AI平台",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Anthropic/Anthropic.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Anthropic/Anthropic.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/Anthropic.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "gemini",
+      "sourceName": "Gemini",
+      "group": "AI平台",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Gemini/Gemini.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Gemini/Gemini.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/Gemini.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "copilot",
+      "sourceName": "Copilot",
+      "group": "AI平台",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Copilot/Copilot.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Copilot/Copilot.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/Copilot.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "youtube",
+      "sourceName": "YouTube",
+      "group": "国外媒体",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/YouTube/YouTube.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/YouTube.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "netflix",
+      "sourceName": "Netflix",
+      "group": "国外媒体",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Netflix/Netflix.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Netflix/Netflix.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/Netflix.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "spotify",
+      "sourceName": "Spotify",
+      "group": "国外媒体",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Spotify/Spotify.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Spotify/Spotify.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/Spotify.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "tiktok",
+      "sourceName": "TikTok",
+      "group": "国外媒体",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TikTok/TikTok.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/TikTok/TikTok.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/TikTok.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "globalmedia",
+      "sourceName": "GlobalMedia",
+      "group": "国外媒体",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GlobalMedia/GlobalMedia.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/GlobalMedia/GlobalMedia.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/GlobalMedia.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "github",
+      "sourceName": "GitHub",
+      "group": "AI平台",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/GitHub/GitHub.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/GitHub.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "npmjs",
+      "sourceName": "Npmjs",
+      "group": "开发工具与镜像",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Npmjs/Npmjs.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Npmjs/Npmjs.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/Npmjs.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "docker",
+      "sourceName": "Docker",
+      "group": "开发工具与镜像",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Docker/Docker.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Docker/Docker.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/Docker.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "python",
+      "sourceName": "Python",
+      "group": "开发工具与镜像",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Python/Python.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Python/Python.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/Python.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "gitlab",
+      "sourceName": "GitLab",
+      "group": "开发工具与镜像",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitLab/GitLab.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/GitLab/GitLab.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/GitLab.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "scholar",
+      "sourceName": "Scholar",
+      "group": "学习与研究",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Scholar/Scholar.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Scholar/Scholar.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/Scholar.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "wikipedia",
+      "sourceName": "Wikipedia",
+      "group": "学习与研究",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Wikipedia/Wikipedia.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Wikipedia/Wikipedia.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/Wikipedia.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "stackexchange",
+      "sourceName": "Stackexchange",
+      "group": "学习与研究",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Stackexchange/Stackexchange.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Stackexchange/Stackexchange.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/Stackexchange.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "google",
+      "sourceName": "Google",
+      "group": "国外网站",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Google/Google.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/Google.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "telegram",
+      "sourceName": "Telegram",
+      "group": "即时通讯",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Telegram/Telegram.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/Telegram.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "discord",
+      "sourceName": "Discord",
+      "group": "即时通讯",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Discord/Discord.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Discord/Discord.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/Discord.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "twitter",
+      "sourceName": "Twitter",
+      "group": "国外网站",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Twitter/Twitter.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Twitter/Twitter.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/Twitter.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "microsoft",
+      "sourceName": "Microsoft",
+      "group": "微软服务",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Microsoft/Microsoft.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/Microsoft.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "apple",
+      "sourceName": "Apple",
+      "group": "苹果服务",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Apple/Apple.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/Apple.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "steam",
+      "sourceName": "Steam",
+      "group": "游戏平台",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Steam/Steam.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Steam/Steam.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/Steam.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "epic",
+      "sourceName": "Epic",
+      "group": "游戏平台",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Epic/Epic.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Epic/Epic.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/Epic.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "lan",
+      "sourceName": "Lan",
+      "group": "国内网站",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Lan/Lan.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/Lan.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "chinamedia",
+      "sourceName": "ChinaMedia",
+      "group": "国内网站",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMedia/ChinaMedia.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ChinaMedia/ChinaMedia.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/ChinaMedia.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "china",
+      "sourceName": "ChinaMax",
+      "group": "国内网站",
+      "behavior": "domain",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax_Domain.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ChinaMax/ChinaMax.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/ChinaMax_Domain.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    }
+  ],
+  "runtimeModules": [
+    {
+      "id": "runtime.ai.assistant",
+      "kind": "script",
+      "domain": "ai",
+      "title": "assistant-panel",
+      "sourceMode": "remote",
+      "sourceUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/openai/openai-panel.js",
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ],
+      "support": {
+        "supportLevel": {
+          "stash": "full",
+          "surge": "full",
+          "mihomo": "unsupported"
+        },
+        "notes": {
+          "stash": "Use through Stash script runtime or Script Hub.",
+          "surge": "Use through Surge script runtime.",
+          "mihomo": "No equivalent cross-client script runtime is emitted by override.js."
+        }
+      },
+      "dependencies": [
+        "scenario.ai"
+      ],
+      "conflicts": [],
+      "render": {
+        "stashScript": {
+          "name": "assistant-panel",
+          "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/openai/openai-panel.js"
+        },
+        "surgeScript": {
+          "name": "assistant-panel",
+          "type": "http-response",
+          "pattern": "^https://(chatgpt|api\\.openai)\\.com/.*",
+          "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/openai/openai-panel.js"
+        }
+      }
+    },
+    {
+      "id": "runtime.media.unlock",
+      "kind": "rewrite",
+      "domain": "media",
+      "title": "reject-tracking",
+      "sourceMode": "local",
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ],
+      "support": {
+        "supportLevel": {
+          "stash": "full",
+          "surge": "full",
+          "mihomo": "partial"
+        },
+        "notes": {
+          "stash": "Rendered as native url-rewrite lines.",
+          "surge": "Rendered as native URL Rewrite rules.",
+          "mihomo": "Documented in metadata only; override.js does not emit rewrite rules."
+        }
+      },
+      "dependencies": [
+        "scenario.media"
+      ],
+      "conflicts": [],
+      "render": {
+        "stashRewrite": "^https?:\\/\\/([^/]+)\\/.*[?&](utm_(source|medium|campaign)|spm)=.*$ 302 https://$1/",
+        "surgeRewrite": "^https?:\\/\\/([^/]+)\\/.*[?&](utm_(source|medium|campaign)|spm)=.*$ 302 https://$1/"
+      }
+    },
+    {
+      "id": "runtime.core.mitm",
+      "kind": "mitm",
+      "domain": "developer",
+      "title": "tls-hosts",
+      "sourceMode": "local",
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ],
+      "support": {
+        "supportLevel": {
+          "stash": "full",
+          "surge": "full",
+          "mihomo": "unsupported"
+        },
+        "notes": {
+          "stash": "Rendered as MITM hostnames.",
+          "surge": "Rendered as MITM hostname append list.",
+          "mihomo": "MITM is not emitted from the generic Mihomo override."
+        }
+      },
+      "dependencies": [
+        "base.core"
+      ],
+      "conflicts": [],
+      "render": {
+        "hostnames": [
+          "*.openai.com",
+          "*.anthropic.com",
+          "*.githubusercontent.com"
+        ]
+      }
+    }
+  ],
+  "runtimeSupportMatrix": {
+    "stash": {
+      "rewrite": "full",
+      "script": "full",
+      "mitm": "full"
+    },
+    "surge": {
+      "rewrite": "full",
+      "script": "full",
+      "mitm": "full"
+    },
+    "mihomo": {
+      "rewrite": "partial",
+      "script": "unsupported",
+      "mitm": "unsupported"
+    }
+  },
+  "inlineRules": [
+    "DOMAIN,localhost,DIRECT",
+    "DOMAIN-SUFFIX,local,DIRECT",
+    "IP-CIDR,127.0.0.0/8,DIRECT,no-resolve",
+    "IP-CIDR6,::1/128,DIRECT,no-resolve"
+  ],
+  "modules": [
+    {
+      "id": "base.core",
+      "layer": "base",
+      "domain": "core",
+      "title": "Core strategy scaffold",
+      "groups": [
+        "自动选择",
+        "节点选择",
+        "香港节点",
+        "台湾节点",
+        "日本节点",
+        "新加坡节点",
+        "美国节点",
+        "英国节点",
+        "澳洲节点",
+        "马来西亚节点",
+        "阿根廷节点",
+        "漏网之鱼"
+      ],
+      "ruleSets": [
+        "advertising",
+        "lan",
+        "china"
+      ],
+      "dependsOn": [],
+      "output": null,
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ],
+      "capabilities": {
+        "routing": true,
+        "rewrite": true,
+        "script": true,
+        "mitm": true
+      },
+      "conflicts": [],
+      "notes": []
+    },
+    {
+      "id": "scenario.ai",
+      "layer": "scenario",
+      "domain": "ai",
+      "title": "AI platforms",
+      "groups": [
+        "AI平台"
+      ],
+      "ruleSets": [
+        "openai",
+        "claude",
+        "anthropic",
+        "gemini",
+        "copilot",
+        "github"
+      ],
+      "dependsOn": [
+        "base.core"
+      ],
+      "output": null,
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ],
+      "capabilities": {
+        "routing": true,
+        "rewrite": false,
+        "script": false,
+        "mitm": false
+      },
+      "conflicts": [],
+      "notes": []
+    },
+    {
+      "id": "scenario.media",
+      "layer": "scenario",
+      "domain": "media",
+      "title": "Streaming media",
+      "groups": [
+        "国外媒体"
+      ],
+      "ruleSets": [
+        "youtube",
+        "netflix",
+        "spotify",
+        "tiktok",
+        "globalmedia"
+      ],
+      "dependsOn": [
+        "base.core"
+      ],
+      "output": null,
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ],
+      "capabilities": {
+        "routing": true,
+        "rewrite": false,
+        "script": false,
+        "mitm": false
+      },
+      "conflicts": [],
+      "notes": []
+    },
+    {
+      "id": "scenario.dev",
+      "layer": "scenario",
+      "domain": "dev",
+      "title": "Developer tools",
+      "groups": [
+        "开发工具与镜像"
+      ],
+      "ruleSets": [
+        "npmjs",
+        "docker",
+        "python",
+        "gitlab"
+      ],
+      "dependsOn": [
+        "base.core"
+      ],
+      "output": null,
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ],
+      "capabilities": {
+        "routing": true,
+        "rewrite": false,
+        "script": false,
+        "mitm": false
+      },
+      "conflicts": [],
+      "notes": []
+    },
+    {
+      "id": "scenario.research",
+      "layer": "scenario",
+      "domain": "research",
+      "title": "Learning and research",
+      "groups": [
+        "学习与研究"
+      ],
+      "ruleSets": [
+        "scholar",
+        "wikipedia",
+        "stackexchange"
+      ],
+      "dependsOn": [
+        "base.core"
+      ],
+      "output": null,
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ],
+      "capabilities": {
+        "routing": true,
+        "rewrite": false,
+        "script": false,
+        "mitm": false
+      },
+      "conflicts": [],
+      "notes": []
+    },
+    {
+      "id": "scenario.chat",
+      "layer": "scenario",
+      "domain": "chat",
+      "title": "Messaging",
+      "groups": [
+        "即时通讯"
+      ],
+      "ruleSets": [
+        "telegram",
+        "discord"
+      ],
+      "dependsOn": [
+        "base.core"
+      ],
+      "output": null,
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ],
+      "capabilities": {
+        "routing": true,
+        "rewrite": false,
+        "script": false,
+        "mitm": false
+      },
+      "conflicts": [],
+      "notes": []
+    },
+    {
+      "id": "scenario.vendor",
+      "layer": "scenario",
+      "domain": "vendor",
+      "title": "Vendor services",
+      "groups": [
+        "微软服务",
+        "苹果服务"
+      ],
+      "ruleSets": [
+        "microsoft",
+        "apple"
+      ],
+      "dependsOn": [
+        "base.core"
+      ],
+      "output": null,
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ],
+      "capabilities": {
+        "routing": true,
+        "rewrite": false,
+        "script": false,
+        "mitm": false
+      },
+      "conflicts": [],
+      "notes": []
+    },
+    {
+      "id": "scenario.games",
+      "layer": "scenario",
+      "domain": "games",
+      "title": "Gaming platforms",
+      "groups": [
+        "游戏平台"
+      ],
+      "ruleSets": [
+        "steam",
+        "epic"
+      ],
+      "dependsOn": [
+        "base.core"
+      ],
+      "output": null,
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ],
+      "capabilities": {
+        "routing": true,
+        "rewrite": false,
+        "script": false,
+        "mitm": false
+      },
+      "conflicts": [],
+      "notes": []
+    },
+    {
+      "id": "scenario.web",
+      "layer": "scenario",
+      "domain": "web",
+      "title": "Global web",
+      "groups": [
+        "国外网站"
+      ],
+      "ruleSets": [
+        "google",
+        "twitter"
+      ],
+      "dependsOn": [
+        "base.core"
+      ],
+      "output": null,
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ],
+      "capabilities": {
+        "routing": true,
+        "rewrite": false,
+        "script": false,
+        "mitm": false
+      },
+      "conflicts": [],
+      "notes": []
+    },
+    {
+      "id": "scenario.domestic",
+      "layer": "scenario",
+      "domain": "domestic",
+      "title": "Domestic routing",
+      "groups": [
+        "国内网站"
+      ],
+      "ruleSets": [
+        "chinamedia"
+      ],
+      "dependsOn": [
+        "base.core"
+      ],
+      "output": null,
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ],
+      "capabilities": {
+        "routing": true,
+        "rewrite": false,
+        "script": false,
+        "mitm": false
+      },
+      "conflicts": [],
+      "notes": []
+    },
+    {
+      "id": "scenario.ads",
+      "layer": "scenario",
+      "domain": "ads",
+      "title": "Ad blocking",
+      "groups": [
+        "广告拦截"
+      ],
+      "ruleSets": [],
+      "dependsOn": [
+        "base.core"
+      ],
+      "output": null,
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ],
+      "capabilities": {
+        "routing": true,
+        "rewrite": false,
+        "script": false,
+        "mitm": false
+      },
+      "conflicts": [],
+      "notes": []
+    },
+    {
+      "id": "scenario.fallback",
+      "layer": "scenario",
+      "domain": "fallback",
+      "title": "Catch-all routing",
+      "groups": [
+        "漏网之鱼"
+      ],
+      "ruleSets": [],
+      "dependsOn": [
+        "base.core"
+      ],
+      "output": null,
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ],
+      "capabilities": {
+        "routing": true,
+        "rewrite": false,
+        "script": false,
+        "mitm": false
+      },
+      "conflicts": [],
+      "notes": []
+    },
+    {
+      "id": "client.stash.entry",
+      "layer": "client",
+      "domain": "stash",
+      "title": "Stash entry override",
+      "groups": [
+        "自动选择",
+        "节点选择",
+        "国外媒体",
+        "AI平台",
+        "开发工具与镜像",
+        "学习与研究",
+        "即时通讯",
+        "微软服务",
+        "苹果服务",
+        "游戏平台",
+        "国外网站",
+        "国内网站",
+        "广告拦截",
+        "漏网之鱼"
+      ],
+      "ruleSets": [],
+      "dependsOn": [
+        "base.core",
+        "scenario.ai",
+        "scenario.media",
+        "scenario.dev",
+        "scenario.research",
+        "scenario.chat",
+        "scenario.vendor",
+        "scenario.games",
+        "scenario.web",
+        "scenario.domestic",
+        "scenario.ads",
+        "scenario.fallback"
+      ],
+      "output": {
+        "path": "dist/stash/stash.stoverride",
+        "format": "stash-override"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ],
+      "capabilities": {
+        "routing": true,
+        "rewrite": true,
+        "script": true,
+        "mitm": true
+      },
+      "conflicts": [],
+      "notes": [
+        "Designed for clients that already resolve subscription parsing upstream."
+      ]
+    },
+    {
+      "id": "client.mihomo.entry",
+      "layer": "client",
+      "domain": "mihomo",
+      "title": "Mihomo entry override",
+      "groups": [
+        "自动选择",
+        "节点选择",
+        "国外媒体",
+        "AI平台",
+        "开发工具与镜像",
+        "学习与研究",
+        "即时通讯",
+        "微软服务",
+        "苹果服务",
+        "游戏平台",
+        "国外网站",
+        "国内网站",
+        "广告拦截",
+        "漏网之鱼"
+      ],
+      "ruleSets": [],
+      "dependsOn": [
+        "base.core",
+        "scenario.ai",
+        "scenario.media",
+        "scenario.dev",
+        "scenario.research",
+        "scenario.chat",
+        "scenario.vendor",
+        "scenario.games",
+        "scenario.web",
+        "scenario.domestic",
+        "scenario.ads",
+        "scenario.fallback"
+      ],
+      "output": {
+        "path": "dist/mihomo/override.js",
+        "format": "mihomo-override-js"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ],
+      "capabilities": {
+        "routing": true,
+        "rewrite": false,
+        "script": false,
+        "mitm": false
+      },
+      "conflicts": [],
+      "notes": [
+        "Rendered as an override script with explicit runtime capability downgrades."
+      ]
+    },
+    {
+      "id": "client.surge.entry",
+      "layer": "client",
+      "domain": "surge",
+      "title": "Surge entry module",
+      "groups": [
+        "自动选择",
+        "节点选择",
+        "国外媒体",
+        "AI平台",
+        "开发工具与镜像",
+        "学习与研究",
+        "即时通讯",
+        "微软服务",
+        "苹果服务",
+        "游戏平台",
+        "国外网站",
+        "国内网站",
+        "广告拦截",
+        "漏网之鱼"
+      ],
+      "ruleSets": [],
+      "dependsOn": [
+        "base.core",
+        "scenario.ai",
+        "scenario.media",
+        "scenario.dev",
+        "scenario.research",
+        "scenario.chat",
+        "scenario.vendor",
+        "scenario.games",
+        "scenario.web",
+        "scenario.domestic",
+        "scenario.ads",
+        "scenario.fallback"
+      ],
+      "output": {
+        "path": "dist/surge/module.sgmodule",
+        "format": "surge-module"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ],
+      "capabilities": {
+        "routing": true,
+        "rewrite": true,
+        "script": true,
+        "mitm": true
+      },
+      "conflicts": [],
+      "notes": [
+        "Rendered as a reusable Surge module fragment rather than a full profile."
+      ]
+    }
+  ],
+  "entrypoints": {
+    "stash": {
+      "moduleId": "client.stash.entry",
+      "modules": [
+        "base.core",
+        "scenario.ai",
+        "scenario.media",
+        "scenario.dev",
+        "scenario.research",
+        "scenario.chat",
+        "scenario.vendor",
+        "scenario.games",
+        "scenario.web",
+        "scenario.domestic",
+        "scenario.ads",
+        "scenario.fallback"
+      ],
+      "outputPath": "dist/stash/stash.stoverride",
+      "format": "stash-override"
+    },
+    "mihomo": {
+      "moduleId": "client.mihomo.entry",
+      "modules": [
+        "base.core",
+        "scenario.ai",
+        "scenario.media",
+        "scenario.dev",
+        "scenario.research",
+        "scenario.chat",
+        "scenario.vendor",
+        "scenario.games",
+        "scenario.web",
+        "scenario.domestic",
+        "scenario.ads",
+        "scenario.fallback"
+      ],
+      "outputPath": "dist/mihomo/override.js",
+      "format": "mihomo-override-js"
+    },
+    "surge": {
+      "moduleId": "client.surge.entry",
+      "modules": [
+        "base.core",
+        "scenario.ai",
+        "scenario.media",
+        "scenario.dev",
+        "scenario.research",
+        "scenario.chat",
+        "scenario.vendor",
+        "scenario.games",
+        "scenario.web",
+        "scenario.domestic",
+        "scenario.ads",
+        "scenario.fallback"
+      ],
+      "outputPath": "dist/surge/module.sgmodule",
+      "format": "surge-module"
+    }
+  }
+};
+
+function uniq(items) {
+  return [...new Set((items || []).filter(Boolean))];
+}
+
+function main(config = {}) {
+  config.proxies ??= [];
+  config["proxy-groups"] ??= [];
+  config["rule-providers"] ??= {};
+  config.rules ??= [];
+
+  const defaultUrl = MODULE_INDEX.defaultHealthCheck.url;
+  const defaultInterval = MODULE_INDEX.defaultHealthCheck.interval;
+  const defaultTolerance = MODULE_INDEX.defaultHealthCheck.tolerance;
+
+  function buildProxyNames(config) {
+    return uniq((config.proxies || []).map((proxy) => proxy && proxy.name));
+  }
+
+  function buildRegionGroups(proxyNames) {
+    return MODULE_INDEX.regions.map((region) => {
+      const matched = proxyNames.filter((name) => new RegExp(region.match, "i").test(name));
+      return {
+        name: region.groupName,
+        type: "url-test",
+        hidden: true,
+        proxies: matched.length ? uniq(matched) : ["节点选择"],
+        url: defaultUrl,
+        interval: defaultInterval,
+        tolerance: defaultTolerance,
+      };
+    });
+  }
+
+  function buildStrategyGroups(proxyNames) {
+    return MODULE_INDEX.strategyGroups.map((group) => {
+      if (group.mode === "all-proxies") {
+        return {
+          name: group.name,
+          type: group.type,
+          proxies: proxyNames.length ? uniq(proxyNames) : ["DIRECT"],
+          url: defaultUrl,
+          interval: defaultInterval,
+          tolerance: defaultTolerance,
+        };
+      }
+
+      return {
+        name: group.name,
+        type: group.type,
+        proxies: uniq(group.proxies),
+      };
+    });
+  }
+
+  function buildBusinessGroups() {
+    return MODULE_INDEX.businessGroups.map((group) => ({
+      name: group.name,
+      type: group.type,
+      proxies: uniq(group.proxies),
+    }));
+  }
+
+  function buildRuleProviders() {
+    return MODULE_INDEX.ruleSets.reduce((providers, ruleSet) => {
+      providers[ruleSet.id] = {
+        type: "http",
+        behavior: ruleSet.behavior,
+        url: ruleSet.urls.mihomo,
+        path: ruleSet.paths.mihomo,
+        interval: 86400,
+      };
+      return providers;
+    }, {});
+  }
+
+  function buildRules() {
+    return [
+      ...MODULE_INDEX.inlineRules,
+      ...MODULE_INDEX.ruleSets.map((ruleSet) => `RULE-SET,${ruleSet.id},${ruleSet.group}`),
+      "MATCH,漏网之鱼",
+    ];
+  }
+
+  const proxyNames = buildProxyNames(config);
+  config["proxy-groups"] = [
+    ...buildStrategyGroups(proxyNames),
+    ...buildRegionGroups(proxyNames),
+    ...buildBusinessGroups(),
+  ];
+  config["rule-providers"] = buildRuleProviders();
+  config.rules = buildRules();
+  config["x-runtime-support"] = MODULE_INDEX.runtimeSupportMatrix;
+  return config;
+}
+
+module.exports = {
+  main,
+  MODULE_INDEX,
+};

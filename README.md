@@ -1,138 +1,206 @@
 # Rules
 
-面向 **Clash Mi**、**Clash Party（Mihomo）** 与 **Surge** 的代理配置模板：共享分组、地区与 Blackmatrix7 规则集映射，由 `scripts/build.js` 生成各客户端产物。本仓库为 **公开仓库**，不含真实订阅 URL；私有值请放在本地或私有副本中。许可证：[LICENSE](LICENSE)（MIT）。
+`Rules` 现在是一个面向 Stash、Mihomo、Surge 的**策略发行仓**，不是“订阅模板仓”。
 
-依赖：本机安装 **Node.js**（用于运行生成脚本）。无需 npm 安装依赖。
+默认前提是：订阅解析、节点清洗、格式转换已经由客户端能力或前置工具完成，例如 `Sub-Store`、`Script Hub`，以及客户端自带的覆写、重写、脚本、 MITM 能力。本仓库只负责维护统一策略模型，并输出可远程引用的模块化产物。
 
----
+仓库是公开的，因此**不会包含**真实订阅链接、token、Cookie、个人路径或其他私有材料。
 
-## 已实现内容
+## 产物形态
 
-| 能力 | 说明 |
-| --- | --- |
-| 共享定义 | `shared/groups.js`、`regions.js`、`rulesets.js`、`programmerRules.js` 统一驱动 Mihomo / Surge |
-| Mihomo | `mihomo-public.yaml`、`mihomo-private.example.yaml`、Clash Party 用 `overwrite.js`（由 build 自共享定义生成） |
-| Surge | `surge-public.conf`、`surge-private.example.conf`、`surge-local-overrides.example.conf`；`RULE-SET,LAN`、远程集 `extended-matching`、`enhanced-mode-by-rule`、Smart / `#!REQUIREMENT` 等与模板注释一致 |
-| 订阅转 Surge | `scripts/airport-subscribe-to-surge-policy-list.js`（Base64 中 `anytls://`）、`scripts/surge-inject-policy-path.js`（含 `--absolute`） |
-| 规则集来源 | 默认 Blackmatrix7；**Cursor** 规则集为本仓库 `mihomo/ruleset/Cursor.{yaml,list}`，raw 地址由构建时的 `RULES_GITHUB_REPO` 决定 |
-| 补充列表 | `rules/alibaba.list` 等可按需自行引用 |
+仓库使用三层策略模型：
 
-地区组与业务组与 `shared/` 中定义一致（含「开发工具与镜像」「学习与研究」等）。程序员相关仅 **localhost / 回环** 写在 `programmerRules.js`，其余走 BM7 规则集。
+- `base`：基础策略能力，例如健康检查、地区识别、通用分组、基础分流、rewrite/script/MITM 元数据。
+- `scenario`：业务场景模块，例如 AI、流媒体、开发工具、即时通讯、广告拦截、国内直连。
+- `client`：客户端适配层，将统一语义渲染成各客户端入口产物。
 
----
+构建后正式对外入口位于 `dist/`：
 
-## 目录结构
+- `dist/stash/stash.stoverride`
+- `dist/mihomo/override.js`
+- `dist/surge/module.sgmodule`
+- `dist/modules/index.json`
 
-```text
-shared/          # 分组、地区、规则集映射、回环规则
-mihomo/          # 生成出的 yaml、overwrite.js、ruleset/Cursor.*
-surge/           # 生成出的 .conf 与示例
-scripts/
-  build.js
-  airport-subscribe-to-surge-policy-list.js
-  surge-inject-policy-path.js
-rules/           # 可选静态列表（如 alibaba.list）
-.env.example     # 构建相关环境变量示例（可选复制为本地 private.env，勿提交密钥）
-```
+其中 `index.json` 是机器可读模块索引，描述模块标识、层级、支持客户端、依赖关系和能力矩阵。
 
-`mihomo/overwrite.js` 仅维护于 `mihomo/` 下，由 `build.js` 写入；**不存在** `scripts/overwrite.js`。
+## 推荐使用路径
 
----
+1. 在客户端或前置工具中处理订阅。
+   `Sub-Store`、`Script Hub`、客户端自带能力负责解析订阅与清洗节点。
 
-## 生成配置
+2. 选择客户端入口产物。
+   直接引用 `dist/` 下对应客户端的入口文件，而不是再从仓库拿完整模板。
+
+3. 按需叠加场景模块。
+   常见用户可以只用客户端入口；需要细分业务分流时，再围绕统一模型扩展或组合模块。
+
+4. 在私有环境里做个性化配置。
+   订阅、凭据、私有规则源、企业域名等内容应保留在本地或私有副本里。
+
+## 从一个订阅链接开始
+
+如果你手里只有一条机场订阅链接，推荐按下面的顺序处理：
+
+1. 把订阅链接交给 `Sub-Store`。
+   不要直接让仓库产物承担订阅解析。先在 `Sub-Store` 里创建一个上游 source，把原始订阅变成可复用的中间订阅。
+
+2. 在 `Sub-Store` 里为不同客户端准备输出。
+   - Stash / Mihomo：输出标准代理订阅，让客户端先拿到节点。
+   - Surge：输出 Surge 可识别的代理列表或代理片段，让客户端本身先拥有 `[Proxy]` 节点池。
+
+3. 先在客户端导入 `Sub-Store` 产物，再叠加本仓库入口。
+   - Stash：先导入 `Sub-Store` 输出的节点订阅，再追加远程覆写 `dist/stash/stash.stoverride`。
+   - Mihomo / Clash Party：先导入 `Sub-Store` 输出的节点，再把覆写脚本指向 `dist/mihomo/override.js`。
+   - Surge：先让 profile 通过 `Sub-Store` 或远程 `#!include` 拿到真实代理节点，再叠加 `dist/surge/module.sgmodule`。
+
+4. 需要运行时脚本时，再打开 `Script Hub`。
+   `Script Hub` 适合承接脚本、重写、MITM 这类客户端运行时能力；本仓库负责给出统一策略入口，不负责托管个人脚本状态。
+
+5. 最后再做私有化微调。
+   包括节点重命名、去噪、地区优先级、私有域名直连、企业内网例外等，都应该留在 `Sub-Store` 规则或客户端本地设置里，而不是写回公开仓库。
+
+这条链路的原则是：
+
+- `Sub-Store` 负责“把一个订阅链接整理成客户端能消费的节点源”
+- `Script Hub` 负责“承接脚本化运行时能力”
+- 本仓库负责“提供统一的分组、规则、rewrite/script/MITM 策略入口”
+
+## 按客户端落地
+
+下面这部分是更接近实际操作的顺序。界面名称可能会随着客户端版本微调，但整体流程不变。
+
+### Stash
+
+1. 在 `Sub-Store` 中新增一个 source。
+   输入你的原始订阅链接，让 `Sub-Store` 先完成解析和去噪。
+
+2. 在 `Sub-Store` 中新增一个 Stash 输出。
+   输出目标保持为“节点订阅”，不要在这里再塞完整规则模板。
+
+3. 在 Stash 里先导入 `Sub-Store` 输出的节点订阅。
+   这一步的目标是让 Stash 的代理列表里先出现真实节点。
+
+4. 再给这个 profile 追加远程覆写。
+   覆写入口使用 `dist/stash/stash.stoverride`，让本仓库负责分组、规则、rewrite、script、MITM 相关策略。
+
+5. 如果需要脚本化能力，再在 `Script Hub` 中启用对应脚本。
+   原则是节点整理放在 `Sub-Store`，运行时脚本放在 `Script Hub`，不要让一个组件同时做两件事。
+
+### Mihomo / Clash Party
+
+1. 用 `Sub-Store` 把原始订阅整理成标准代理订阅。
+
+2. 在客户端里先导入这份节点订阅。
+   先确认客户端已经能看到真实节点，再做覆写。
+
+3. 把覆写脚本指向 `dist/mihomo/override.js`。
+   这个入口会基于现有节点去生成地区组、业务组和规则集引用。
+
+4. 如需进一步私有化：
+   节点重命名、节点过滤、机场信息去噪继续放在 `Sub-Store`，不要回写到本仓库。
+
+### Surge
+
+1. 先用 `Sub-Store` 准备一个 Surge 可消费的代理源。
+   可以是代理列表、远程 `[Proxy]` 片段，或你自己维护的可 include 远端片段；关键是 Surge 在叠加本仓模块前必须已经有真实节点。
+
+2. 在 Surge 中先导入基础 profile。
+   这个 profile 只负责拿到节点来源，不负责承载完整分流策略。
+
+3. 再叠加 `dist/surge/module.sgmodule`。
+   本仓模块负责分组、规则、rewrite、script、MITM，不再负责把原始订阅转换成 Surge 节点。
+
+4. 如果节点名需要进一步整理：
+   优先在 `Sub-Store` 完成，再让本仓模块按地区正则和业务分组消费这些节点。
+
+### 什么时候用 Script Hub
+
+- 需要运行时脚本、面板、网络请求拦截脚本时，用 `Script Hub`
+- 需要订阅解析、节点筛选、去噪、改名、跨客户端输出时，用 `Sub-Store`
+- 需要统一的策略组、规则集、rewrite/script/MITM 入口时，用本仓库
+
+可以把三者理解成一条流水线：
+
+`订阅链接 -> Sub-Store -> 客户端拿到节点 -> 本仓库入口 -> Script Hub 承接运行时脚本`
+
+## 运行时模块支持矩阵
+
+当前这轮实现采用“统一模型 + 显式降级”：
+
+| 能力 | Stash | Surge | Mihomo / Clash |
+| --- | --- | --- | --- |
+| Rewrite | Full | Full | Partial |
+| Script | Full | Full | Unsupported |
+| MITM | Full | Full | Unsupported |
+
+解释：
+
+- `Full`：本仓库会直接生成真实可运行的产物。
+- `Partial`：本仓库保留统一模型和元数据，但不会在该客户端入口里生成完整等价能力。
+- `Unsupported`：本仓库只在索引和文档里声明，不伪造产物。
+
+当前内置的真实运行时模块以常见场景为主：
+
+- `assistant-panel`
+  面向 AI 场景的脚本模块，Stash / Surge 可直接消费。
+- `reject-tracking`
+  基础改写模块，用于清理常见追踪参数。
+- `tls-hosts`
+  基础 MITM 主机集合，供 Stash / Surge 入口直接渲染。
+
+`Mihomo / Clash` 的入口目前会显式暴露运行时能力降级信息，但不会伪造脚本或 MITM 段，避免形成“看起来支持、实际上不可用”的假象。
+
+## 构建
+
+仓库无额外依赖，使用系统 Node.js 即可：
 
 ```bash
 node scripts/build.js
 ```
 
-生成或更新：`mihomo/overwrite.js`、`mihomo/mihomo-public.yaml`、`mihomo/mihomo-private.example.yaml`、`surge/surge-public.conf`、`surge/surge-private.example.conf`。
+构建会刷新 `dist/` 下的模块索引和三类客户端入口产物。
 
-Fork 后若要让配置里的 Cursor raw 链接指向你的 GitHub 仓库：
+如需让 Cursor 规则集 raw 地址指向你的 fork，可在构建时设置：
 
 ```bash
 RULES_GITHUB_REPO='owner/repo' node scripts/build.js
 ```
 
-未设置时为占位 `YOUR_GITHUB_USER/Rules`，使用前请替换并重新生成。
+未设置时，默认公开产物不会包含 Cursor 补充规则集。
 
-本地一次性生成带占位订阅的私有文件（勿提交）：
+## 规则与资源原则
 
-```bash
-MIHOMO_SUBSCRIPTION_URL='https://example.com/your-private-airport-subscription' \
-SURGE_POLICY_PATH='https://example.com/your-private-surge-policy.list' \
-node scripts/build.js
+- 优先使用 `blackmatrix7/ios_rule_script` 的远程规则源。
+- 不在仓库里复制大型 ruleset。
+- 客户端差异必须显式建模，不把某一客户端专属能力伪装成通用策略。
+- 小型本地补充只在确有必要时保留。
+
+## 迁移说明
+
+以下旧入口已经废弃，不再作为主产物维护：
+
+- `mihomo/mihomo-public.yaml`
+- `surge/surge-public.conf`
+- `mihomo/stash/stash-subscription-only.stoverride.yaml`
+
+旧模式是“先生成完整配置，再替换订阅”。新模式是“先在客户端侧解决订阅问题，再引用仓库发行的策略模块”。
+
+这次重构同时带来这些变化：
+
+- 不再公开维护占位订阅模板或私有示例配置。
+- 旧 `shared/*` 定义已被统一策略模型替代。
+- 新的公开接口从“配置文件路径”改为 `dist/` 下的模块化远程产物路径。
+
+如果你仍在使用旧文件，应尽快迁移到新的 `dist/` 入口。
+
+## 目录
+
+```text
+policy/         # 统一策略模型与模块定义
+dist/           # 构建产物：模块索引 + 客户端入口
+scripts/        # 构建脚本与历史辅助脚本
+mihomo/ruleset/ # 少量需要由仓库托管的规则集
+rules/          # 小型补充列表
 ```
 
-可得到 `mihomo/mihomo-private.yaml`、`surge/surge-private.conf`（默认已在 [.gitignore](.gitignore) 中忽略）。
-
----
-
-## 规则集一览（Blackmatrix7 + 本仓 Cursor）
-
-与 `shared/rulesets.js` 一致，主要包括：
-
-Advertising，OpenAI，Claude，Anthropic，Gemini，Copilot，**Cursor（本仓托管）**，YouTube，Netflix，Spotify，TikTok，GlobalMedia，GitHub，Npmjs / Docker / Python / GitLab，Scholar / Wikipedia / Stackexchange，Google，Telegram，Discord，Twitter，Microsoft，Apple，Steam，Epic，ChinaMax（域名），ChinaMedia，Lan。
-
----
-
-## Clash Party
-
-导入机场订阅后，将覆写脚本指向 [mihomo/overwrite.js](mihomo/overwrite.js)。覆写会按节点名正则挂地区组、注入业务组与 BM7 `rule-providers` 及规则顺序。对外分享时只引用本仓库脚本地址即可，勿公开个人订阅链接。
-
----
-
-## Clash Mi
-
-1. 以 [mihomo/mihomo-public.yaml](mihomo/mihomo-public.yaml) 为入口模板。  
-2. 复制 [mihomo/mihomo-private.example.yaml](mihomo/mihomo-private.example.yaml) 为本地 `mihomo/mihomo-private.yaml`（或他名），将 `__MIHOMO_SUBSCRIPTION_URL__` 换成你的订阅。  
-3. 仅在本地或私有环境保存该文件并导入客户端。
-
-多数机场返回 **Base64** 订阅体；Mihomo `type: http` 的 `proxy-providers` 会按标准订阅解析，模板侧无需额外解码。若商要求特定 `User-Agent` 或 `Cookie`，在私有 yaml 里为对应 `proxy-providers` 增加 `header` 等即可。
-
----
-
-## Surge
-
-入口：[surge/surge-public.conf](surge/surge-public.conf)，占位符 `__SURGE_POLICY_PATH__`。完整示例流程见 [surge/surge-private.example.conf](surge/surge-private.example.conf)。
-
-- **已有 Surge 策略列表 URL 或本地路径**：在私有副本中替换占位符后导入。  
-- **仅有与 Mihomo 类似的 Base64 订阅且主要为 `anytls://`**：在本机执行（输出文件勿提交）：
-
-```bash
-node scripts/airport-subscribe-to-surge-policy-list.js --url 'https://…' > surge/airport-surge-policies.txt
-node scripts/surge-inject-policy-path.js --absolute surge/airport-surge-policies.txt < surge/surge-public.conf > surge/surge-private.local.conf
-```
-
-脚本默认浏览器 UA；`--user-agent-clash` 仅在你会自行处理 YAML→Surge 时使用。订阅里常见的「剩余流量 / 重置 / 到期」等信息行会被跳过，以免节点名含全角标点或空格导致 Surge 报无效节点；若要保留可加 `--keep-noise`。含 `ss://` / `vmess://` 等需 subconverter 或自行扩展脚本。Surge AnyTLS 版本要求见脚本注释与 [Surge 手册](https://manual.nssurge.com/policy/proxy.html)。
-
-**与 Mihomo 的差异**：`policy-path` 需要 **Surge 语法策略列表**，不能直接把常见 Clash Base64 订阅 URL 当作 `policy-path`。
-
-**其它取得策略列表的方式**（与上脚本二选一或组合即可）：
-
-- **[BoxJs](https://docs.boxjs.app/)**：Surge / QX 等环境下的脚本面板；订阅转换常仍依赖 Sub-Converter 或机场导出 Surge，再把得到的文件或 URL 用作 `policy-path`。
-- **[subconverter](https://github.com/tindy2013/subconverter)** 或可信的在线转换前端：多协议订阅 → Surge 格式；注意勿向不可信站点提交含 token 的订阅。
-- **Surge 说明**：[使用来自代理服务商的线路](https://kb.nssurge.com/surge-knowledge-base/zh/guidelines/proxy-provider)（`policy-path` 与外置策略）。
-
-**`[Proxy]` + 远程 `#!include`（Surge Mac 6.0.0+）**：[Profile 手册 · Linked Profiles](https://manual.nssurge.com/overview/configuration.html) 允许在 `[Proxy]`（以及 `[Rule]` 等段落）内写 `#!include https://…`，由客户端拉取远程「托管/链接」片段并随上游更新。远端内容必须是 **Surge 合法配置**；按配置分离约定，被拉取的文件里通常仍需带对应 `[Proxy]` 段（或完整 profile 中的多段），而不是未转换的原始订阅体。与本仓库默认模板 **「不写 `[Proxy]`、节点全部来自 `policy-path`」** 是不同路线：若改用远程 `[Proxy]` include，请在 `[Proxy Group]` / `[Rule]` 里引用该段中定义的**节点名**（或配套上游提供的分组），并避免与同 profile 里另一套 `policy-path` 节点来源重复、混用导致难排查。含 token 的 URL 等同凭据，勿写入本仓库或公开 gist。
-
-**Proxy Group 结构**：默认是「单份 `policy-path` + 按节点名正则分地区的 `url-test` + 业务 select」。若要减少地区组、多订阅多 `policy-path`、或只保留极简 select，请改 `shared/regions.js` / `shared/groups.js` 后重新 `node scripts/build.js`，或用 `#!include` 本地覆写；详见项目内 `.claude/skills/surge-rules-workflow/SKILL.md`。
-
-Surge 应用里的 **「关联配置副本」** 是客户端对配置片段的管理方式，**不是**本仓库用脚本生成的 `#!include` 配置分离；二者不要混称。本仓库仍用 `surge-public.conf`（或注入后的 `surge-private.local.conf`）即可。若要把某段拆到单独文件，属于 Surge 的 [配置分离](https://kb.nssurge.com/surge-knowledge-base/zh/guidelines/detached-profile)，需自行在 Surge 或编辑器里操作，**无专用生成脚本**。
-
-**模板内可选能力**（详见生成文件内注释）：`enhanced-mode-by-rule`、Smart / `url-test` 与 `#!REQUIREMENT`、`[Host]` 示例、`external-controller` 示例、[surge-local-overrides.example.conf](surge/surge-local-overrides.example.conf) 的 `#!include` 叠规则。
-
----
-
-## 本地与私有文件
-
-订阅、本地策略列表、`*.local.*`、`.env*`、客户端下载的 `mihomo/ruleset/*`（除已提交的 Cursor 文件）等见 [.gitignore](.gitignore)。修改 `shared/` 后请重新执行 `node scripts/build.js`。
-
----
-
-## 可选扩展（未承诺排期）
-
-- 更细的地区优先级或正则策略  
-- 额外国内 / 自定义规则集接入方式  
-- Surge Module 形态交付  
-
-若你改进本仓库，欢迎通过 Issue / PR 交流；也欢迎直接 Fork 按 `RULES_GITHUB_REPO` 与本地副本定制。
+`scripts/` 现在只保留构建链本身，不再维护旧的订阅转换与占位注入流程。
