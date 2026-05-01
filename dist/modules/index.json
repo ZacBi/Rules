@@ -808,8 +808,8 @@
       "domain": "ai",
       "title": "assistant-panel",
       "emitByDefault": false,
-      "sourceMode": "remote",
-      "sourceUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/openai/openai-panel.js",
+      "sourceMode": "unresolved",
+      "sourceUrl": null,
       "supportedClients": [
         "stash",
         "mihomo",
@@ -817,13 +817,13 @@
       ],
       "support": {
         "supportLevel": {
-          "stash": "full",
-          "surge": "full",
+          "stash": "partial",
+          "surge": "partial",
           "mihomo": "unsupported"
         },
         "notes": {
-          "stash": "Use through Stash script runtime or Script Hub.",
-          "surge": "Use through Surge script runtime.",
+          "stash": "Metadata only until a maintained upstream script URL is selected.",
+          "surge": "Metadata only until a maintained upstream script URL is selected.",
           "mihomo": "No equivalent cross-client script runtime is emitted by override.js."
         }
       },
@@ -831,25 +831,7 @@
         "scenario.ai"
       ],
       "conflicts": [],
-      "render": {
-        "stashScript": {
-          "name": "assistant-panel",
-          "type": "response",
-          "match": "^https://(chatgpt|api\\.openai)\\.com/.*",
-          "requireBody": false,
-          "timeout": 5,
-          "argument": "",
-          "binaryMode": false,
-          "maxSize": 1048576,
-          "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/openai/openai-panel.js"
-        },
-        "surgeScript": {
-          "name": "assistant-panel",
-          "type": "http-response",
-          "pattern": "^https://(chatgpt|api\\.openai)\\.com/.*",
-          "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/openai/openai-panel.js"
-        }
-      },
+      "render": {},
       "ui": {
         "title": "AI assistant panel",
         "surface": "script",
@@ -899,6 +881,124 @@
         "defaultEnabled": false,
         "iosPerformanceCost": "low",
         "performanceNote": "Disabled until a path-preserving cleaner is available; broad redirects can break pages."
+      }
+    },
+    {
+      "id": "runtime.app.upgrade-check",
+      "kind": "rewrite",
+      "domain": "utility",
+      "title": "app-upgrade-check-block",
+      "emitByDefault": true,
+      "sourceMode": "remote-derived",
+      "sourceUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rewrite/Stash/Upgrade/Upgrade.stoverride",
+      "supportedClients": [
+        "stash"
+      ],
+      "support": {
+        "supportLevel": {
+          "stash": "full",
+          "surge": "unsupported",
+          "mihomo": "unsupported"
+        },
+        "notes": {
+          "stash": "Derived from blackmatrix7 ios_rule_script Stash Upgrade rewrite.",
+          "surge": "Use the upstream Surge module directly if needed.",
+          "mihomo": "No equivalent runtime rewrite is emitted by override.js."
+        }
+      },
+      "dependencies": [
+        "base.core"
+      ],
+      "conflicts": [],
+      "render": {
+        "stashRewrite": [
+          "^https?:\\/\\/api\\.ishansong\\.com\\/app\\/check\\/v\\d+\\/check - reject",
+          "^https?:\\/\\/api\\.m\\.jd\\.com\\/openUpgrade - reject",
+          "^https?:\\/\\/apimobile\\.meituan\\.com\\/appupdate\\/mach\\/checkUpdate? - reject",
+          "^https?:\\/\\/apprn\\.pizzahut\\.com\\.cn\\/updateCheck\\? - reject",
+          "^https?:\\/\\/capis(-?\\w*)?\\.didapinche\\.com\\/publish\\/api\\/upgrade - reject",
+          "^https?:\\/\\/ccsp-egmas\\.sf-express\\.com\\/cx-app-base\\/base\\/app\\/appVersion\\/detectionUpgrade - reject",
+          "^https?:\\/\\/fmapp\\.chinafamilymart\\.com\\.cn\\/api\\/app\\/biz\\/base\\/appversion\\/latest - reject",
+          "^https?:\\/\\/m\\.client\\.10010\\.com\\/mobileService\\/(activity|customer)\\/(accountListData|get_client_adv|get_startadv) - reject",
+          "^https?:\\/\\/sso\\.lxjapp\\.com\\/\\/chims\\/servlet\\/csGetLatestSoftwareVersionServlet - reject",
+          "^https?:\\/\\/www\\.meituan\\.com\\/api\\/v\\d\\/appstatus\\? - reject"
+        ],
+        "hostnames": [
+          "api.ishansong.com",
+          "api.m.jd.com",
+          "apimobile.meituan.com",
+          "apprn.pizzahut.com.cn",
+          "capis*.didapinche.com",
+          "ccsp-egmas.sf-express.com",
+          "fmapp.chinafamilymart.com.cn",
+          "m.client.10010.com",
+          "sso.lxjapp.com",
+          "www.meituan.com"
+        ]
+      },
+      "ui": {
+        "title": "Block common app upgrade checks",
+        "surface": "rewrite",
+        "defaultState": "enabled",
+        "riskLevel": "medium",
+        "requiresMitm": true,
+        "defaultEnabled": true,
+        "iosPerformanceCost": "low",
+        "performanceNote": "Small Stash rewrite subset derived from upstream; HTTPS matches require MITM hosts."
+      }
+    },
+    {
+      "id": "runtime.apple.testflight-download",
+      "kind": "script",
+      "domain": "apple",
+      "title": "testflight-download-fix",
+      "emitByDefault": true,
+      "sourceMode": "remote",
+      "sourceUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/external/Stash/TestFlight/TestFlight.stoverride",
+      "supportedClients": [
+        "stash"
+      ],
+      "support": {
+        "supportLevel": {
+          "stash": "full",
+          "surge": "unsupported",
+          "mihomo": "unsupported"
+        },
+        "notes": {
+          "stash": "Uses the script provider URL from blackmatrix7 ios_rule_script external Stash TestFlight.",
+          "surge": "Use the upstream Surge module directly if needed.",
+          "mihomo": "No equivalent runtime script is emitted by override.js."
+        }
+      },
+      "dependencies": [
+        "scenario.vendor"
+      ],
+      "conflicts": [],
+      "render": {
+        "stashScript": {
+          "name": "testflight-download-fix",
+          "type": "request",
+          "match": "^https?:\\/\\/testflight\\.apple\\.com\\/v\\d\\/accounts\\/.+?\\/install$",
+          "requireBody": true,
+          "timeout": 30,
+          "argument": "",
+          "binaryMode": false,
+          "maxSize": 1048576,
+          "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/source/javascript/043922e05c79445b6da818d0864c1b7d.js"
+        },
+        "hostnames": [
+          "testflight.apple.com"
+        ]
+      },
+      "ui": {
+        "title": "TestFlight download fix",
+        "surface": "script",
+        "defaultState": "enabled",
+        "riskLevel": "medium",
+        "requiresMitm": true,
+        "defaultEnabled": true,
+        "iosPerformanceCost": "medium",
+        "performanceNote": "Requires request body and MITM only for TestFlight install requests."
       }
     },
     {

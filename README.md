@@ -91,13 +91,14 @@ Stash 入口默认按 iOS 交互优化：
 - 策略组优先展示“手动节点、自动优选、业务场景”，地区组放在后面作为细分选择。
 - 每个策略组都带图标，方便在 Stash 的策略组页面快速识别。
 - 节点筛选会过滤剩余流量、到期、官网、订阅等信息行，减少无效策略项。
-- rewrite/script/MITM 默认不注入；需要时通过运行时模块元数据自行开启。
+- 默认只注入少量常见 HTTP 改写和脚本，来源使用受欢迎的开源上游，不在本仓库自写脚本。
+- 当前内置 Stash 运行时能力包括 APP 更新检查屏蔽和 TestFlight 下载修正；更重的广告复写、解锁或私有脚本仍建议单独在 Stash / Script Hub 中按需导入。
 
-可选运行时能力只保留在 `dist/modules/index.json` 的元数据里：
+可选运行时能力仍会保留在 `dist/modules/index.json` 的元数据里：
 
-- 主入口 `stash.stoverride` 不生成 script/MITM 段，避免默认引入脚本、证书解密和额外 HTTP 匹配成本。
-- 脚本元数据标注 `require-body: false`、`max-size` 等性能约束，供私有侧按需消费。
-- MITM 主机按模块拆分记录，只在私有侧明确需要调试对应服务时使用。
+- 主入口 `stash.stoverride` 只生成低数量、低风险的 `http.rewrite`、`http.script` 和对应 `http.mitm` 主机。
+- 脚本元数据标注 `require-body`、`max-size` 等性能约束，默认不内联 payload。
+- MITM 主机按实际启用模块拆分记录，只覆盖对应上游规则需要的域名。
 - 旧的 tracking 参数 rewrite 不再输出；宽泛 302 改写容易丢路径或查询参数，后续如需启用应在私有侧改成路径保持的脚本实现。
 
 ### Mihomo / Clash Party
@@ -153,16 +154,20 @@ Stash 入口默认按 iOS 交互优化：
 - `Partial`：本仓库保留统一模型和元数据，但不会在该客户端入口里生成完整等价能力。
 - `Unsupported`：本仓库只在索引和文档里声明，不伪造产物。
 
-当前内置的运行时模块以常见场景为主，但默认 `emitByDefault=false`，只保留在 `dist/modules/index.json` 元数据里：
+当前内置的运行时模块以常见场景为主：
 
 - `assistant-panel`
-  面向 AI 场景的脚本模块，Stash / Surge 可按需消费。
+  面向 AI 场景的脚本模块，当前未绑定可用上游脚本 URL，不默认下发。
 - `reject-tracking`
   仅保留风险元数据，不再渲染；宽泛 302 改写容易破坏页面状态。
+- `app-upgrade-check-block`
+  引用 `blackmatrix7/ios_rule_script` 的 Stash APP 更新检查屏蔽复写子集，默认下发。
+- `testflight-download-fix`
+  引用 `blackmatrix7/ios_rule_script` 的 TestFlight 下载修正脚本，默认下发。
 - `openai-tls-hosts`、`anthropic-tls-hosts`、`githubusercontent-tls-hosts`
-  拆分后的 MITM 主机集合，供 Stash / Surge 私有入口按需渲染。
+  拆分后的 MITM 主机集合，仅保留元数据，供私有入口按需渲染。
 
-默认公开入口不下发 rewrite/script/MITM，避免通用策略包影响页面行为、触发证书解密或增加运行时开销。`Mihomo / Clash` 的入口目前会显式暴露运行时能力降级信息，但不会伪造脚本或 MITM 段，避免形成“看起来支持、实际上不可用”的假象。
+默认公开入口只下发小规模 Stash rewrite/script/MITM，避免通用策略包过重。`Mihomo / Clash` 的入口目前会显式暴露运行时能力降级信息，但不会伪造脚本或 MITM 段，避免形成“看起来支持、实际上不可用”的假象。
 
 ## 构建
 

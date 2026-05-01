@@ -12,6 +12,6 @@
 - After editing `policy/catalog.js`, `policy/renderers.js`, `policy/index.js`, or related policy sources, run `node scripts/build.js` to regenerate `dist/modules/index.json`, `dist/stash/stash.stoverride`, `dist/mihomo/override.js`, and `dist/surge/module.sgmodule`.
 - Surge `policy-path` must reference a Surge-compatible policy list; raw Clash or YAML subscription bodies are not valid without conversion (for example via this repo’s scripts).
 - Prefer blackmatrix7 `ios_rule_script` rule sets where they cover the traffic, rather than maintaining large parallel hand-written rule lists.
-- Stash runtime script, rewrite, and MITM capabilities should remain opt-in metadata in `dist/modules/index.json` unless a real public entrypoint intentionally consumes them. The default `dist/stash/stash.stoverride` should stay script-free and MITM-free.
+- Stash runtime script, rewrite, and MITM capabilities should use mature upstream sources where possible. Keep default output small; heavier rewrite packs should remain metadata or be documented for separate import.
 - Broad Stash/Surge URL rewrite rules that redirect whole URLs should not be emitted by default; they can drop path or query state. Prefer metadata-only or a path-preserving private implementation.
 - After policy output changes, run `node --test`, `node --check` on touched policy files and generated JS, `git diff --check`, and scan added lines for secrets or private subscription material before committing.
