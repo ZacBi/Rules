@@ -6,22 +6,13 @@ log-level: info
 ipv6: false
 
 proxy-groups:
-  - name: "智能优选"
-    type: url-test
-    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png"
-    include-all: true
-    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset)).*$"
-    url: "https://www.gstatic.com/generate_204"
-    interval: 600
-    tolerance: 100
-    lazy: true
-  - name: "手动选择"
+  - name: "手动节点"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png"
     include-all: true
     filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset)).*$"
     proxies:
-      - "智能优选"
+      - "自动优选"
       - "香港"
       - "台湾"
       - "日本"
@@ -32,6 +23,129 @@ proxy-groups:
       - "马来西亚"
       - "阿根廷"
       - DIRECT
+  - name: "自动优选"
+    type: url-test
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png"
+    include-all: true
+    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset)).*$"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 600
+    tolerance: 100
+    lazy: true
+  - name: "流媒体"
+    type: select
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ForeignMedia.png"
+    proxies:
+      - "手动节点"
+      - "自动优选"
+      - "香港"
+      - "台湾"
+      - "日本"
+      - "新加坡"
+      - "美国"
+  - name: "AI 平台"
+    type: select
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/AI.png"
+    proxies:
+      - "手动节点"
+      - "自动优选"
+      - "香港"
+      - "日本"
+      - "新加坡"
+      - "美国"
+  - name: "开发工具"
+    type: select
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Lab.png"
+    proxies:
+      - "手动节点"
+      - "自动优选"
+      - "香港"
+      - "日本"
+      - "新加坡"
+      - "美国"
+      - "DIRECT"
+  - name: "学习研究"
+    type: select
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Scholar.png"
+    proxies:
+      - "手动节点"
+      - "自动优选"
+      - "香港"
+      - "台湾"
+      - "日本"
+      - "新加坡"
+      - "美国"
+      - "DIRECT"
+  - name: "即时通讯"
+    type: select
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png"
+    proxies:
+      - "手动节点"
+      - "自动优选"
+      - "香港"
+      - "台湾"
+      - "日本"
+      - "新加坡"
+      - "美国"
+  - name: "微软服务"
+    type: select
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png"
+    proxies:
+      - "DIRECT"
+      - "手动节点"
+      - "自动优选"
+      - "香港"
+      - "日本"
+      - "新加坡"
+      - "美国"
+  - name: "苹果服务"
+    type: select
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_2.png"
+    proxies:
+      - "DIRECT"
+      - "手动节点"
+      - "自动优选"
+  - name: "游戏平台"
+    type: select
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png"
+    proxies:
+      - "手动节点"
+      - "自动优选"
+      - "香港"
+      - "台湾"
+      - "日本"
+      - "新加坡"
+      - "美国"
+  - name: "全球网站"
+    type: select
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png"
+    proxies:
+      - "手动节点"
+      - "自动优选"
+      - "香港"
+      - "台湾"
+      - "日本"
+      - "新加坡"
+      - "美国"
+  - name: "国内直连"
+    type: select
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Domestic.png"
+    proxies:
+      - "DIRECT"
+      - "手动节点"
+  - name: "广告拦截"
+    type: select
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png"
+    proxies:
+      - "REJECT"
+      - "DIRECT"
+  - name: "默认出口"
+    type: select
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png"
+    proxies:
+      - "手动节点"
+      - "自动优选"
+      - "DIRECT"
   - name: "香港"
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png"
@@ -113,120 +227,6 @@ proxy-groups:
     interval: 600
     tolerance: 100
     lazy: true
-  - name: "国外媒体"
-    type: select
-    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ForeignMedia.png"
-    proxies:
-      - "手动选择"
-      - "智能优选"
-      - "香港"
-      - "台湾"
-      - "日本"
-      - "新加坡"
-      - "美国"
-  - name: "AI平台"
-    type: select
-    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/AI.png"
-    proxies:
-      - "手动选择"
-      - "智能优选"
-      - "香港"
-      - "日本"
-      - "新加坡"
-      - "美国"
-  - name: "开发工具"
-    type: select
-    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Lab.png"
-    proxies:
-      - "手动选择"
-      - "智能优选"
-      - "香港"
-      - "日本"
-      - "新加坡"
-      - "美国"
-      - "DIRECT"
-  - name: "学习研究"
-    type: select
-    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Scholar.png"
-    proxies:
-      - "手动选择"
-      - "智能优选"
-      - "香港"
-      - "台湾"
-      - "日本"
-      - "新加坡"
-      - "美国"
-      - "DIRECT"
-  - name: "即时通讯"
-    type: select
-    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png"
-    proxies:
-      - "手动选择"
-      - "智能优选"
-      - "香港"
-      - "台湾"
-      - "日本"
-      - "新加坡"
-      - "美国"
-  - name: "微软服务"
-    type: select
-    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png"
-    proxies:
-      - "DIRECT"
-      - "手动选择"
-      - "智能优选"
-      - "香港"
-      - "日本"
-      - "新加坡"
-      - "美国"
-  - name: "苹果服务"
-    type: select
-    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_2.png"
-    proxies:
-      - "DIRECT"
-      - "手动选择"
-      - "智能优选"
-  - name: "游戏平台"
-    type: select
-    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png"
-    proxies:
-      - "手动选择"
-      - "智能优选"
-      - "香港"
-      - "台湾"
-      - "日本"
-      - "新加坡"
-      - "美国"
-  - name: "国外网站"
-    type: select
-    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png"
-    proxies:
-      - "手动选择"
-      - "智能优选"
-      - "香港"
-      - "台湾"
-      - "日本"
-      - "新加坡"
-      - "美国"
-  - name: "国内网站"
-    type: select
-    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Domestic.png"
-    proxies:
-      - "DIRECT"
-      - "手动选择"
-  - name: "广告拦截"
-    type: select
-    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png"
-    proxies:
-      - "REJECT"
-      - "DIRECT"
-  - name: "漏网之鱼"
-    type: select
-    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png"
-    proxies:
-      - "手动选择"
-      - "智能优选"
-      - "DIRECT"
 
 rule-providers:
   advertising:
@@ -416,19 +416,19 @@ rules:
   - "IP-CIDR,127.0.0.0/8,DIRECT,no-resolve"
   - "IP-CIDR6,::1/128,DIRECT,no-resolve"
   - "RULE-SET,advertising,广告拦截"
-  - "RULE-SET,lan,国内网站"
-  - "RULE-SET,china,国内网站"
-  - "RULE-SET,chinamedia,国内网站"
-  - "RULE-SET,openai,AI平台"
-  - "RULE-SET,claude,AI平台"
-  - "RULE-SET,anthropic,AI平台"
-  - "RULE-SET,gemini,AI平台"
-  - "RULE-SET,copilot,AI平台"
-  - "RULE-SET,youtube,国外媒体"
-  - "RULE-SET,netflix,国外媒体"
-  - "RULE-SET,spotify,国外媒体"
-  - "RULE-SET,tiktok,国外媒体"
-  - "RULE-SET,globalmedia,国外媒体"
+  - "RULE-SET,lan,国内直连"
+  - "RULE-SET,china,国内直连"
+  - "RULE-SET,chinamedia,国内直连"
+  - "RULE-SET,openai,AI 平台"
+  - "RULE-SET,claude,AI 平台"
+  - "RULE-SET,anthropic,AI 平台"
+  - "RULE-SET,gemini,AI 平台"
+  - "RULE-SET,copilot,AI 平台"
+  - "RULE-SET,youtube,流媒体"
+  - "RULE-SET,netflix,流媒体"
+  - "RULE-SET,spotify,流媒体"
+  - "RULE-SET,tiktok,流媒体"
+  - "RULE-SET,globalmedia,流媒体"
   - "RULE-SET,github,开发工具"
   - "RULE-SET,npmjs,开发工具"
   - "RULE-SET,docker,开发工具"
@@ -437,12 +437,12 @@ rules:
   - "RULE-SET,scholar,学习研究"
   - "RULE-SET,wikipedia,学习研究"
   - "RULE-SET,stackexchange,学习研究"
-  - "RULE-SET,google,国外网站"
+  - "RULE-SET,google,全球网站"
   - "RULE-SET,telegram,即时通讯"
   - "RULE-SET,discord,即时通讯"
-  - "RULE-SET,twitter,国外网站"
+  - "RULE-SET,twitter,全球网站"
   - "RULE-SET,microsoft,微软服务"
   - "RULE-SET,apple,苹果服务"
   - "RULE-SET,steam,游戏平台"
   - "RULE-SET,epic,游戏平台"
-  - "MATCH,漏网之鱼"
+  - "MATCH,默认出口"

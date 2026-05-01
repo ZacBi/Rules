@@ -437,6 +437,10 @@ const runtimeModules = [
     render: {
       stashScript: {
         name: "assistant-panel",
+        type: "response",
+        match: "^https://(chatgpt|api\\.openai)\\.com/.*",
+        requireBody: false,
+        timeout: 5,
         url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/openai/openai-panel.js",
       },
       surgeScript: {
@@ -445,6 +449,12 @@ const runtimeModules = [
         pattern: "^https://(chatgpt|api\\.openai)\\.com/.*",
         url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/openai/openai-panel.js",
       },
+    },
+    ui: {
+      title: "AI assistant panel",
+      surface: "script",
+      defaultState: "opt-in",
+      performanceNote: "Requires HTTP script runtime; keep disabled unless the panel is needed.",
     },
   },
   {
@@ -473,6 +483,12 @@ const runtimeModules = [
       stashRewrite: "^https?:\\/\\/([^/]+)\\/.*[?&](utm_(source|medium|campaign)|spm)=.*$ 302 https://$1/",
       surgeRewrite: "^https?:\\/\\/([^/]+)\\/.*[?&](utm_(source|medium|campaign)|spm)=.*$ 302 https://$1/",
     },
+    ui: {
+      title: "Tracking parameter cleanup",
+      surface: "rewrite",
+      defaultState: "opt-in",
+      performanceNote: "Native rewrite is cheap, but broad URL patterns still affect matching cost.",
+    },
   },
   {
     id: "runtime.core.mitm",
@@ -498,6 +514,12 @@ const runtimeModules = [
     conflicts: [],
     render: {
       hostnames: ["*.openai.com", "*.anthropic.com", "*.githubusercontent.com"],
+    },
+    ui: {
+      title: "Selective TLS inspection hosts",
+      surface: "mitm",
+      defaultState: "opt-in",
+      performanceNote: "MITM changes TLS handling; only enable for explicitly trusted troubleshooting flows.",
     },
   },
 ];
