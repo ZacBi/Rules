@@ -1158,6 +1158,53 @@
       }
     },
     {
+      "id": "runtime.google.no-country-redirect",
+      "kind": "rewrite",
+      "domain": "google",
+      "title": "google-no-country-redirect",
+      "emitByDefault": true,
+      "sourceMode": "local",
+      "sourceUrl": "https://stash.wiki/http-engine/rewrite",
+      "supportedClients": [
+        "stash"
+      ],
+      "support": {
+        "supportLevel": {
+          "stash": "full",
+          "surge": "unsupported",
+          "mihomo": "unsupported"
+        },
+        "notes": {
+          "stash": "Keeps Google Hong Kong entry URLs on google.com without changing DNS or routing policy.",
+          "surge": "Use a client-side URL rewrite module if needed.",
+          "mihomo": "No equivalent runtime rewrite is emitted by override.js."
+        }
+      },
+      "dependencies": [
+        "scenario.web"
+      ],
+      "conflicts": [],
+      "render": {
+        "stashRewrite": [
+          "^https?:\\/\\/www\\.google\\.com\\.hk\\/?$ https://www.google.com/ncr 302",
+          "^https?:\\/\\/www\\.google\\.com\\.hk\\/(.*) https://www.google.com/$1 302"
+        ],
+        "hostnames": [
+          "www.google.com.hk"
+        ]
+      },
+      "ui": {
+        "title": "Google no country redirect",
+        "surface": "rewrite",
+        "defaultState": "enabled",
+        "riskLevel": "medium",
+        "requiresMitm": true,
+        "defaultEnabled": true,
+        "iosPerformanceCost": "low",
+        "performanceNote": "Narrow redirect for Google Hong Kong URLs; HTTPS matching requires MITM for www.google.com.hk."
+      }
+    },
+    {
       "id": "runtime.apple.testflight-download",
       "kind": "script",
       "domain": "apple",
