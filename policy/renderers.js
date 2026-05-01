@@ -4,14 +4,6 @@ function uniq(items) {
   return [...new Set((items || []).filter(Boolean))];
 }
 
-function indentBlock(text, spaces) {
-  const pad = " ".repeat(spaces);
-  return text
-    .split("\n")
-    .map((line) => (line.length ? `${pad}${line}` : line))
-    .join("\n");
-}
-
 function yamlScalar(value) {
   if (typeof value === "number" || typeof value === "boolean") {
     return String(value);
@@ -34,14 +26,18 @@ function renderRuleProviderBlock(ruleSet) {
   ].join("\n");
 }
 
-function runtimeModulesByKind(index, kind) {
-  return (index.runtimeModules || []).filter((module) => module.kind === kind);
+function runtimeModulesByKind(index, kind, options = {}) {
+  return (index.runtimeModules || [])
+    .filter((module) => module.kind === kind)
+    .filter((module) => !options.defaultOnly || module.emitByDefault !== false);
 }
 
 const QURE_ICON_BASE_URL = "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color";
+const NOISE_POLICY_PATTERN = "剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset";
+const RESERVED_POLICY_PATTERN = "自动选择|节点选择|DIRECT|REJECT";
 const STASH_DISPLAY_NAME_BY_GROUP = {
-  自动选择: "智能优选",
-  节点选择: "手动选择",
+  自动选择: "自动优选",
+  节点选择: "手动节点",
   香港节点: "香港",
   台湾节点: "台湾",
   日本节点: "日本",
@@ -51,18 +47,18 @@ const STASH_DISPLAY_NAME_BY_GROUP = {
   澳洲节点: "澳洲",
   马来西亚节点: "马来西亚",
   阿根廷节点: "阿根廷",
-  国外媒体: "国外媒体",
-  AI平台: "AI平台",
+  国外媒体: "流媒体",
+  AI平台: "AI 平台",
   开发工具与镜像: "开发工具",
   学习与研究: "学习研究",
   即时通讯: "即时通讯",
   微软服务: "微软服务",
   苹果服务: "苹果服务",
   游戏平台: "游戏平台",
-  国外网站: "国外网站",
-  国内网站: "国内网站",
+  国外网站: "全球网站",
+  国内网站: "国内直连",
   广告拦截: "广告拦截",
-  漏网之鱼: "漏网之鱼",
+  漏网之鱼: "默认出口",
 };
 const STASH_ICON_FILENAME_BY_GROUP = {
   自动选择: "Speedtest.png",
@@ -102,6 +98,25 @@ function stashGroupIcon(name) {
   return fileName ? `${QURE_ICON_BASE_URL}/${fileName}` : null;
 }
 
+function stashPolicyFilter(match = null) {
+  const clauses = [`(?!.*(${NOISE_POLICY_PATTERN}))`];
+  if (match) {
+    clauses.push(`(?=.*(${match}))`);
+  }
+  return `(?i)^${clauses.join("")}.*$`;
+}
+
+function surgePolicyFilter(match = null) {
+  const clauses = [
+    `(?!(?:${RESERVED_POLICY_PATTERN})$)`,
+    `(?!.*(?:${NOISE_POLICY_PATTERN}))`,
+  ];
+  if (match) {
+    clauses.push(`(?=.*(?:${match}))`);
+  }
+  return `^${clauses.join("")}.*$`;
+}
+
 function renderStashGroupHeader(name, type) {
   const lines = [
     `  - name: ${yamlScalar(toStashGroupName(name))}`,
@@ -114,56 +129,129 @@ function renderStashGroupHeader(name, type) {
   return lines;
 }
 
-function renderStashEntry(index) {
+function renderStashAutoGroup(index) {
   const healthCheck = index.defaultHealthCheck;
-  const rewriteModules = runtimeModulesByKind(index, "rewrite")
+  return [
+    ...renderStashGroupHeader("自动选择", "url-test"),
+    "    include-all: true",
+    `    filter: ${yamlScalar(stashPolicyFilter())}`,
+    `    url: ${yamlScalar(healthCheck.url)}`,
+    `    interval: ${healthCheck.interval}`,
+    `    tolerance: ${healthCheck.tolerance}`,
+    "    lazy: true",
+  ].join("\n");
+}
+
+function renderStashSelectGroup(index) {
+  const stashRuleGroupName = (name) => yamlScalar(toStashGroupName(name));
+  return [
+    ...renderStashGroupHeader("节点选择", "select"),
+    "    include-all: true",
+    `    filter: ${yamlScalar(stashPolicyFilter())}`,
+    "    proxies:",
+    `      - ${stashRuleGroupName("自动选择")}`,
+    ...index.regions.map((region) => `      - ${yamlScalar(toStashGroupName(region.groupName))}`),
+    "      - DIRECT",
+  ].join("\n");
+}
+
+function renderStashRegionGroup(index, region) {
+  const healthCheck = index.defaultHealthCheck;
+  return [
+    ...renderStashGroupHeader(region.groupName, "url-test"),
+    "    include-all: true",
+    `    filter: ${yamlScalar(stashPolicyFilter(region.match))}`,
+    `    url: ${yamlScalar(healthCheck.url)}`,
+    `    interval: ${healthCheck.interval}`,
+    `    tolerance: ${healthCheck.tolerance}`,
+    "    lazy: true",
+  ].join("\n");
+}
+
+function renderStashBusinessGroup(group) {
+  return [
+    ...renderStashGroupHeader(group.name, "select"),
+    "    proxies:",
+    ...uniq(group.proxies).map((proxy) => `      - ${yamlScalar(toStashGroupName(proxy))}`),
+  ].join("\n");
+}
+
+function renderStashHttpRuntimeBlocks(rewriteModules, scriptModules) {
+  const lines = [];
+
+  if (!rewriteModules.length && !scriptModules.length) {
+    return lines;
+  }
+
+  lines.push("", "http:");
+
+  if (rewriteModules.length) {
+    lines.push(
+      "  url-rewrite:",
+      ...rewriteModules.flatMap((rewrite) => [
+        `    # ${rewrite.title}`,
+        `    - ${yamlScalar(rewrite.line)}`,
+      ])
+    );
+  }
+
+  if (scriptModules.length) {
+    lines.push(
+      "  script:",
+      ...scriptModules.flatMap((script) => [
+        "    - " + `match: ${yamlScalar(script.match)}`,
+        `      name: ${yamlScalar(script.name)}`,
+        `      type: ${script.type}`,
+        `      require-body: ${Boolean(script.requireBody)}`,
+        `      timeout: ${script.timeout || 5}`,
+      ])
+    );
+  }
+
+  if (scriptModules.length) {
+    lines.push(
+      "",
+      "script-providers:",
+      ...scriptModules.flatMap((script) => [
+        `  ${script.name}:`,
+        `    url: ${yamlScalar(script.url)}`,
+        "    interval: 86400",
+      ])
+    );
+  }
+
+  return lines;
+}
+
+function renderStashEntry(index) {
+  const rewriteModules = runtimeModulesByKind(index, "rewrite", { defaultOnly: true })
     .map((module) =>
       module.render && module.render.stashRewrite
         ? { title: module.title, line: module.render.stashRewrite }
         : null
     )
     .filter(Boolean);
-  const scriptModules = runtimeModulesByKind(index, "script")
+  const scriptModules = runtimeModulesByKind(index, "script", { defaultOnly: true })
     .map((module) => module.render && module.render.stashScript)
     .filter(Boolean);
   const mitmHostnames = uniq(
-    runtimeModulesByKind(index, "mitm")
+    runtimeModulesByKind(index, "mitm", { defaultOnly: true })
       .flatMap((module) => (module.render && module.render.hostnames) || [])
       .filter(Boolean)
   );
-  const stashRuleGroupName = (name) => yamlScalar(toStashGroupName(name));
   const lines = [
     "# Generated from the unified strategy model",
     "mixed-port: 7890",
     "allow-lan: false",
     "mode: rule",
     "log-level: info",
-    "ipv6: true",
+    "ipv6: false",
     "",
     "proxy-groups:",
-    ...renderStashGroupHeader("自动选择", "url-test"),
-    "    include-all: true",
-    `    url: ${yamlScalar(healthCheck.url)}`,
-    `    interval: ${healthCheck.interval}`,
-    "    lazy: true",
-    ...renderStashGroupHeader("节点选择", "select"),
-    "    proxies:",
-    `      - ${stashRuleGroupName("自动选择")}`,
-    ...index.regions.map((region) => `      - ${yamlScalar(toStashGroupName(region.groupName))}`),
-    "      - DIRECT",
-    ...index.regions.map((region) => [
-      ...renderStashGroupHeader(region.groupName, "url-test"),
-      "    include-all: true",
-      `    filter: ${yamlScalar(`(?i)(${region.match})`)}`,
-      `    url: ${yamlScalar(healthCheck.url)}`,
-      `    interval: ${healthCheck.interval}`,
-      "    lazy: true",
-    ].join("\n")),
-    ...index.businessGroups.map((group) => [
-      ...renderStashGroupHeader(group.name, "select"),
-      "    proxies:",
-      ...uniq(group.proxies).map((proxy) => `      - ${yamlScalar(toStashGroupName(proxy))}`),
-    ].join("\n")),
+    renderStashSelectGroup(index),
+    renderStashAutoGroup(index),
+    ...index.businessGroups.map((group) => renderStashBusinessGroup(group)),
+    ...index.regions.map((region) => renderStashRegionGroup(index, region)),
     "",
     "rule-providers:",
     ...index.ruleSets.map((ruleSet) => renderRuleProviderBlock(ruleSet)),
@@ -172,31 +260,19 @@ function renderStashEntry(index) {
     ...index.inlineRules.map((rule) => `  - ${yamlScalar(rule)}`),
     ...index.ruleSets.map((ruleSet) => `  - ${yamlScalar(`RULE-SET,${ruleSet.id},${toStashGroupName(ruleSet.group)}`)}`),
     `  - ${yamlScalar(`MATCH,${toStashGroupName("漏网之鱼")}`)}`,
-    "",
-    "url-rewrite:",
-    ...rewriteModules.flatMap((rewrite) => [
-      `  # ${rewrite.title}`,
-      `  - ${yamlScalar(rewrite.line)}`,
-    ]),
-    "script:",
-    ...scriptModules.flatMap((script) => [
-      `  ${script.name}:`,
-      "    type: generic",
-      `    url: ${yamlScalar(script.url)}`,
-      "    interval: 86400",
-    ]),
-    "  runtime-support:",
-    "    type: generic",
-    "    script: |",
-    indentBlock(
-      `const runtimeSupport = ${JSON.stringify(index.runtimeSupportMatrix, null, 2)};\nmodule.exports = runtimeSupport;`,
-      6
-    ),
-    "mitm:",
-    "  enabled: true",
-    "  hostnames:",
-    ...mitmHostnames.map((hostname) => `    - ${yamlScalar(hostname)}`),
   ];
+
+  lines.push(...renderStashHttpRuntimeBlocks(rewriteModules, scriptModules));
+
+  if (mitmHostnames.length) {
+    lines.push(
+      "",
+      "mitm:",
+      "  enabled: true",
+      "  hostnames:",
+      ...mitmHostnames.map((hostname) => `    - ${yamlScalar(hostname)}`)
+    );
+  }
 
   return lines.join("\n");
 }
@@ -314,19 +390,19 @@ function renderMihomoEntry(index) {
 function renderSurgeEntry(index) {
   const healthCheck = index.defaultHealthCheck;
   const regionNames = index.regions.map((region) => region.groupName);
-  const allPolicyRegex = "^((?!(自动选择|节点选择|DIRECT|REJECT)).)*$";
-  const rewriteModules = runtimeModulesByKind(index, "rewrite")
+  const allPolicyRegex = surgePolicyFilter();
+  const rewriteModules = runtimeModulesByKind(index, "rewrite", { defaultOnly: true })
     .map((module) =>
       module.render && module.render.surgeRewrite
         ? { title: module.title, line: module.render.surgeRewrite }
         : null
     )
     .filter(Boolean);
-  const scriptModules = runtimeModulesByKind(index, "script")
+  const scriptModules = runtimeModulesByKind(index, "script", { defaultOnly: true })
     .map((module) => module.render && module.render.surgeScript)
     .filter(Boolean);
   const mitmHostnames = uniq(
-    runtimeModulesByKind(index, "mitm")
+    runtimeModulesByKind(index, "mitm", { defaultOnly: true })
       .flatMap((module) => (module.render && module.render.hostnames) || [])
       .filter(Boolean)
   );
@@ -337,15 +413,15 @@ function renderSurgeEntry(index) {
     "",
     "[General]",
     "loglevel = notify",
-    "ipv6 = true",
+    "ipv6 = false",
     "enhanced-mode-by-rule = true",
     "",
     "[Proxy Group]",
-    `自动选择 = url-test, policy-regex-filter='${allPolicyRegex}', url=${healthCheck.url}, interval=${healthCheck.interval}, tolerance=${healthCheck.tolerance}, timeout=5`,
-    `节点选择 = select, 自动选择, ${regionNames.join(", ")}, DIRECT`,
+    `自动选择 = url-test, include-all-proxies=true, policy-regex-filter='${allPolicyRegex}', url=${healthCheck.url}, interval=${healthCheck.interval}, tolerance=${healthCheck.tolerance}, timeout=${healthCheck.timeout}`,
+    `节点选择 = select, 自动选择, ${regionNames.join(", ")}, DIRECT, include-all-proxies=true, policy-regex-filter='${allPolicyRegex}'`,
     ...index.regions.map(
       (region) =>
-        `${region.groupName} = url-test, policy-regex-filter='${region.match}', url=${healthCheck.url}, interval=${healthCheck.interval}, tolerance=${healthCheck.tolerance}, timeout=5`
+        `${region.groupName} = url-test, include-all-proxies=true, policy-regex-filter='${surgePolicyFilter(region.match)}', url=${healthCheck.url}, interval=${healthCheck.interval}, tolerance=${healthCheck.tolerance}, timeout=${healthCheck.timeout}`
     ),
     ...index.businessGroups.map((group) => `${group.name} = select, ${uniq(group.proxies).join(", ")}`),
     "",
@@ -354,19 +430,26 @@ function renderSurgeEntry(index) {
     ...index.inlineRules,
     ...index.ruleSets.map((ruleSet) => `RULE-SET,${ruleSet.urls.surge},${ruleSet.group},extended-matching`),
     "FINAL,漏网之鱼",
-    "",
-    "[URL Rewrite]",
-    ...rewriteModules.flatMap((rewrite) => [`# ${rewrite.title}`, rewrite.line]),
-    "",
-    "[Script]",
-    ...scriptModules.map(
-      (script) =>
-        `${script.name} = type=${script.type}, pattern=${script.pattern}, script-path=${script.url}, timeout=10`
-    ),
-    "",
-    "[MITM]",
-    `hostname = %APPEND% ${mitmHostnames.join(", ")}`,
   ];
+
+  if (rewriteModules.length) {
+    lines.push("", "[URL Rewrite]", ...rewriteModules.flatMap((rewrite) => [`# ${rewrite.title}`, rewrite.line]));
+  }
+
+  if (scriptModules.length) {
+    lines.push(
+      "",
+      "[Script]",
+      ...scriptModules.map(
+        (script) =>
+          `${script.name} = type=${script.type}, pattern=${script.pattern}, script-path=${script.url}, timeout=10`
+      )
+    );
+  }
+
+  if (mitmHostnames.length) {
+    lines.push("", "[MITM]", `hostname = %APPEND% ${mitmHostnames.join(", ")}`);
+  }
 
   return lines.join("\n");
 }
