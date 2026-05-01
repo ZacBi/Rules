@@ -11,13 +11,17 @@ log-level: info
 ipv6: false
 
 proxy-groups: #!replace
-  - name: "手动节点"
+  - name: "全部节点"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png"
     include-all: true
     filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset)).*$"
+  - name: "手动节点"
+    type: select
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png"
     proxies:
       - "自动优选"
+      - "全部节点"
       - "香港"
       - "台湾"
       - "日本"
