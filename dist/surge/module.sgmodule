@@ -4,30 +4,30 @@
 
 [General]
 loglevel = notify
-ipv6 = true
+ipv6 = false
 enhanced-mode-by-rule = true
 
 [Proxy Group]
-自动选择 = url-test, policy-regex-filter='^((?!(自动选择|节点选择|DIRECT|REJECT)).)*$', url=https://www.gstatic.com/generate_204, interval=300, tolerance=50, timeout=5
-节点选择 = select, 自动选择, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 英国节点, 澳洲节点, 马来西亚节点, 阿根廷节点, DIRECT
-香港节点 = url-test, policy-regex-filter='香港|HK|Hong\s*Kong', url=https://www.gstatic.com/generate_204, interval=300, tolerance=50, timeout=5
-台湾节点 = url-test, policy-regex-filter='台湾|TW|Taiwan|Taipei', url=https://www.gstatic.com/generate_204, interval=300, tolerance=50, timeout=5
-日本节点 = url-test, policy-regex-filter='日本|JP|Japan|Tokyo|Osaka', url=https://www.gstatic.com/generate_204, interval=300, tolerance=50, timeout=5
-新加坡节点 = url-test, policy-regex-filter='新加坡|狮城|SG|Singapore', url=https://www.gstatic.com/generate_204, interval=300, tolerance=50, timeout=5
-美国节点 = url-test, policy-regex-filter='美国|US|USA|United\s*States|America|Los\s*Angeles|San\s*Jose|Seattle', url=https://www.gstatic.com/generate_204, interval=300, tolerance=50, timeout=5
-英国节点 = url-test, policy-regex-filter='英国|UK|United\s*Kingdom|Britain|England|London|Manchester', url=https://www.gstatic.com/generate_204, interval=300, tolerance=50, timeout=5
-澳洲节点 = url-test, policy-regex-filter='澳洲|澳大利亚|AU|Australia|Sydney|Melbourne|Perth', url=https://www.gstatic.com/generate_204, interval=300, tolerance=50, timeout=5
-马来西亚节点 = url-test, policy-regex-filter='马来西亚|MY|Malaysia|Kuala\s*Lumpur', url=https://www.gstatic.com/generate_204, interval=300, tolerance=50, timeout=5
-阿根廷节点 = url-test, policy-regex-filter='阿根廷|AR|Argentina|Buenos\s*Aires', url=https://www.gstatic.com/generate_204, interval=300, tolerance=50, timeout=5
-国外媒体 = select, 节点选择, 自动选择, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 英国节点, 澳洲节点, 马来西亚节点, 阿根廷节点
-AI平台 = select, 节点选择, 自动选择, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 英国节点, 澳洲节点, 马来西亚节点, 阿根廷节点
-开发工具与镜像 = select, 节点选择, 自动选择, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 英国节点, 澳洲节点, 马来西亚节点, 阿根廷节点, DIRECT
-学习与研究 = select, 节点选择, 自动选择, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 英国节点, 澳洲节点, 马来西亚节点, 阿根廷节点, DIRECT
-即时通讯 = select, 节点选择, 自动选择, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 英国节点, 澳洲节点, 马来西亚节点, 阿根廷节点
-微软服务 = select, 节点选择, 自动选择, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 英国节点, 澳洲节点, 马来西亚节点, 阿根廷节点, DIRECT
-苹果服务 = select, DIRECT, 节点选择, 自动选择, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 英国节点, 澳洲节点, 马来西亚节点, 阿根廷节点
-游戏平台 = select, 节点选择, 自动选择, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 英国节点, 澳洲节点, 马来西亚节点, 阿根廷节点
-国外网站 = select, 节点选择, 自动选择, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 英国节点, 澳洲节点, 马来西亚节点, 阿根廷节点
+自动选择 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
+节点选择 = select, 自动选择, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 英国节点, 澳洲节点, 马来西亚节点, 阿根廷节点, DIRECT, include-all-proxies=true, policy-regex-filter='^(?!(?:自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset)).*$'
+香港节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:香港|HK|Hong\s*Kong)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
+台湾节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:台湾|TW|Taiwan|Taipei)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
+日本节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:日本|JP|Japan|Tokyo|Osaka)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
+新加坡节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:新加坡|狮城|SG|Singapore)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
+美国节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:美国|US|USA|United\s*States|America|Los\s*Angeles|San\s*Jose|Seattle)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
+英国节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:英国|UK|United\s*Kingdom|Britain|England|London|Manchester)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
+澳洲节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:澳洲|澳大利亚|AU|Australia|Sydney|Melbourne|Perth)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
+马来西亚节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:马来西亚|MY|Malaysia|Kuala\s*Lumpur)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
+阿根廷节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:阿根廷|AR|Argentina|Buenos\s*Aires)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
+国外媒体 = select, 节点选择, 自动选择, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点
+AI平台 = select, 节点选择, 自动选择, 香港节点, 日本节点, 新加坡节点, 美国节点
+开发工具与镜像 = select, 节点选择, 自动选择, 香港节点, 日本节点, 新加坡节点, 美国节点, DIRECT
+学习与研究 = select, 节点选择, 自动选择, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, DIRECT
+即时通讯 = select, 节点选择, 自动选择, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点
+微软服务 = select, DIRECT, 节点选择, 自动选择, 香港节点, 日本节点, 新加坡节点, 美国节点
+苹果服务 = select, DIRECT, 节点选择, 自动选择
+游戏平台 = select, 节点选择, 自动选择, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点
+国外网站 = select, 节点选择, 自动选择, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点
 国内网站 = select, DIRECT, 节点选择
 广告拦截 = select, REJECT, DIRECT
 漏网之鱼 = select, 节点选择, 自动选择, DIRECT
@@ -39,6 +39,9 @@ DOMAIN-SUFFIX,local,DIRECT
 IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
 IP-CIDR6,::1/128,DIRECT,no-resolve
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Advertising/Advertising.list,广告拦截,extended-matching
+RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Lan/Lan.list,国内网站,extended-matching
+RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ChinaMax/ChinaMax.list,国内网站,extended-matching
+RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ChinaMedia/ChinaMedia.list,国内网站,extended-matching
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/OpenAI/OpenAI.list,AI平台,extended-matching
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Claude/Claude.list,AI平台,extended-matching
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Anthropic/Anthropic.list,AI平台,extended-matching
@@ -49,7 +52,7 @@ RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/r
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Spotify/Spotify.list,国外媒体,extended-matching
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/TikTok/TikTok.list,国外媒体,extended-matching
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/GlobalMedia/GlobalMedia.list,国外媒体,extended-matching
-RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/GitHub/GitHub.list,AI平台,extended-matching
+RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/GitHub/GitHub.list,开发工具与镜像,extended-matching
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Npmjs/Npmjs.list,开发工具与镜像,extended-matching
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Docker/Docker.list,开发工具与镜像,extended-matching
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Python/Python.list,开发工具与镜像,extended-matching
@@ -65,17 +68,4 @@ RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/r
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Apple/Apple.list,苹果服务,extended-matching
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Steam/Steam.list,游戏平台,extended-matching
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Epic/Epic.list,游戏平台,extended-matching
-RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Lan/Lan.list,国内网站,extended-matching
-RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ChinaMedia/ChinaMedia.list,国内网站,extended-matching
-RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ChinaMax/ChinaMax.list,国内网站,extended-matching
 FINAL,漏网之鱼
-
-[URL Rewrite]
-# reject-tracking
-^https?:\/\/([^/]+)\/.*[?&](utm_(source|medium|campaign)|spm)=.*$ 302 https://$1/
-
-[Script]
-assistant-panel = type=http-response, pattern=^https://(chatgpt|api\.openai)\.com/.*, script-path=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/openai/openai-panel.js, timeout=10
-
-[MITM]
-hostname = %APPEND% *.openai.com, *.anthropic.com, *.githubusercontent.com

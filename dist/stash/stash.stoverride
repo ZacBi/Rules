@@ -3,19 +3,23 @@ mixed-port: 7890
 allow-lan: false
 mode: rule
 log-level: info
-ipv6: true
+ipv6: false
 
 proxy-groups:
   - name: "智能优选"
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png"
     include-all: true
+    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset)).*$"
     url: "https://www.gstatic.com/generate_204"
-    interval: 300
+    interval: 600
+    tolerance: 100
     lazy: true
   - name: "手动选择"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png"
+    include-all: true
+    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset)).*$"
     proxies:
       - "智能优选"
       - "香港"
@@ -32,73 +36,82 @@ proxy-groups:
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png"
     include-all: true
-    filter: "(?i)(香港|HK|Hong\\s*Kong)"
+    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(香港|HK|Hong\\s*Kong)).*$"
     url: "https://www.gstatic.com/generate_204"
-    interval: 300
+    interval: 600
+    tolerance: 100
     lazy: true
   - name: "台湾"
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png"
     include-all: true
-    filter: "(?i)(台湾|TW|Taiwan|Taipei)"
+    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(台湾|TW|Taiwan|Taipei)).*$"
     url: "https://www.gstatic.com/generate_204"
-    interval: 300
+    interval: 600
+    tolerance: 100
     lazy: true
   - name: "日本"
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png"
     include-all: true
-    filter: "(?i)(日本|JP|Japan|Tokyo|Osaka)"
+    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(日本|JP|Japan|Tokyo|Osaka)).*$"
     url: "https://www.gstatic.com/generate_204"
-    interval: 300
+    interval: 600
+    tolerance: 100
     lazy: true
   - name: "新加坡"
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png"
     include-all: true
-    filter: "(?i)(新加坡|狮城|SG|Singapore)"
+    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(新加坡|狮城|SG|Singapore)).*$"
     url: "https://www.gstatic.com/generate_204"
-    interval: 300
+    interval: 600
+    tolerance: 100
     lazy: true
   - name: "美国"
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States_Map.png"
     include-all: true
-    filter: "(?i)(美国|US|USA|United\\s*States|America|Los\\s*Angeles|San\\s*Jose|Seattle)"
+    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(美国|US|USA|United\\s*States|America|Los\\s*Angeles|San\\s*Jose|Seattle)).*$"
     url: "https://www.gstatic.com/generate_204"
-    interval: 300
+    interval: 600
+    tolerance: 100
     lazy: true
   - name: "英国"
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_Kingdom.png"
     include-all: true
-    filter: "(?i)(英国|UK|United\\s*Kingdom|Britain|England|London|Manchester)"
+    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(英国|UK|United\\s*Kingdom|Britain|England|London|Manchester)).*$"
     url: "https://www.gstatic.com/generate_204"
-    interval: 300
+    interval: 600
+    tolerance: 100
     lazy: true
   - name: "澳洲"
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Australia.png"
     include-all: true
-    filter: "(?i)(澳洲|澳大利亚|AU|Australia|Sydney|Melbourne|Perth)"
+    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(澳洲|澳大利亚|AU|Australia|Sydney|Melbourne|Perth)).*$"
     url: "https://www.gstatic.com/generate_204"
-    interval: 300
+    interval: 600
+    tolerance: 100
     lazy: true
   - name: "马来西亚"
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Malaysia.png"
     include-all: true
-    filter: "(?i)(马来西亚|MY|Malaysia|Kuala\\s*Lumpur)"
+    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(马来西亚|MY|Malaysia|Kuala\\s*Lumpur)).*$"
     url: "https://www.gstatic.com/generate_204"
-    interval: 300
+    interval: 600
+    tolerance: 100
     lazy: true
   - name: "阿根廷"
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Argentina.png"
     include-all: true
-    filter: "(?i)(阿根廷|AR|Argentina|Buenos\\s*Aires)"
+    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(阿根廷|AR|Argentina|Buenos\\s*Aires)).*$"
     url: "https://www.gstatic.com/generate_204"
-    interval: 300
+    interval: 600
+    tolerance: 100
     lazy: true
   - name: "国外媒体"
     type: select
@@ -111,10 +124,6 @@ proxy-groups:
       - "日本"
       - "新加坡"
       - "美国"
-      - "英国"
-      - "澳洲"
-      - "马来西亚"
-      - "阿根廷"
   - name: "AI平台"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/AI.png"
@@ -122,14 +131,9 @@ proxy-groups:
       - "手动选择"
       - "智能优选"
       - "香港"
-      - "台湾"
       - "日本"
       - "新加坡"
       - "美国"
-      - "英国"
-      - "澳洲"
-      - "马来西亚"
-      - "阿根廷"
   - name: "开发工具"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Lab.png"
@@ -137,14 +141,9 @@ proxy-groups:
       - "手动选择"
       - "智能优选"
       - "香港"
-      - "台湾"
       - "日本"
       - "新加坡"
       - "美国"
-      - "英国"
-      - "澳洲"
-      - "马来西亚"
-      - "阿根廷"
       - "DIRECT"
   - name: "学习研究"
     type: select
@@ -157,10 +156,6 @@ proxy-groups:
       - "日本"
       - "新加坡"
       - "美国"
-      - "英国"
-      - "澳洲"
-      - "马来西亚"
-      - "阿根廷"
       - "DIRECT"
   - name: "即时通讯"
     type: select
@@ -173,26 +168,17 @@ proxy-groups:
       - "日本"
       - "新加坡"
       - "美国"
-      - "英国"
-      - "澳洲"
-      - "马来西亚"
-      - "阿根廷"
   - name: "微软服务"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png"
     proxies:
+      - "DIRECT"
       - "手动选择"
       - "智能优选"
       - "香港"
-      - "台湾"
       - "日本"
       - "新加坡"
       - "美国"
-      - "英国"
-      - "澳洲"
-      - "马来西亚"
-      - "阿根廷"
-      - "DIRECT"
   - name: "苹果服务"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_2.png"
@@ -200,15 +186,6 @@ proxy-groups:
       - "DIRECT"
       - "手动选择"
       - "智能优选"
-      - "香港"
-      - "台湾"
-      - "日本"
-      - "新加坡"
-      - "美国"
-      - "英国"
-      - "澳洲"
-      - "马来西亚"
-      - "阿根廷"
   - name: "游戏平台"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png"
@@ -220,10 +197,6 @@ proxy-groups:
       - "日本"
       - "新加坡"
       - "美国"
-      - "英国"
-      - "澳洲"
-      - "马来西亚"
-      - "阿根廷"
   - name: "国外网站"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png"
@@ -235,10 +208,6 @@ proxy-groups:
       - "日本"
       - "新加坡"
       - "美国"
-      - "英国"
-      - "澳洲"
-      - "马来西亚"
-      - "阿根廷"
   - name: "国内网站"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Domestic.png"
@@ -265,6 +234,24 @@ rule-providers:
     behavior: classical
     url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Advertising/Advertising.yaml"
     path: "./ruleset/Advertising.yaml"
+    interval: 86400
+  lan:
+    type: http
+    behavior: classical
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan.yaml"
+    path: "./ruleset/Lan.yaml"
+    interval: 86400
+  china:
+    type: http
+    behavior: domain
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax_Domain.yaml"
+    path: "./ruleset/ChinaMax_Domain.yaml"
+    interval: 86400
+  chinamedia:
+    type: http
+    behavior: classical
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMedia/ChinaMedia.yaml"
+    path: "./ruleset/ChinaMedia.yaml"
     interval: 86400
   openai:
     type: http
@@ -422,24 +409,6 @@ rule-providers:
     url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Epic/Epic.yaml"
     path: "./ruleset/Epic.yaml"
     interval: 86400
-  lan:
-    type: http
-    behavior: classical
-    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan.yaml"
-    path: "./ruleset/Lan.yaml"
-    interval: 86400
-  chinamedia:
-    type: http
-    behavior: classical
-    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMedia/ChinaMedia.yaml"
-    path: "./ruleset/ChinaMedia.yaml"
-    interval: 86400
-  china:
-    type: http
-    behavior: domain
-    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax_Domain.yaml"
-    path: "./ruleset/ChinaMax_Domain.yaml"
-    interval: 86400
 
 rules:
   - "DOMAIN,localhost,DIRECT"
@@ -447,6 +416,9 @@ rules:
   - "IP-CIDR,127.0.0.0/8,DIRECT,no-resolve"
   - "IP-CIDR6,::1/128,DIRECT,no-resolve"
   - "RULE-SET,advertising,广告拦截"
+  - "RULE-SET,lan,国内网站"
+  - "RULE-SET,china,国内网站"
+  - "RULE-SET,chinamedia,国内网站"
   - "RULE-SET,openai,AI平台"
   - "RULE-SET,claude,AI平台"
   - "RULE-SET,anthropic,AI平台"
@@ -457,7 +429,7 @@ rules:
   - "RULE-SET,spotify,国外媒体"
   - "RULE-SET,tiktok,国外媒体"
   - "RULE-SET,globalmedia,国外媒体"
-  - "RULE-SET,github,AI平台"
+  - "RULE-SET,github,开发工具"
   - "RULE-SET,npmjs,开发工具"
   - "RULE-SET,docker,开发工具"
   - "RULE-SET,python,开发工具"
@@ -473,43 +445,4 @@ rules:
   - "RULE-SET,apple,苹果服务"
   - "RULE-SET,steam,游戏平台"
   - "RULE-SET,epic,游戏平台"
-  - "RULE-SET,lan,国内网站"
-  - "RULE-SET,chinamedia,国内网站"
-  - "RULE-SET,china,国内网站"
   - "MATCH,漏网之鱼"
-
-url-rewrite:
-  # reject-tracking
-  - "^https?:\\/\\/([^/]+)\\/.*[?&](utm_(source|medium|campaign)|spm)=.*$ 302 https://$1/"
-script:
-  assistant-panel:
-    type: generic
-    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/openai/openai-panel.js"
-    interval: 86400
-  runtime-support:
-    type: generic
-    script: |
-      const runtimeSupport = {
-        "stash": {
-          "rewrite": "full",
-          "script": "full",
-          "mitm": "full"
-        },
-        "surge": {
-          "rewrite": "full",
-          "script": "full",
-          "mitm": "full"
-        },
-        "mihomo": {
-          "rewrite": "partial",
-          "script": "unsupported",
-          "mitm": "unsupported"
-        }
-      };
-      module.exports = runtimeSupport;
-mitm:
-  enabled: true
-  hostnames:
-    - "*.openai.com"
-    - "*.anthropic.com"
-    - "*.githubusercontent.com"

@@ -2,8 +2,9 @@
 
 const defaultHealthCheck = {
   url: "https://www.gstatic.com/generate_204",
-  interval: 300,
-  tolerance: 50,
+  interval: 600,
+  tolerance: 100,
+  timeout: 3,
 };
 
 const regions = [
@@ -63,6 +64,41 @@ const regions = [
   },
 ];
 
+function pickRegionGroupNames(keys) {
+  const wanted = new Set(keys);
+  return regions
+    .filter((region) => wanted.has(region.key))
+    .map((region) => region.groupName);
+}
+
+const coreRegionGroupNames = pickRegionGroupNames([
+  "hong_kong",
+  "taiwan",
+  "japan",
+  "singapore",
+  "united_states",
+]);
+const aiRegionGroupNames = pickRegionGroupNames([
+  "united_states",
+  "japan",
+  "singapore",
+  "hong_kong",
+]);
+const devRegionGroupNames = pickRegionGroupNames([
+  "hong_kong",
+  "japan",
+  "singapore",
+  "united_states",
+]);
+const mediaRegionGroupNames = pickRegionGroupNames([
+  "hong_kong",
+  "taiwan",
+  "japan",
+  "singapore",
+  "united_states",
+]);
+const defaultProxyGroupNames = ["节点选择", "自动选择"];
+
 const strategyGroups = [
   {
     key: "auto",
@@ -82,47 +118,47 @@ const businessGroups = [
   {
     name: "国外媒体",
     type: "select",
-    proxies: ["节点选择", "自动选择", ...regions.map((region) => region.groupName)],
+    proxies: [...defaultProxyGroupNames, ...mediaRegionGroupNames],
   },
   {
     name: "AI平台",
     type: "select",
-    proxies: ["节点选择", "自动选择", ...regions.map((region) => region.groupName)],
+    proxies: [...defaultProxyGroupNames, ...aiRegionGroupNames],
   },
   {
     name: "开发工具与镜像",
     type: "select",
-    proxies: ["节点选择", "自动选择", ...regions.map((region) => region.groupName), "DIRECT"],
+    proxies: [...defaultProxyGroupNames, ...devRegionGroupNames, "DIRECT"],
   },
   {
     name: "学习与研究",
     type: "select",
-    proxies: ["节点选择", "自动选择", ...regions.map((region) => region.groupName), "DIRECT"],
+    proxies: [...defaultProxyGroupNames, ...coreRegionGroupNames, "DIRECT"],
   },
   {
     name: "即时通讯",
     type: "select",
-    proxies: ["节点选择", "自动选择", ...regions.map((region) => region.groupName)],
+    proxies: [...defaultProxyGroupNames, ...coreRegionGroupNames],
   },
   {
     name: "微软服务",
     type: "select",
-    proxies: ["节点选择", "自动选择", ...regions.map((region) => region.groupName), "DIRECT"],
+    proxies: ["DIRECT", ...defaultProxyGroupNames, ...devRegionGroupNames],
   },
   {
     name: "苹果服务",
     type: "select",
-    proxies: ["DIRECT", "节点选择", "自动选择", ...regions.map((region) => region.groupName)],
+    proxies: ["DIRECT", ...defaultProxyGroupNames],
   },
   {
     name: "游戏平台",
     type: "select",
-    proxies: ["节点选择", "自动选择", ...regions.map((region) => region.groupName)],
+    proxies: [...defaultProxyGroupNames, ...coreRegionGroupNames],
   },
   {
     name: "国外网站",
     type: "select",
-    proxies: ["节点选择", "自动选择", ...regions.map((region) => region.groupName)],
+    proxies: [...defaultProxyGroupNames, ...coreRegionGroupNames],
   },
   {
     name: "国内网站",
@@ -146,6 +182,25 @@ const rawRuleSets = [
     key: "advertising",
     sourceName: "Advertising",
     group: "广告拦截",
+    behavior: "classical",
+  },
+  {
+    key: "lan",
+    sourceName: "Lan",
+    group: "国内网站",
+    behavior: "classical",
+  },
+  {
+    key: "china",
+    sourceName: "ChinaMax",
+    mihomoFile: "ChinaMax_Domain",
+    group: "国内网站",
+    behavior: "domain",
+  },
+  {
+    key: "chinamedia",
+    sourceName: "ChinaMedia",
+    group: "国内网站",
     behavior: "classical",
   },
   {
@@ -211,7 +266,7 @@ const rawRuleSets = [
   {
     key: "github",
     sourceName: "GitHub",
-    group: "AI平台",
+    group: "开发工具与镜像",
     behavior: "classical",
   },
   {
@@ -304,25 +359,6 @@ const rawRuleSets = [
     group: "游戏平台",
     behavior: "classical",
   },
-  {
-    key: "lan",
-    sourceName: "Lan",
-    group: "国内网站",
-    behavior: "classical",
-  },
-  {
-    key: "chinamedia",
-    sourceName: "ChinaMedia",
-    group: "国内网站",
-    behavior: "classical",
-  },
-  {
-    key: "china",
-    sourceName: "ChinaMax",
-    mihomoFile: "ChinaMax_Domain",
-    group: "国内网站",
-    behavior: "domain",
-  },
 ];
 
 const RULES_GITHUB_REPO = process.env.RULES_GITHUB_REPO || null;
@@ -331,7 +367,7 @@ const RULES_RAW_BASE = RULES_GITHUB_REPO
   : null;
 
 if (RULES_RAW_BASE) {
-  rawRuleSets.splice(6, 0, {
+  rawRuleSets.splice(rawRuleSets.findIndex((ruleSet) => ruleSet.key === "youtube"), 0, {
     key: "cursor",
     sourceName: "Cursor",
     group: "AI平台",
@@ -380,6 +416,7 @@ const runtimeModules = [
     kind: "script",
     domain: "ai",
     title: "assistant-panel",
+    emitByDefault: false,
     sourceMode: "remote",
     sourceUrl: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/openai/openai-panel.js",
     supportedClients,
@@ -415,6 +452,7 @@ const runtimeModules = [
     kind: "rewrite",
     domain: "media",
     title: "reject-tracking",
+    emitByDefault: false,
     sourceMode: "local",
     supportedClients,
     support: {
@@ -441,6 +479,7 @@ const runtimeModules = [
     kind: "mitm",
     domain: "developer",
     title: "tls-hosts",
+    emitByDefault: false,
     sourceMode: "local",
     supportedClients,
     support: {
@@ -566,7 +605,7 @@ const scenarioModules = [
     domain: "ai",
     title: "AI platforms",
     groups: ["AI平台"],
-    ruleSets: uniq(["openai", "claude", "anthropic", "gemini", "copilot", "github", RULES_GITHUB_REPO ? "cursor" : null]),
+    ruleSets: uniq(["openai", "claude", "anthropic", "gemini", "copilot", RULES_GITHUB_REPO ? "cursor" : null]),
     dependsOn: ["base.core"],
     capabilities: {
       routing: true,
@@ -590,7 +629,7 @@ const scenarioModules = [
     domain: "dev",
     title: "Developer tools",
     groups: ["开发工具与镜像"],
-    ruleSets: ["npmjs", "docker", "python", "gitlab"],
+    ruleSets: ["github", "npmjs", "docker", "python", "gitlab"],
     dependsOn: ["base.core"],
     capabilities: {
       routing: true,

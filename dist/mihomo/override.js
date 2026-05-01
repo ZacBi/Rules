@@ -3,8 +3,9 @@ const MODULE_INDEX = {
   "model": "unified-strategy-pack",
   "defaultHealthCheck": {
     "url": "https://www.gstatic.com/generate_204",
-    "interval": 300,
-    "tolerance": 50
+    "interval": 600,
+    "tolerance": 100,
+    "timeout": 3
   },
   "strategyGroups": [
     {
@@ -43,11 +44,7 @@ const MODULE_INDEX = {
         "台湾节点",
         "日本节点",
         "新加坡节点",
-        "美国节点",
-        "英国节点",
-        "澳洲节点",
-        "马来西亚节点",
-        "阿根廷节点"
+        "美国节点"
       ]
     },
     {
@@ -57,14 +54,9 @@ const MODULE_INDEX = {
         "节点选择",
         "自动选择",
         "香港节点",
-        "台湾节点",
         "日本节点",
         "新加坡节点",
-        "美国节点",
-        "英国节点",
-        "澳洲节点",
-        "马来西亚节点",
-        "阿根廷节点"
+        "美国节点"
       ]
     },
     {
@@ -74,14 +66,9 @@ const MODULE_INDEX = {
         "节点选择",
         "自动选择",
         "香港节点",
-        "台湾节点",
         "日本节点",
         "新加坡节点",
         "美国节点",
-        "英国节点",
-        "澳洲节点",
-        "马来西亚节点",
-        "阿根廷节点",
         "DIRECT"
       ]
     },
@@ -96,10 +83,6 @@ const MODULE_INDEX = {
         "日本节点",
         "新加坡节点",
         "美国节点",
-        "英国节点",
-        "澳洲节点",
-        "马来西亚节点",
-        "阿根廷节点",
         "DIRECT"
       ]
     },
@@ -113,29 +96,20 @@ const MODULE_INDEX = {
         "台湾节点",
         "日本节点",
         "新加坡节点",
-        "美国节点",
-        "英国节点",
-        "澳洲节点",
-        "马来西亚节点",
-        "阿根廷节点"
+        "美国节点"
       ]
     },
     {
       "name": "微软服务",
       "type": "select",
       "proxies": [
+        "DIRECT",
         "节点选择",
         "自动选择",
         "香港节点",
-        "台湾节点",
         "日本节点",
         "新加坡节点",
-        "美国节点",
-        "英国节点",
-        "澳洲节点",
-        "马来西亚节点",
-        "阿根廷节点",
-        "DIRECT"
+        "美国节点"
       ]
     },
     {
@@ -144,16 +118,7 @@ const MODULE_INDEX = {
       "proxies": [
         "DIRECT",
         "节点选择",
-        "自动选择",
-        "香港节点",
-        "台湾节点",
-        "日本节点",
-        "新加坡节点",
-        "美国节点",
-        "英国节点",
-        "澳洲节点",
-        "马来西亚节点",
-        "阿根廷节点"
+        "自动选择"
       ]
     },
     {
@@ -166,11 +131,7 @@ const MODULE_INDEX = {
         "台湾节点",
         "日本节点",
         "新加坡节点",
-        "美国节点",
-        "英国节点",
-        "澳洲节点",
-        "马来西亚节点",
-        "阿根廷节点"
+        "美国节点"
       ]
     },
     {
@@ -183,11 +144,7 @@ const MODULE_INDEX = {
         "台湾节点",
         "日本节点",
         "新加坡节点",
-        "美国节点",
-        "英国节点",
-        "澳洲节点",
-        "马来西亚节点",
-        "阿根廷节点"
+        "美国节点"
       ]
     },
     {
@@ -285,6 +242,63 @@ const MODULE_INDEX = {
       },
       "paths": {
         "mihomo": "./ruleset/Advertising.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "lan",
+      "sourceName": "Lan",
+      "group": "国内网站",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Lan/Lan.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/Lan.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "china",
+      "sourceName": "ChinaMax",
+      "group": "国内网站",
+      "behavior": "domain",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax_Domain.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ChinaMax/ChinaMax.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/ChinaMax_Domain.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ]
+    },
+    {
+      "id": "chinamedia",
+      "sourceName": "ChinaMedia",
+      "group": "国内网站",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMedia/ChinaMedia.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ChinaMedia/ChinaMedia.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/ChinaMedia.yaml"
       },
       "supportedClients": [
         "stash",
@@ -485,7 +499,7 @@ const MODULE_INDEX = {
     {
       "id": "github",
       "sourceName": "GitHub",
-      "group": "AI平台",
+      "group": "开发工具与镜像",
       "behavior": "classical",
       "origin": "blackmatrix7",
       "urls": {
@@ -785,63 +799,6 @@ const MODULE_INDEX = {
         "mihomo",
         "surge"
       ]
-    },
-    {
-      "id": "lan",
-      "sourceName": "Lan",
-      "group": "国内网站",
-      "behavior": "classical",
-      "origin": "blackmatrix7",
-      "urls": {
-        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Lan/Lan.list"
-      },
-      "paths": {
-        "mihomo": "./ruleset/Lan.yaml"
-      },
-      "supportedClients": [
-        "stash",
-        "mihomo",
-        "surge"
-      ]
-    },
-    {
-      "id": "chinamedia",
-      "sourceName": "ChinaMedia",
-      "group": "国内网站",
-      "behavior": "classical",
-      "origin": "blackmatrix7",
-      "urls": {
-        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMedia/ChinaMedia.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ChinaMedia/ChinaMedia.list"
-      },
-      "paths": {
-        "mihomo": "./ruleset/ChinaMedia.yaml"
-      },
-      "supportedClients": [
-        "stash",
-        "mihomo",
-        "surge"
-      ]
-    },
-    {
-      "id": "china",
-      "sourceName": "ChinaMax",
-      "group": "国内网站",
-      "behavior": "domain",
-      "origin": "blackmatrix7",
-      "urls": {
-        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax_Domain.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ChinaMax/ChinaMax.list"
-      },
-      "paths": {
-        "mihomo": "./ruleset/ChinaMax_Domain.yaml"
-      },
-      "supportedClients": [
-        "stash",
-        "mihomo",
-        "surge"
-      ]
     }
   ],
   "runtimeModules": [
@@ -850,6 +807,7 @@ const MODULE_INDEX = {
       "kind": "script",
       "domain": "ai",
       "title": "assistant-panel",
+      "emitByDefault": false,
       "sourceMode": "remote",
       "sourceUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/openai/openai-panel.js",
       "supportedClients": [
@@ -891,6 +849,7 @@ const MODULE_INDEX = {
       "kind": "rewrite",
       "domain": "media",
       "title": "reject-tracking",
+      "emitByDefault": false,
       "sourceMode": "local",
       "supportedClients": [
         "stash",
@@ -923,6 +882,7 @@ const MODULE_INDEX = {
       "kind": "mitm",
       "domain": "developer",
       "title": "tls-hosts",
+      "emitByDefault": false,
       "sourceMode": "local",
       "supportedClients": [
         "stash",
@@ -1031,8 +991,7 @@ const MODULE_INDEX = {
         "claude",
         "anthropic",
         "gemini",
-        "copilot",
-        "github"
+        "copilot"
       ],
       "dependsOn": [
         "base.core"
@@ -1094,6 +1053,7 @@ const MODULE_INDEX = {
         "开发工具与镜像"
       ],
       "ruleSets": [
+        "github",
         "npmjs",
         "docker",
         "python",
