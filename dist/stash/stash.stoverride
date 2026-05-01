@@ -453,7 +453,7 @@ rules:
   - "MATCH,默认出口"
 
 http:
-  rewrite:
+  url-rewrite:
     # app-upgrade-check-block
     - "^https?:\\/\\/api\\.ishansong\\.com\\/app\\/check\\/v\\d+\\/check - reject"
     - "^https?:\\/\\/api\\.m\\.jd\\.com\\/openUpgrade - reject"
