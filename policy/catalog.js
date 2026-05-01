@@ -99,58 +99,7 @@ const mediaRegionGroupNames = pickRegionGroupNames([
 ]);
 const defaultProxyGroupNames = ["节点选择", "自动选择"];
 
-const serviceCheckGroups = [
-  {
-    key: "ai",
-    name: "AI检测",
-    type: "url-test",
-    proxies: aiRegionGroupNames,
-    url: "https://auth.openai.com/.well-known/openid-configuration",
-    interval: 600,
-    tolerance: 100,
-    timeout: 3,
-  },
-  {
-    key: "gemini",
-    name: "Gemini检测",
-    type: "url-test",
-    proxies: aiRegionGroupNames,
-    url: "https://gemini.google.com",
-    interval: 600,
-    tolerance: 100,
-    timeout: 3,
-  },
-  {
-    key: "media",
-    name: "媒体检测",
-    type: "url-test",
-    proxies: mediaRegionGroupNames,
-    url: "https://www.youtube.com/generate_204",
-    interval: 600,
-    tolerance: 100,
-    timeout: 3,
-  },
-  {
-    key: "apple",
-    name: "苹果检测",
-    type: "url-test",
-    proxies: ["DIRECT", ...coreRegionGroupNames],
-    url: "https://www.apple.com/library/test/success.html",
-    interval: 600,
-    tolerance: 100,
-    timeout: 3,
-  },
-  {
-    key: "google",
-    name: "Google检测",
-    type: "url-test",
-    proxies: coreRegionGroupNames,
-    url: "https://www.google.com/generate_204",
-    interval: 600,
-    tolerance: 100,
-    timeout: 3,
-  },
-];
+const serviceCheckGroups = [];
 
 const strategyGroups = [
   {
@@ -171,17 +120,12 @@ const businessGroups = [
   {
     name: "国外媒体",
     type: "select",
-    proxies: ["媒体检测", ...defaultProxyGroupNames, ...mediaRegionGroupNames],
+    proxies: [...defaultProxyGroupNames, ...mediaRegionGroupNames],
   },
   {
     name: "AI平台",
     type: "select",
-    proxies: ["AI检测", ...defaultProxyGroupNames, ...aiRegionGroupNames],
-  },
-  {
-    name: "Gemini服务",
-    type: "select",
-    proxies: ["Gemini检测", ...defaultProxyGroupNames, ...aiRegionGroupNames],
+    proxies: [...defaultProxyGroupNames, ...aiRegionGroupNames],
   },
   {
     name: "即时通讯",
@@ -196,7 +140,7 @@ const businessGroups = [
   {
     name: "苹果服务",
     type: "select",
-    proxies: ["DIRECT", "苹果检测", ...defaultProxyGroupNames],
+    proxies: ["DIRECT", ...defaultProxyGroupNames],
   },
   {
     name: "游戏平台",
@@ -206,7 +150,7 @@ const businessGroups = [
   {
     name: "国外网站",
     type: "select",
-    proxies: ["Google检测", ...defaultProxyGroupNames, ...coreRegionGroupNames],
+    proxies: [...defaultProxyGroupNames, ...coreRegionGroupNames],
   },
   {
     name: "国内网站",
@@ -272,7 +216,7 @@ const rawRuleSets = [
   {
     key: "gemini",
     sourceName: "Gemini",
-    group: "Gemini服务",
+    group: "AI平台",
     behavior: "classical",
   },
   {
@@ -870,20 +814,8 @@ const scenarioModules = [
     layer: "scenario",
     domain: "ai",
     title: "AI platforms",
-    groups: ["AI平台", "AI检测"],
-    ruleSets: uniq(["openai", "claude", "anthropic", "copilot", RULES_GITHUB_REPO ? "cursor" : null]),
-    dependsOn: ["base.core"],
-    capabilities: {
-      routing: true,
-    },
-  }),
-  moduleTemplate({
-    id: "scenario.gemini",
-    layer: "scenario",
-    domain: "ai",
-    title: "Gemini",
-    groups: ["Gemini服务", "Gemini检测"],
-    ruleSets: ["gemini"],
+    groups: ["AI平台"],
+    ruleSets: uniq(["openai", "claude", "anthropic", "gemini", "copilot", RULES_GITHUB_REPO ? "cursor" : null]),
     dependsOn: ["base.core"],
     capabilities: {
       routing: true,
@@ -894,7 +826,7 @@ const scenarioModules = [
     layer: "scenario",
     domain: "media",
     title: "Streaming media",
-    groups: ["国外媒体", "媒体检测"],
+    groups: ["国外媒体"],
     ruleSets: ["youtube", "netflix", "spotify", "tiktok", "globalmedia"],
     dependsOn: ["base.core"],
     capabilities: {
@@ -942,7 +874,7 @@ const scenarioModules = [
     layer: "scenario",
     domain: "vendor",
     title: "Vendor services",
-    groups: ["微软服务", "苹果服务", "苹果检测"],
+    groups: ["微软服务", "苹果服务"],
     ruleSets: ["microsoft", "apple"],
     dependsOn: ["base.core"],
     capabilities: {
@@ -966,7 +898,7 @@ const scenarioModules = [
     layer: "scenario",
     domain: "web",
     title: "Global web",
-    groups: ["国外网站", "Google检测"],
+    groups: ["国外网站"],
     ruleSets: ["google", "twitter", "github", "npmjs", "docker", "python", "gitlab", "scholar", "wikipedia", "stackexchange"],
     dependsOn: ["base.core"],
     capabilities: {
