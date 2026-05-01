@@ -176,10 +176,15 @@ function renderStashBusinessGroup(group) {
   ].join("\n");
 }
 
-function renderStashHttpRuntimeBlocks(rewriteModules, scriptModules) {
+function renderStashHttpRuntimeBlocks(rewriteModules, scriptModules, mitmModules) {
   const lines = [];
+  const mitmHostnames = uniq(
+    (mitmModules || [])
+      .flatMap((module) => (module.render && module.render.hostnames) || [])
+      .filter(Boolean)
+  );
 
-  if (!rewriteModules.length && !scriptModules.length) {
+  if (!rewriteModules.length && !scriptModules.length && !mitmHostnames.length) {
     return lines;
   }
 
@@ -187,10 +192,10 @@ function renderStashHttpRuntimeBlocks(rewriteModules, scriptModules) {
 
   if (rewriteModules.length) {
     lines.push(
-      "  url-rewrite:",
+      "  rewrite:",
       ...rewriteModules.flatMap((rewrite) => [
         `    # ${rewrite.title}`,
-        `    - ${yamlScalar(rewrite.line)}`,
+        ...rewrite.lines.map((line) => `    - ${yamlScalar(line)}`),
       ])
     );
   }
@@ -211,6 +216,13 @@ function renderStashHttpRuntimeBlocks(rewriteModules, scriptModules) {
     );
   }
 
+  if (mitmHostnames.length) {
+    lines.push(
+      "  mitm:",
+      ...mitmHostnames.map((hostname) => `    - ${yamlScalar(hostname)}`)
+    );
+  }
+
   if (scriptModules.length) {
     lines.push(
       "",
@@ -226,44 +238,27 @@ function renderStashHttpRuntimeBlocks(rewriteModules, scriptModules) {
   return lines;
 }
 
-function renderStashMitmBlock(mitmModules) {
-  const modules = (mitmModules || [])
-    .map((module) => ({
-      title: module.title,
-      hostnames: (module.render && module.render.hostnames) || [],
-    }))
-    .filter((module) => module.hostnames.length);
-
-  if (!modules.length) {
-    return [];
-  }
-
-  return [
-    "",
-    "mitm:",
-    "  enabled: true",
-    "  hostnames:",
-    ...modules.flatMap((module) => [
-      `    # ${module.title}`,
-      ...module.hostnames.map((hostname) => `    - ${yamlScalar(hostname)}`),
-    ]),
-  ];
-}
-
 function renderStashEntry(index) {
   const rewriteModules = runtimeModulesByKind(index, "rewrite", { defaultOnly: true })
     .map((module) =>
       module.render && module.render.stashRewrite
-        ? { title: module.title, line: module.render.stashRewrite }
+        ? { title: module.title, lines: Array.isArray(module.render.stashRewrite) ? module.render.stashRewrite : [module.render.stashRewrite] }
         : null
     )
     .filter(Boolean);
   const scriptModules = runtimeModulesByKind(index, "script", { defaultOnly: true })
     .map((module) => module.render && module.render.stashScript)
     .filter(Boolean);
-  const mitmModules = runtimeModulesByKind(index, "mitm", { defaultOnly: true });
+  const mitmModules = (index.runtimeModules || [])
+    .filter((module) => module.emitByDefault !== false)
+    .filter((module) => module.render && module.render.hostnames);
   const lines = [
     "# Generated from the unified strategy model",
+    "name: Rules 策略分流",
+    "desc: Stash iOS 轻量分组、规则集、常见 HTTP 改写与脚本入口。",
+    "homepage: https://github.com/ZacBi/Rules",
+    "author: Rules contributors",
+    "category: Policy",
     "mixed-port: 7890",
     "allow-lan: false",
     "mode: rule",
@@ -285,9 +280,7 @@ function renderStashEntry(index) {
     `  - ${yamlScalar(`MATCH,${toStashGroupName("漏网之鱼")}`)}`,
   ];
 
-  lines.push(...renderStashHttpRuntimeBlocks(rewriteModules, scriptModules));
-
-  lines.push(...renderStashMitmBlock(mitmModules));
+  lines.push(...renderStashHttpRuntimeBlocks(rewriteModules, scriptModules, mitmModules));
 
   return lines.join("\n");
 }
