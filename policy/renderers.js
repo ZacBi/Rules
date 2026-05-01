@@ -192,7 +192,7 @@ function renderStashHttpRuntimeBlocks(rewriteModules, scriptModules, mitmModules
 
   if (rewriteModules.length) {
     lines.push(
-      "  rewrite:",
+      "  url-rewrite:",
       ...rewriteModules.flatMap((rewrite) => [
         `    # ${rewrite.title}`,
         ...rewrite.lines.map((line) => `    - ${yamlScalar(line)}`),
