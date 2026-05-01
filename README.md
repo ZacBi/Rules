@@ -93,6 +93,13 @@ Stash 入口默认按 iOS 交互优化：
 - 节点筛选会过滤剩余流量、到期、官网、订阅等信息行，减少无效策略项。
 - rewrite/script/MITM 默认不注入；需要时通过运行时模块元数据自行开启。
 
+可选运行时能力只保留在 `dist/modules/index.json` 的元数据里：
+
+- 主入口 `stash.stoverride` 不生成 script/MITM 段，避免默认引入脚本、证书解密和额外 HTTP 匹配成本。
+- 脚本元数据标注 `require-body: false`、`max-size` 等性能约束，供私有侧按需消费。
+- MITM 主机按模块拆分记录，只在私有侧明确需要调试对应服务时使用。
+- 旧的 tracking 参数 rewrite 不再输出；宽泛 302 改写容易丢路径或查询参数，后续如需启用应在私有侧改成路径保持的脚本实现。
+
 ### Mihomo / Clash Party
 
 1. 用 `Sub-Store` 把原始订阅整理成标准代理订阅。
@@ -151,9 +158,9 @@ Stash 入口默认按 iOS 交互优化：
 - `assistant-panel`
   面向 AI 场景的脚本模块，Stash / Surge 可按需消费。
 - `reject-tracking`
-  基础改写模块，用于清理常见追踪参数。
-- `tls-hosts`
-  基础 MITM 主机集合，供 Stash / Surge 私有入口按需渲染。
+  仅保留风险元数据，不再渲染；宽泛 302 改写容易破坏页面状态。
+- `openai-tls-hosts`、`anthropic-tls-hosts`、`githubusercontent-tls-hosts`
+  拆分后的 MITM 主机集合，供 Stash / Surge 私有入口按需渲染。
 
 默认公开入口不下发 rewrite/script/MITM，避免通用策略包影响页面行为、触发证书解密或增加运行时开销。`Mihomo / Clash` 的入口目前会显式暴露运行时能力降级信息，但不会伪造脚本或 MITM 段，避免形成“看起来支持、实际上不可用”的假象。
 

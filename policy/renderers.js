@@ -204,6 +204,9 @@ function renderStashHttpRuntimeBlocks(rewriteModules, scriptModules) {
         `      type: ${script.type}`,
         `      require-body: ${Boolean(script.requireBody)}`,
         `      timeout: ${script.timeout || 5}`,
+        `      argument: ${yamlScalar(script.argument || "")}`,
+        `      binary-mode: ${Boolean(script.binaryMode)}`,
+        `      max-size: ${script.maxSize || 1048576}`,
       ])
     );
   }
@@ -223,6 +226,30 @@ function renderStashHttpRuntimeBlocks(rewriteModules, scriptModules) {
   return lines;
 }
 
+function renderStashMitmBlock(mitmModules) {
+  const modules = (mitmModules || [])
+    .map((module) => ({
+      title: module.title,
+      hostnames: (module.render && module.render.hostnames) || [],
+    }))
+    .filter((module) => module.hostnames.length);
+
+  if (!modules.length) {
+    return [];
+  }
+
+  return [
+    "",
+    "mitm:",
+    "  enabled: true",
+    "  hostnames:",
+    ...modules.flatMap((module) => [
+      `    # ${module.title}`,
+      ...module.hostnames.map((hostname) => `    - ${yamlScalar(hostname)}`),
+    ]),
+  ];
+}
+
 function renderStashEntry(index) {
   const rewriteModules = runtimeModulesByKind(index, "rewrite", { defaultOnly: true })
     .map((module) =>
@@ -234,11 +261,7 @@ function renderStashEntry(index) {
   const scriptModules = runtimeModulesByKind(index, "script", { defaultOnly: true })
     .map((module) => module.render && module.render.stashScript)
     .filter(Boolean);
-  const mitmHostnames = uniq(
-    runtimeModulesByKind(index, "mitm", { defaultOnly: true })
-      .flatMap((module) => (module.render && module.render.hostnames) || [])
-      .filter(Boolean)
-  );
+  const mitmModules = runtimeModulesByKind(index, "mitm", { defaultOnly: true });
   const lines = [
     "# Generated from the unified strategy model",
     "mixed-port: 7890",
@@ -264,15 +287,7 @@ function renderStashEntry(index) {
 
   lines.push(...renderStashHttpRuntimeBlocks(rewriteModules, scriptModules));
 
-  if (mitmHostnames.length) {
-    lines.push(
-      "",
-      "mitm:",
-      "  enabled: true",
-      "  hostnames:",
-      ...mitmHostnames.map((hostname) => `    - ${yamlScalar(hostname)}`)
-    );
-  }
+  lines.push(...renderStashMitmBlock(mitmModules));
 
   return lines.join("\n");
 }

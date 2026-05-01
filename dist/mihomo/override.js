@@ -838,6 +838,9 @@ const MODULE_INDEX = {
           "match": "^https://(chatgpt|api\\.openai)\\.com/.*",
           "requireBody": false,
           "timeout": 5,
+          "argument": "",
+          "binaryMode": false,
+          "maxSize": 1048576,
           "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/openai/openai-panel.js"
         },
         "surgeScript": {
@@ -851,6 +854,10 @@ const MODULE_INDEX = {
         "title": "AI assistant panel",
         "surface": "script",
         "defaultState": "opt-in",
+        "riskLevel": "medium",
+        "requiresMitm": false,
+        "defaultEnabled": false,
+        "iosPerformanceCost": "medium",
         "performanceNote": "Requires HTTP script runtime; keep disabled unless the panel is needed."
       }
     },
@@ -868,13 +875,13 @@ const MODULE_INDEX = {
       ],
       "support": {
         "supportLevel": {
-          "stash": "full",
-          "surge": "full",
+          "stash": "partial",
+          "surge": "partial",
           "mihomo": "partial"
         },
         "notes": {
-          "stash": "Rendered as native url-rewrite lines.",
-          "surge": "Rendered as native URL Rewrite rules.",
+          "stash": "Metadata only. The previous broad redirect dropped useful URL state and is intentionally not emitted.",
+          "surge": "Metadata only. The previous broad redirect dropped useful URL state and is intentionally not emitted.",
           "mihomo": "Documented in metadata only; override.js does not emit rewrite rules."
         }
       },
@@ -882,22 +889,23 @@ const MODULE_INDEX = {
         "scenario.media"
       ],
       "conflicts": [],
-      "render": {
-        "stashRewrite": "^https?:\\/\\/([^/]+)\\/.*[?&](utm_(source|medium|campaign)|spm)=.*$ 302 https://$1/",
-        "surgeRewrite": "^https?:\\/\\/([^/]+)\\/.*[?&](utm_(source|medium|campaign)|spm)=.*$ 302 https://$1/"
-      },
+      "render": {},
       "ui": {
         "title": "Tracking parameter cleanup",
         "surface": "rewrite",
-        "defaultState": "opt-in",
-        "performanceNote": "Native rewrite is cheap, but broad URL patterns still affect matching cost."
+        "defaultState": "disabled",
+        "riskLevel": "high",
+        "requiresMitm": false,
+        "defaultEnabled": false,
+        "iosPerformanceCost": "low",
+        "performanceNote": "Disabled until a path-preserving cleaner is available; broad redirects can break pages."
       }
     },
     {
-      "id": "runtime.core.mitm",
+      "id": "runtime.mitm.openai",
       "kind": "mitm",
-      "domain": "developer",
-      "title": "tls-hosts",
+      "domain": "ai",
+      "title": "openai-tls-hosts",
       "emitByDefault": false,
       "sourceMode": "local",
       "supportedClients": [
@@ -923,15 +931,105 @@ const MODULE_INDEX = {
       "conflicts": [],
       "render": {
         "hostnames": [
-          "*.openai.com",
-          "*.anthropic.com",
+          "*.openai.com"
+        ]
+      },
+      "ui": {
+        "title": "OpenAI TLS inspection hosts",
+        "surface": "mitm",
+        "defaultState": "opt-in",
+        "riskLevel": "high",
+        "requiresMitm": true,
+        "defaultEnabled": false,
+        "iosPerformanceCost": "high",
+        "performanceNote": "MITM changes TLS handling; only enable for explicitly trusted troubleshooting flows."
+      }
+    },
+    {
+      "id": "runtime.mitm.anthropic",
+      "kind": "mitm",
+      "domain": "ai",
+      "title": "anthropic-tls-hosts",
+      "emitByDefault": false,
+      "sourceMode": "local",
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ],
+      "support": {
+        "supportLevel": {
+          "stash": "full",
+          "surge": "full",
+          "mihomo": "unsupported"
+        },
+        "notes": {
+          "stash": "Rendered as MITM hostnames.",
+          "surge": "Rendered as MITM hostname append list.",
+          "mihomo": "MITM is not emitted from the generic Mihomo override."
+        }
+      },
+      "dependencies": [
+        "base.core"
+      ],
+      "conflicts": [],
+      "render": {
+        "hostnames": [
+          "*.anthropic.com"
+        ]
+      },
+      "ui": {
+        "title": "Anthropic TLS inspection hosts",
+        "surface": "mitm",
+        "defaultState": "opt-in",
+        "riskLevel": "high",
+        "requiresMitm": true,
+        "defaultEnabled": false,
+        "iosPerformanceCost": "high",
+        "performanceNote": "MITM changes TLS handling; only enable for explicitly trusted troubleshooting flows."
+      }
+    },
+    {
+      "id": "runtime.mitm.githubusercontent",
+      "kind": "mitm",
+      "domain": "developer",
+      "title": "githubusercontent-tls-hosts",
+      "emitByDefault": false,
+      "sourceMode": "local",
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ],
+      "support": {
+        "supportLevel": {
+          "stash": "full",
+          "surge": "full",
+          "mihomo": "unsupported"
+        },
+        "notes": {
+          "stash": "Rendered as MITM hostnames.",
+          "surge": "Rendered as MITM hostname append list.",
+          "mihomo": "MITM is not emitted from the generic Mihomo override."
+        }
+      },
+      "dependencies": [
+        "base.core"
+      ],
+      "conflicts": [],
+      "render": {
+        "hostnames": [
           "*.githubusercontent.com"
         ]
       },
       "ui": {
-        "title": "Selective TLS inspection hosts",
+        "title": "GitHub raw asset TLS inspection hosts",
         "surface": "mitm",
         "defaultState": "opt-in",
+        "riskLevel": "high",
+        "requiresMitm": true,
+        "defaultEnabled": false,
+        "iosPerformanceCost": "high",
         "performanceNote": "MITM changes TLS handling; only enable for explicitly trusted troubleshooting flows."
       }
     }
