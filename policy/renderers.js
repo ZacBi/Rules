@@ -36,33 +36,42 @@ const QURE_ICON_BASE_URL = "https://raw.githubusercontent.com/Koolson/Qure/maste
 const NOISE_POLICY_PATTERN = "剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset";
 const RESERVED_POLICY_PATTERN = "自动选择|节点选择|DIRECT|REJECT";
 const STASH_DISPLAY_NAME_BY_GROUP = {
-  自动选择: "自动优选",
-  节点选择: "手动节点",
-  香港节点: "香港",
-  台湾节点: "台湾",
-  日本节点: "日本",
-  新加坡节点: "新加坡",
-  美国节点: "美国",
-  英国节点: "英国",
-  澳洲节点: "澳洲",
-  马来西亚节点: "马来西亚",
-  阿根廷节点: "阿根廷",
-  国外媒体: "流媒体",
-  AI平台: "AI 平台",
-  开发工具与镜像: "开发工具",
-  学习与研究: "学习研究",
-  即时通讯: "即时通讯",
-  微软服务: "微软服务",
-  苹果服务: "苹果服务",
-  游戏平台: "游戏平台",
-  国外网站: "全球网站",
-  国内网站: "国内直连",
-  广告拦截: "广告拦截",
-  漏网之鱼: "默认出口",
+  自动选择: "Rules 自动优选",
+  节点选择: "Rules 手动节点",
+  AI检测: "Rules AI 检测",
+  Gemini检测: "Rules Gemini 检测",
+  媒体检测: "Rules 媒体检测",
+  苹果检测: "Rules 苹果检测",
+  Google检测: "Rules Google 检测",
+  香港节点: "Rules 香港",
+  台湾节点: "Rules 台湾",
+  日本节点: "Rules 日本",
+  新加坡节点: "Rules 新加坡",
+  美国节点: "Rules 美国",
+  英国节点: "Rules 英国",
+  澳洲节点: "Rules 澳洲",
+  马来西亚节点: "Rules 马来西亚",
+  阿根廷节点: "Rules 阿根廷",
+  国外媒体: "Rules 流媒体",
+  AI平台: "Rules AI 平台",
+  Gemini服务: "Rules Gemini",
+  即时通讯: "Rules 即时通讯",
+  微软服务: "Rules 微软服务",
+  苹果服务: "Rules 苹果服务",
+  游戏平台: "Rules 游戏平台",
+  国外网站: "Rules 全球网站",
+  国内网站: "Rules 国内直连",
+  广告拦截: "Rules 广告拦截",
+  漏网之鱼: "Rules 默认出口",
 };
 const STASH_ICON_FILENAME_BY_GROUP = {
   自动选择: "Speedtest.png",
   节点选择: "Proxy.png",
+  AI检测: "AI.png",
+  Gemini检测: "Google_Search.png",
+  媒体检测: "YouTube.png",
+  苹果检测: "Apple_2.png",
+  Google检测: "Google_Search.png",
   香港节点: "Hong_Kong.png",
   台湾节点: "Taiwan.png",
   日本节点: "Japan.png",
@@ -74,8 +83,7 @@ const STASH_ICON_FILENAME_BY_GROUP = {
   阿根廷节点: "Argentina.png",
   国外媒体: "ForeignMedia.png",
   AI平台: "AI.png",
-  开发工具与镜像: "Lab.png",
-  学习与研究: "Scholar.png",
+  Gemini服务: "Google_Search.png",
   即时通讯: "Telegram.png",
   微软服务: "Microsoft.png",
   苹果服务: "Apple_2.png",
@@ -168,12 +176,28 @@ function renderStashRegionGroup(index, region) {
   ].join("\n");
 }
 
+function renderStashServiceCheckGroup(group) {
+  return [
+    ...renderStashGroupHeader(group.name, group.type),
+    "    proxies:",
+    ...uniq(group.proxies).map((proxy) => `      - ${yamlScalar(toStashGroupName(proxy))}`),
+    `    url: ${yamlScalar(group.url)}`,
+    `    interval: ${group.interval}`,
+    `    tolerance: ${group.tolerance}`,
+    "    lazy: true",
+  ].join("\n");
+}
+
 function renderStashBusinessGroup(group) {
   return [
     ...renderStashGroupHeader(group.name, "select"),
     "    proxies:",
     ...uniq(group.proxies).map((proxy) => `      - ${yamlScalar(toStashGroupName(proxy))}`),
   ].join("\n");
+}
+
+function renderRouteRule(rule, groupName) {
+  return `${rule},${groupName}`;
 }
 
 function renderStashHttpRuntimeBlocks(rewriteModules, scriptModules, mitmModules) {
@@ -265,17 +289,20 @@ function renderStashEntry(index) {
     "log-level: info",
     "ipv6: false",
     "",
-    "proxy-groups:",
+    "proxy-groups: #!replace",
     renderStashSelectGroup(index),
     renderStashAutoGroup(index),
+    ...index.serviceCheckGroups.map((group) => renderStashServiceCheckGroup(group)),
     ...index.businessGroups.map((group) => renderStashBusinessGroup(group)),
     ...index.regions.map((region) => renderStashRegionGroup(index, region)),
     "",
-    "rule-providers:",
+    "rule-providers: #!replace",
     ...index.ruleSets.map((ruleSet) => renderRuleProviderBlock(ruleSet)),
     "",
-    "rules:",
+    "rules: #!replace",
+    ...index.clashInlineRules.map((rule) => `  - ${yamlScalar(rule)}`),
     ...index.inlineRules.map((rule) => `  - ${yamlScalar(rule)}`),
+    ...index.routingRules.map((route) => `  - ${yamlScalar(renderRouteRule(route.rule, toStashGroupName(route.group)))}`),
     ...index.ruleSets.map((ruleSet) => `  - ${yamlScalar(`RULE-SET,${ruleSet.id},${toStashGroupName(ruleSet.group)}`)}`),
     `  - ${yamlScalar(`MATCH,${toStashGroupName("漏网之鱼")}`)}`,
   ];
@@ -331,6 +358,17 @@ function renderMihomoEntry(index) {
     "    });",
     "  }",
     "",
+    "  function buildServiceCheckGroups() {",
+    "    return MODULE_INDEX.serviceCheckGroups.map((group) => ({",
+    "      name: group.name,",
+    "      type: group.type,",
+    "      proxies: uniq(group.proxies),",
+    "      url: group.url,",
+    "      interval: group.interval,",
+    "      tolerance: group.tolerance,",
+    "    }));",
+    "  }",
+    "",
     "  function buildBusinessGroups() {",
     "    return MODULE_INDEX.businessGroups.map((group) => ({",
     "      name: group.name,",
@@ -354,7 +392,9 @@ function renderMihomoEntry(index) {
     "",
     "  function buildRules() {",
     "    return [",
+    "      ...MODULE_INDEX.clashInlineRules,",
     "      ...MODULE_INDEX.inlineRules,",
+    "      ...MODULE_INDEX.routingRules.map((route) => `${route.rule},${route.group}`),",
     "      ...MODULE_INDEX.ruleSets.map((ruleSet) => `RULE-SET,${ruleSet.id},${ruleSet.group}`),",
     "      \"MATCH,漏网之鱼\",",
     "    ];",
@@ -376,10 +416,11 @@ function renderMihomoEntry(index) {
     "",
     groupsSource,
     "",
-    "  const proxyNames = buildProxyNames(config);",
-    "  config[\"proxy-groups\"] = [",
-    "    ...buildStrategyGroups(proxyNames),",
-    "    ...buildRegionGroups(proxyNames),",
+  "  const proxyNames = buildProxyNames(config);",
+  "  config[\"proxy-groups\"] = [",
+  "    ...buildStrategyGroups(proxyNames),",
+  "    ...buildServiceCheckGroups(),",
+  "    ...buildRegionGroups(proxyNames),",
     "    ...buildBusinessGroups(),",
     "  ];",
     "  config[\"rule-providers\"] = buildRuleProviders();",
@@ -427,6 +468,10 @@ function renderSurgeEntry(index) {
     "[Proxy Group]",
     `自动选择 = url-test, include-all-proxies=true, policy-regex-filter='${allPolicyRegex}', url=${healthCheck.url}, interval=${healthCheck.interval}, tolerance=${healthCheck.tolerance}, timeout=${healthCheck.timeout}`,
     `节点选择 = select, 自动选择, ${regionNames.join(", ")}, DIRECT, include-all-proxies=true, policy-regex-filter='${allPolicyRegex}'`,
+    ...index.serviceCheckGroups.map(
+      (group) =>
+        `${group.name} = url-test, ${uniq(group.proxies).join(", ")}, url=${group.url}, interval=${group.interval}, tolerance=${group.tolerance}, timeout=${group.timeout}`
+    ),
     ...index.regions.map(
       (region) =>
         `${region.groupName} = url-test, include-all-proxies=true, policy-regex-filter='${surgePolicyFilter(region.match)}', url=${healthCheck.url}, interval=${healthCheck.interval}, tolerance=${healthCheck.tolerance}, timeout=${healthCheck.timeout}`
@@ -436,6 +481,7 @@ function renderSurgeEntry(index) {
     "[Rule]",
     "RULE-SET,LAN,DIRECT",
     ...index.inlineRules,
+    ...index.routingRules.map((route) => renderRouteRule(route.rule, route.group)),
     ...index.ruleSets.map((ruleSet) => `RULE-SET,${ruleSet.urls.surge},${ruleSet.group},extended-matching`),
     "FINAL,漏网之鱼",
   ];

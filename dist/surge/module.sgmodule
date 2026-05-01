@@ -10,6 +10,11 @@ enhanced-mode-by-rule = true
 [Proxy Group]
 自动选择 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
 节点选择 = select, 自动选择, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 英国节点, 澳洲节点, 马来西亚节点, 阿根廷节点, DIRECT, include-all-proxies=true, policy-regex-filter='^(?!(?:自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset)).*$'
+AI检测 = url-test, 香港节点, 日本节点, 新加坡节点, 美国节点, url=https://auth.openai.com/.well-known/openid-configuration, interval=600, tolerance=100, timeout=3
+Gemini检测 = url-test, 香港节点, 日本节点, 新加坡节点, 美国节点, url=https://gemini.google.com, interval=600, tolerance=100, timeout=3
+媒体检测 = url-test, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, url=https://www.youtube.com/generate_204, interval=600, tolerance=100, timeout=3
+苹果检测 = url-test, DIRECT, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, url=https://www.apple.com/library/test/success.html, interval=600, tolerance=100, timeout=3
+Google检测 = url-test, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, url=https://www.google.com/generate_204, interval=600, tolerance=100, timeout=3
 香港节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:香港|HK|Hong\s*Kong)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
 台湾节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:台湾|TW|Taiwan|Taipei)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
 日本节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:日本|JP|Japan|Tokyo|Osaka)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
@@ -19,15 +24,14 @@ enhanced-mode-by-rule = true
 澳洲节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:澳洲|澳大利亚|AU|Australia|Sydney|Melbourne|Perth)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
 马来西亚节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:马来西亚|MY|Malaysia|Kuala\s*Lumpur)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
 阿根廷节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:阿根廷|AR|Argentina|Buenos\s*Aires)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
-国外媒体 = select, 节点选择, 自动选择, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点
-AI平台 = select, 节点选择, 自动选择, 香港节点, 日本节点, 新加坡节点, 美国节点
-开发工具与镜像 = select, 节点选择, 自动选择, 香港节点, 日本节点, 新加坡节点, 美国节点, DIRECT
-学习与研究 = select, 节点选择, 自动选择, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, DIRECT
+国外媒体 = select, 媒体检测, 节点选择, 自动选择, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点
+AI平台 = select, AI检测, 节点选择, 自动选择, 香港节点, 日本节点, 新加坡节点, 美国节点
+Gemini服务 = select, Gemini检测, 节点选择, 自动选择, 香港节点, 日本节点, 新加坡节点, 美国节点
 即时通讯 = select, 节点选择, 自动选择, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点
 微软服务 = select, DIRECT, 节点选择, 自动选择, 香港节点, 日本节点, 新加坡节点, 美国节点
-苹果服务 = select, DIRECT, 节点选择, 自动选择
+苹果服务 = select, DIRECT, 苹果检测, 节点选择, 自动选择
 游戏平台 = select, 节点选择, 自动选择, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点
-国外网站 = select, 节点选择, 自动选择, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点
+国外网站 = select, Google检测, 节点选择, 自动选择, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点
 国内网站 = select, DIRECT, 节点选择
 广告拦截 = select, REJECT, DIRECT
 漏网之鱼 = select, 节点选择, 自动选择, DIRECT
@@ -38,6 +42,15 @@ DOMAIN,localhost,DIRECT
 DOMAIN-SUFFIX,local,DIRECT
 IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
 IP-CIDR6,::1/128,DIRECT,no-resolve
+DOMAIN,ios.chat.openai.com,AI平台
+DOMAIN,android.chat.openai.com,AI平台
+DOMAIN-SUFFIX,auth.openai.com,AI平台
+DOMAIN-SUFFIX,challenges.cloudflare.com,AI平台
+DOMAIN-SUFFIX,workos.com,AI平台
+DOMAIN-SUFFIX,statsigapi.net,AI平台
+DOMAIN-SUFFIX,featuregates.org,AI平台
+DOMAIN-SUFFIX,appattest.apple.com,AI平台
+DOMAIN-SUFFIX,devicecheck.apple.com,AI平台
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Advertising/Advertising.list,广告拦截,extended-matching
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Lan/Lan.list,国内网站,extended-matching
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ChinaMax/ChinaMax.list,国内网站,extended-matching
@@ -45,21 +58,21 @@ RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/r
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/OpenAI/OpenAI.list,AI平台,extended-matching
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Claude/Claude.list,AI平台,extended-matching
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Anthropic/Anthropic.list,AI平台,extended-matching
-RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Gemini/Gemini.list,AI平台,extended-matching
+RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Gemini/Gemini.list,Gemini服务,extended-matching
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Copilot/Copilot.list,AI平台,extended-matching
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/YouTube/YouTube.list,国外媒体,extended-matching
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Netflix/Netflix.list,国外媒体,extended-matching
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Spotify/Spotify.list,国外媒体,extended-matching
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/TikTok/TikTok.list,国外媒体,extended-matching
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/GlobalMedia/GlobalMedia.list,国外媒体,extended-matching
-RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/GitHub/GitHub.list,开发工具与镜像,extended-matching
-RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Npmjs/Npmjs.list,开发工具与镜像,extended-matching
-RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Docker/Docker.list,开发工具与镜像,extended-matching
-RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Python/Python.list,开发工具与镜像,extended-matching
-RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/GitLab/GitLab.list,开发工具与镜像,extended-matching
-RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Scholar/Scholar.list,学习与研究,extended-matching
-RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Wikipedia/Wikipedia.list,学习与研究,extended-matching
-RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Stackexchange/Stackexchange.list,学习与研究,extended-matching
+RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/GitHub/GitHub.list,国外网站,extended-matching
+RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Npmjs/Npmjs.list,国外网站,extended-matching
+RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Docker/Docker.list,国外网站,extended-matching
+RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Python/Python.list,国外网站,extended-matching
+RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/GitLab/GitLab.list,国外网站,extended-matching
+RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Scholar/Scholar.list,国外网站,extended-matching
+RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Wikipedia/Wikipedia.list,国外网站,extended-matching
+RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Stackexchange/Stackexchange.list,国外网站,extended-matching
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Google/Google.list,国外网站,extended-matching
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Telegram/Telegram.list,即时通讯,extended-matching
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Discord/Discord.list,即时通讯,extended-matching

@@ -33,11 +33,93 @@ const MODULE_INDEX = {
       ]
     }
   ],
+  "serviceCheckGroups": [
+    {
+      "key": "ai",
+      "name": "AI检测",
+      "type": "url-test",
+      "proxies": [
+        "香港节点",
+        "日本节点",
+        "新加坡节点",
+        "美国节点"
+      ],
+      "url": "https://auth.openai.com/.well-known/openid-configuration",
+      "interval": 600,
+      "tolerance": 100,
+      "timeout": 3
+    },
+    {
+      "key": "gemini",
+      "name": "Gemini检测",
+      "type": "url-test",
+      "proxies": [
+        "香港节点",
+        "日本节点",
+        "新加坡节点",
+        "美国节点"
+      ],
+      "url": "https://gemini.google.com",
+      "interval": 600,
+      "tolerance": 100,
+      "timeout": 3
+    },
+    {
+      "key": "media",
+      "name": "媒体检测",
+      "type": "url-test",
+      "proxies": [
+        "香港节点",
+        "台湾节点",
+        "日本节点",
+        "新加坡节点",
+        "美国节点"
+      ],
+      "url": "https://www.youtube.com/generate_204",
+      "interval": 600,
+      "tolerance": 100,
+      "timeout": 3
+    },
+    {
+      "key": "apple",
+      "name": "苹果检测",
+      "type": "url-test",
+      "proxies": [
+        "DIRECT",
+        "香港节点",
+        "台湾节点",
+        "日本节点",
+        "新加坡节点",
+        "美国节点"
+      ],
+      "url": "https://www.apple.com/library/test/success.html",
+      "interval": 600,
+      "tolerance": 100,
+      "timeout": 3
+    },
+    {
+      "key": "google",
+      "name": "Google检测",
+      "type": "url-test",
+      "proxies": [
+        "香港节点",
+        "台湾节点",
+        "日本节点",
+        "新加坡节点",
+        "美国节点"
+      ],
+      "url": "https://www.google.com/generate_204",
+      "interval": 600,
+      "tolerance": 100,
+      "timeout": 3
+    }
+  ],
   "businessGroups": [
     {
       "name": "国外媒体",
       "type": "select",
       "proxies": [
+        "媒体检测",
         "节点选择",
         "自动选择",
         "香港节点",
@@ -51,6 +133,7 @@ const MODULE_INDEX = {
       "name": "AI平台",
       "type": "select",
       "proxies": [
+        "AI检测",
         "节点选择",
         "自动选择",
         "香港节点",
@@ -60,30 +143,16 @@ const MODULE_INDEX = {
       ]
     },
     {
-      "name": "开发工具与镜像",
+      "name": "Gemini服务",
       "type": "select",
       "proxies": [
+        "Gemini检测",
         "节点选择",
         "自动选择",
         "香港节点",
         "日本节点",
         "新加坡节点",
-        "美国节点",
-        "DIRECT"
-      ]
-    },
-    {
-      "name": "学习与研究",
-      "type": "select",
-      "proxies": [
-        "节点选择",
-        "自动选择",
-        "香港节点",
-        "台湾节点",
-        "日本节点",
-        "新加坡节点",
-        "美国节点",
-        "DIRECT"
+        "美国节点"
       ]
     },
     {
@@ -117,6 +186,7 @@ const MODULE_INDEX = {
       "type": "select",
       "proxies": [
         "DIRECT",
+        "苹果检测",
         "节点选择",
         "自动选择"
       ]
@@ -138,6 +208,7 @@ const MODULE_INDEX = {
       "name": "国外网站",
       "type": "select",
       "proxies": [
+        "Google检测",
         "节点选择",
         "自动选择",
         "香港节点",
@@ -236,6 +307,7 @@ const MODULE_INDEX = {
       "group": "广告拦截",
       "behavior": "classical",
       "origin": "blackmatrix7",
+      "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Advertising/Advertising.yaml",
         "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Advertising/Advertising.list"
@@ -255,6 +327,7 @@ const MODULE_INDEX = {
       "group": "国内网站",
       "behavior": "classical",
       "origin": "blackmatrix7",
+      "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan.yaml",
         "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Lan/Lan.list"
@@ -274,6 +347,7 @@ const MODULE_INDEX = {
       "group": "国内网站",
       "behavior": "domain",
       "origin": "blackmatrix7",
+      "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax_Domain.yaml",
         "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ChinaMax/ChinaMax.list"
@@ -293,6 +367,7 @@ const MODULE_INDEX = {
       "group": "国内网站",
       "behavior": "classical",
       "origin": "blackmatrix7",
+      "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMedia/ChinaMedia.yaml",
         "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ChinaMedia/ChinaMedia.list"
@@ -312,6 +387,7 @@ const MODULE_INDEX = {
       "group": "AI平台",
       "behavior": "classical",
       "origin": "blackmatrix7",
+      "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.yaml",
         "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/OpenAI/OpenAI.list"
@@ -331,6 +407,7 @@ const MODULE_INDEX = {
       "group": "AI平台",
       "behavior": "classical",
       "origin": "blackmatrix7",
+      "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Claude/Claude.yaml",
         "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Claude/Claude.list"
@@ -350,6 +427,7 @@ const MODULE_INDEX = {
       "group": "AI平台",
       "behavior": "classical",
       "origin": "blackmatrix7",
+      "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Anthropic/Anthropic.yaml",
         "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Anthropic/Anthropic.list"
@@ -366,9 +444,10 @@ const MODULE_INDEX = {
     {
       "id": "gemini",
       "sourceName": "Gemini",
-      "group": "AI平台",
+      "group": "Gemini服务",
       "behavior": "classical",
       "origin": "blackmatrix7",
+      "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Gemini/Gemini.yaml",
         "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Gemini/Gemini.list"
@@ -388,6 +467,7 @@ const MODULE_INDEX = {
       "group": "AI平台",
       "behavior": "classical",
       "origin": "blackmatrix7",
+      "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Copilot/Copilot.yaml",
         "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Copilot/Copilot.list"
@@ -407,6 +487,7 @@ const MODULE_INDEX = {
       "group": "国外媒体",
       "behavior": "classical",
       "origin": "blackmatrix7",
+      "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.yaml",
         "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/YouTube/YouTube.list"
@@ -426,6 +507,7 @@ const MODULE_INDEX = {
       "group": "国外媒体",
       "behavior": "classical",
       "origin": "blackmatrix7",
+      "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Netflix/Netflix.yaml",
         "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Netflix/Netflix.list"
@@ -445,6 +527,7 @@ const MODULE_INDEX = {
       "group": "国外媒体",
       "behavior": "classical",
       "origin": "blackmatrix7",
+      "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Spotify/Spotify.yaml",
         "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Spotify/Spotify.list"
@@ -464,6 +547,7 @@ const MODULE_INDEX = {
       "group": "国外媒体",
       "behavior": "classical",
       "origin": "blackmatrix7",
+      "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TikTok/TikTok.yaml",
         "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/TikTok/TikTok.list"
@@ -483,6 +567,7 @@ const MODULE_INDEX = {
       "group": "国外媒体",
       "behavior": "classical",
       "origin": "blackmatrix7",
+      "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GlobalMedia/GlobalMedia.yaml",
         "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/GlobalMedia/GlobalMedia.list"
@@ -499,9 +584,10 @@ const MODULE_INDEX = {
     {
       "id": "github",
       "sourceName": "GitHub",
-      "group": "开发工具与镜像",
+      "group": "国外网站",
       "behavior": "classical",
       "origin": "blackmatrix7",
+      "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub.yaml",
         "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/GitHub/GitHub.list"
@@ -518,9 +604,10 @@ const MODULE_INDEX = {
     {
       "id": "npmjs",
       "sourceName": "Npmjs",
-      "group": "开发工具与镜像",
+      "group": "国外网站",
       "behavior": "classical",
       "origin": "blackmatrix7",
+      "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Npmjs/Npmjs.yaml",
         "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Npmjs/Npmjs.list"
@@ -537,9 +624,10 @@ const MODULE_INDEX = {
     {
       "id": "docker",
       "sourceName": "Docker",
-      "group": "开发工具与镜像",
+      "group": "国外网站",
       "behavior": "classical",
       "origin": "blackmatrix7",
+      "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Docker/Docker.yaml",
         "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Docker/Docker.list"
@@ -556,9 +644,10 @@ const MODULE_INDEX = {
     {
       "id": "python",
       "sourceName": "Python",
-      "group": "开发工具与镜像",
+      "group": "国外网站",
       "behavior": "classical",
       "origin": "blackmatrix7",
+      "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Python/Python.yaml",
         "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Python/Python.list"
@@ -575,9 +664,10 @@ const MODULE_INDEX = {
     {
       "id": "gitlab",
       "sourceName": "GitLab",
-      "group": "开发工具与镜像",
+      "group": "国外网站",
       "behavior": "classical",
       "origin": "blackmatrix7",
+      "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitLab/GitLab.yaml",
         "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/GitLab/GitLab.list"
@@ -594,9 +684,10 @@ const MODULE_INDEX = {
     {
       "id": "scholar",
       "sourceName": "Scholar",
-      "group": "学习与研究",
+      "group": "国外网站",
       "behavior": "classical",
       "origin": "blackmatrix7",
+      "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Scholar/Scholar.yaml",
         "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Scholar/Scholar.list"
@@ -613,9 +704,10 @@ const MODULE_INDEX = {
     {
       "id": "wikipedia",
       "sourceName": "Wikipedia",
-      "group": "学习与研究",
+      "group": "国外网站",
       "behavior": "classical",
       "origin": "blackmatrix7",
+      "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Wikipedia/Wikipedia.yaml",
         "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Wikipedia/Wikipedia.list"
@@ -632,9 +724,10 @@ const MODULE_INDEX = {
     {
       "id": "stackexchange",
       "sourceName": "Stackexchange",
-      "group": "学习与研究",
+      "group": "国外网站",
       "behavior": "classical",
       "origin": "blackmatrix7",
+      "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Stackexchange/Stackexchange.yaml",
         "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Stackexchange/Stackexchange.list"
@@ -654,6 +747,7 @@ const MODULE_INDEX = {
       "group": "国外网站",
       "behavior": "classical",
       "origin": "blackmatrix7",
+      "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google.yaml",
         "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Google/Google.list"
@@ -673,6 +767,7 @@ const MODULE_INDEX = {
       "group": "即时通讯",
       "behavior": "classical",
       "origin": "blackmatrix7",
+      "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.yaml",
         "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Telegram/Telegram.list"
@@ -692,6 +787,7 @@ const MODULE_INDEX = {
       "group": "即时通讯",
       "behavior": "classical",
       "origin": "blackmatrix7",
+      "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Discord/Discord.yaml",
         "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Discord/Discord.list"
@@ -711,6 +807,7 @@ const MODULE_INDEX = {
       "group": "国外网站",
       "behavior": "classical",
       "origin": "blackmatrix7",
+      "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Twitter/Twitter.yaml",
         "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Twitter/Twitter.list"
@@ -730,6 +827,7 @@ const MODULE_INDEX = {
       "group": "微软服务",
       "behavior": "classical",
       "origin": "blackmatrix7",
+      "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.yaml",
         "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Microsoft/Microsoft.list"
@@ -749,6 +847,7 @@ const MODULE_INDEX = {
       "group": "苹果服务",
       "behavior": "classical",
       "origin": "blackmatrix7",
+      "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple.yaml",
         "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Apple/Apple.list"
@@ -768,6 +867,7 @@ const MODULE_INDEX = {
       "group": "游戏平台",
       "behavior": "classical",
       "origin": "blackmatrix7",
+      "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Steam/Steam.yaml",
         "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Steam/Steam.list"
@@ -787,6 +887,7 @@ const MODULE_INDEX = {
       "group": "游戏平台",
       "behavior": "classical",
       "origin": "blackmatrix7",
+      "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Epic/Epic.yaml",
         "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Epic/Epic.list"
@@ -799,6 +900,62 @@ const MODULE_INDEX = {
         "mihomo",
         "surge"
       ]
+    }
+  ],
+  "routingRules": [
+    {
+      "rule": "DOMAIN,ios.chat.openai.com",
+      "group": "AI平台",
+      "origin": "openai-docs",
+      "sourceUrl": "https://help.openai.com/en/articles/9247338-network-recommendations-for-chatgpt-errors-on-web-and-apps"
+    },
+    {
+      "rule": "DOMAIN,android.chat.openai.com",
+      "group": "AI平台",
+      "origin": "openai-docs",
+      "sourceUrl": "https://help.openai.com/en/articles/9247338-network-recommendations-for-chatgpt-errors-on-web-and-apps"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,auth.openai.com",
+      "group": "AI平台",
+      "origin": "openai-docs",
+      "sourceUrl": "https://help.openai.com/en/articles/9247338-network-recommendations-for-chatgpt-errors-on-web-and-apps"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,challenges.cloudflare.com",
+      "group": "AI平台",
+      "origin": "openai-docs",
+      "sourceUrl": "https://help.openai.com/en/articles/9247338-network-recommendations-for-chatgpt-errors-on-web-and-apps"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,workos.com",
+      "group": "AI平台",
+      "origin": "openai-docs",
+      "sourceUrl": "https://help.openai.com/en/articles/9247338-network-recommendations-for-chatgpt-errors-on-web-and-apps"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,statsigapi.net",
+      "group": "AI平台",
+      "origin": "openai-docs",
+      "sourceUrl": "https://help.openai.com/en/articles/9247338-network-recommendations-for-chatgpt-errors-on-web-and-apps"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,featuregates.org",
+      "group": "AI平台",
+      "origin": "openai-docs",
+      "sourceUrl": "https://help.openai.com/en/articles/9247338-network-recommendations-for-chatgpt-errors-on-web-and-apps"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,appattest.apple.com",
+      "group": "AI平台",
+      "origin": "openai-docs",
+      "sourceUrl": "https://help.openai.com/en/articles/9247338-network-recommendations-for-chatgpt-errors-on-web-and-apps"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,devicecheck.apple.com",
+      "group": "AI平台",
+      "origin": "openai-docs",
+      "sourceUrl": "https://help.openai.com/en/articles/9247338-network-recommendations-for-chatgpt-errors-on-web-and-apps"
     }
   ],
   "runtimeModules": [
@@ -1151,6 +1308,9 @@ const MODULE_INDEX = {
       "mitm": "unsupported"
     }
   },
+  "clashInlineRules": [
+    "AND,((NETWORK,UDP),(DST-PORT,443)),REJECT"
+  ],
   "inlineRules": [
     "DOMAIN,localhost,DIRECT",
     "DOMAIN-SUFFIX,local,DIRECT",
@@ -1166,6 +1326,11 @@ const MODULE_INDEX = {
       "groups": [
         "自动选择",
         "节点选择",
+        "AI检测",
+        "Gemini检测",
+        "媒体检测",
+        "苹果检测",
+        "Google检测",
         "香港节点",
         "台湾节点",
         "日本节点",
@@ -1204,14 +1369,44 @@ const MODULE_INDEX = {
       "domain": "ai",
       "title": "AI platforms",
       "groups": [
-        "AI平台"
+        "AI平台",
+        "AI检测"
       ],
       "ruleSets": [
         "openai",
         "claude",
         "anthropic",
-        "gemini",
         "copilot"
+      ],
+      "dependsOn": [
+        "base.core"
+      ],
+      "output": null,
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge"
+      ],
+      "capabilities": {
+        "routing": true,
+        "rewrite": false,
+        "script": false,
+        "mitm": false
+      },
+      "conflicts": [],
+      "notes": []
+    },
+    {
+      "id": "scenario.gemini",
+      "layer": "scenario",
+      "domain": "ai",
+      "title": "Gemini",
+      "groups": [
+        "Gemini服务",
+        "Gemini检测"
+      ],
+      "ruleSets": [
+        "gemini"
       ],
       "dependsOn": [
         "base.core"
@@ -1237,7 +1432,8 @@ const MODULE_INDEX = {
       "domain": "media",
       "title": "Streaming media",
       "groups": [
-        "国外媒体"
+        "国外媒体",
+        "媒体检测"
       ],
       "ruleSets": [
         "youtube",
@@ -1270,7 +1466,7 @@ const MODULE_INDEX = {
       "domain": "dev",
       "title": "Developer tools",
       "groups": [
-        "开发工具与镜像"
+        "国外网站"
       ],
       "ruleSets": [
         "github",
@@ -1303,7 +1499,7 @@ const MODULE_INDEX = {
       "domain": "research",
       "title": "Learning and research",
       "groups": [
-        "学习与研究"
+        "国外网站"
       ],
       "ruleSets": [
         "scholar",
@@ -1365,7 +1561,8 @@ const MODULE_INDEX = {
       "title": "Vendor services",
       "groups": [
         "微软服务",
-        "苹果服务"
+        "苹果服务",
+        "苹果检测"
       ],
       "ruleSets": [
         "microsoft",
@@ -1425,11 +1622,20 @@ const MODULE_INDEX = {
       "domain": "web",
       "title": "Global web",
       "groups": [
-        "国外网站"
+        "国外网站",
+        "Google检测"
       ],
       "ruleSets": [
         "google",
-        "twitter"
+        "twitter",
+        "github",
+        "npmjs",
+        "docker",
+        "python",
+        "gitlab",
+        "scholar",
+        "wikipedia",
+        "stackexchange"
       ],
       "dependsOn": [
         "base.core"
@@ -1540,10 +1746,14 @@ const MODULE_INDEX = {
       "groups": [
         "自动选择",
         "节点选择",
+        "AI检测",
+        "Gemini检测",
+        "媒体检测",
+        "苹果检测",
+        "Google检测",
         "国外媒体",
         "AI平台",
-        "开发工具与镜像",
-        "学习与研究",
+        "Gemini服务",
         "即时通讯",
         "微软服务",
         "苹果服务",
@@ -1557,6 +1767,7 @@ const MODULE_INDEX = {
       "dependsOn": [
         "base.core",
         "scenario.ai",
+        "scenario.gemini",
         "scenario.media",
         "scenario.dev",
         "scenario.research",
@@ -1596,10 +1807,14 @@ const MODULE_INDEX = {
       "groups": [
         "自动选择",
         "节点选择",
+        "AI检测",
+        "Gemini检测",
+        "媒体检测",
+        "苹果检测",
+        "Google检测",
         "国外媒体",
         "AI平台",
-        "开发工具与镜像",
-        "学习与研究",
+        "Gemini服务",
         "即时通讯",
         "微软服务",
         "苹果服务",
@@ -1613,6 +1828,7 @@ const MODULE_INDEX = {
       "dependsOn": [
         "base.core",
         "scenario.ai",
+        "scenario.gemini",
         "scenario.media",
         "scenario.dev",
         "scenario.research",
@@ -1652,10 +1868,14 @@ const MODULE_INDEX = {
       "groups": [
         "自动选择",
         "节点选择",
+        "AI检测",
+        "Gemini检测",
+        "媒体检测",
+        "苹果检测",
+        "Google检测",
         "国外媒体",
         "AI平台",
-        "开发工具与镜像",
-        "学习与研究",
+        "Gemini服务",
         "即时通讯",
         "微软服务",
         "苹果服务",
@@ -1669,6 +1889,7 @@ const MODULE_INDEX = {
       "dependsOn": [
         "base.core",
         "scenario.ai",
+        "scenario.gemini",
         "scenario.media",
         "scenario.dev",
         "scenario.research",
@@ -1707,6 +1928,7 @@ const MODULE_INDEX = {
       "modules": [
         "base.core",
         "scenario.ai",
+        "scenario.gemini",
         "scenario.media",
         "scenario.dev",
         "scenario.research",
@@ -1726,6 +1948,7 @@ const MODULE_INDEX = {
       "modules": [
         "base.core",
         "scenario.ai",
+        "scenario.gemini",
         "scenario.media",
         "scenario.dev",
         "scenario.research",
@@ -1745,6 +1968,7 @@ const MODULE_INDEX = {
       "modules": [
         "base.core",
         "scenario.ai",
+        "scenario.gemini",
         "scenario.media",
         "scenario.dev",
         "scenario.research",
@@ -1816,6 +2040,17 @@ function main(config = {}) {
     });
   }
 
+  function buildServiceCheckGroups() {
+    return MODULE_INDEX.serviceCheckGroups.map((group) => ({
+      name: group.name,
+      type: group.type,
+      proxies: uniq(group.proxies),
+      url: group.url,
+      interval: group.interval,
+      tolerance: group.tolerance,
+    }));
+  }
+
   function buildBusinessGroups() {
     return MODULE_INDEX.businessGroups.map((group) => ({
       name: group.name,
@@ -1839,7 +2074,9 @@ function main(config = {}) {
 
   function buildRules() {
     return [
+      ...MODULE_INDEX.clashInlineRules,
       ...MODULE_INDEX.inlineRules,
+      ...MODULE_INDEX.routingRules.map((route) => `${route.rule},${route.group}`),
       ...MODULE_INDEX.ruleSets.map((ruleSet) => `RULE-SET,${ruleSet.id},${ruleSet.group}`),
       "MATCH,漏网之鱼",
     ];
@@ -1848,6 +2085,7 @@ function main(config = {}) {
   const proxyNames = buildProxyNames(config);
   config["proxy-groups"] = [
     ...buildStrategyGroups(proxyNames),
+    ...buildServiceCheckGroups(),
     ...buildRegionGroups(proxyNames),
     ...buildBusinessGroups(),
   ];
