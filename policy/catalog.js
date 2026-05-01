@@ -99,6 +99,59 @@ const mediaRegionGroupNames = pickRegionGroupNames([
 ]);
 const defaultProxyGroupNames = ["节点选择", "自动选择"];
 
+const serviceCheckGroups = [
+  {
+    key: "ai",
+    name: "AI检测",
+    type: "url-test",
+    proxies: aiRegionGroupNames,
+    url: "https://auth.openai.com/.well-known/openid-configuration",
+    interval: 600,
+    tolerance: 100,
+    timeout: 3,
+  },
+  {
+    key: "gemini",
+    name: "Gemini检测",
+    type: "url-test",
+    proxies: aiRegionGroupNames,
+    url: "https://gemini.google.com",
+    interval: 600,
+    tolerance: 100,
+    timeout: 3,
+  },
+  {
+    key: "media",
+    name: "媒体检测",
+    type: "url-test",
+    proxies: mediaRegionGroupNames,
+    url: "https://www.youtube.com/generate_204",
+    interval: 600,
+    tolerance: 100,
+    timeout: 3,
+  },
+  {
+    key: "apple",
+    name: "苹果检测",
+    type: "url-test",
+    proxies: ["DIRECT", ...coreRegionGroupNames],
+    url: "https://www.apple.com/library/test/success.html",
+    interval: 600,
+    tolerance: 100,
+    timeout: 3,
+  },
+  {
+    key: "google",
+    name: "Google检测",
+    type: "url-test",
+    proxies: coreRegionGroupNames,
+    url: "https://www.google.com/generate_204",
+    interval: 600,
+    tolerance: 100,
+    timeout: 3,
+  },
+];
+
 const strategyGroups = [
   {
     key: "auto",
@@ -118,22 +171,17 @@ const businessGroups = [
   {
     name: "国外媒体",
     type: "select",
-    proxies: [...defaultProxyGroupNames, ...mediaRegionGroupNames],
+    proxies: ["媒体检测", ...defaultProxyGroupNames, ...mediaRegionGroupNames],
   },
   {
     name: "AI平台",
     type: "select",
-    proxies: [...defaultProxyGroupNames, ...aiRegionGroupNames],
+    proxies: ["AI检测", ...defaultProxyGroupNames, ...aiRegionGroupNames],
   },
   {
-    name: "开发工具与镜像",
+    name: "Gemini服务",
     type: "select",
-    proxies: [...defaultProxyGroupNames, ...devRegionGroupNames, "DIRECT"],
-  },
-  {
-    name: "学习与研究",
-    type: "select",
-    proxies: [...defaultProxyGroupNames, ...coreRegionGroupNames, "DIRECT"],
+    proxies: ["Gemini检测", ...defaultProxyGroupNames, ...aiRegionGroupNames],
   },
   {
     name: "即时通讯",
@@ -148,7 +196,7 @@ const businessGroups = [
   {
     name: "苹果服务",
     type: "select",
-    proxies: ["DIRECT", ...defaultProxyGroupNames],
+    proxies: ["DIRECT", "苹果检测", ...defaultProxyGroupNames],
   },
   {
     name: "游戏平台",
@@ -158,7 +206,7 @@ const businessGroups = [
   {
     name: "国外网站",
     type: "select",
-    proxies: [...defaultProxyGroupNames, ...coreRegionGroupNames],
+    proxies: ["Google检测", ...defaultProxyGroupNames, ...coreRegionGroupNames],
   },
   {
     name: "国内网站",
@@ -224,7 +272,7 @@ const rawRuleSets = [
   {
     key: "gemini",
     sourceName: "Gemini",
-    group: "AI平台",
+    group: "Gemini服务",
     behavior: "classical",
   },
   {
@@ -266,49 +314,49 @@ const rawRuleSets = [
   {
     key: "github",
     sourceName: "GitHub",
-    group: "开发工具与镜像",
+    group: "国外网站",
     behavior: "classical",
   },
   {
     key: "npmjs",
     sourceName: "Npmjs",
-    group: "开发工具与镜像",
+    group: "国外网站",
     behavior: "classical",
   },
   {
     key: "docker",
     sourceName: "Docker",
-    group: "开发工具与镜像",
+    group: "国外网站",
     behavior: "classical",
   },
   {
     key: "python",
     sourceName: "Python",
-    group: "开发工具与镜像",
+    group: "国外网站",
     behavior: "classical",
   },
   {
     key: "gitlab",
     sourceName: "GitLab",
-    group: "开发工具与镜像",
+    group: "国外网站",
     behavior: "classical",
   },
   {
     key: "scholar",
     sourceName: "Scholar",
-    group: "学习与研究",
+    group: "国外网站",
     behavior: "classical",
   },
   {
     key: "wikipedia",
     sourceName: "Wikipedia",
-    group: "学习与研究",
+    group: "国外网站",
     behavior: "classical",
   },
   {
     key: "stackexchange",
     sourceName: "Stackexchange",
-    group: "学习与研究",
+    group: "国外网站",
     behavior: "classical",
   },
   {
@@ -722,7 +770,8 @@ function withRuleSetMetadata(entry) {
     sourceName: entry.sourceName,
     group: entry.group,
     behavior: entry.behavior,
-    origin: entry.key === "cursor" ? "project" : "blackmatrix7",
+    origin: entry.origin ?? (entry.key === "cursor" ? "project" : "blackmatrix7"),
+    sourceUrl: entry.sourceUrl ?? null,
     urls: {
       mihomo: entry.mihomoUrl,
       surge: entry.surgeUrl,
@@ -774,6 +823,26 @@ function moduleTemplate(options) {
 const normalizedRuleSets = rawRuleSets.map(withDerivedUrls).map(withRuleSetMetadata);
 const regionGroupNames = regions.map((region) => region.groupName);
 const businessGroupNames = businessGroups.map((group) => group.name);
+const serviceCheckGroupNames = serviceCheckGroups.map((group) => group.name);
+const clashInlineRules = [
+  "AND,((NETWORK,UDP),(DST-PORT,443)),REJECT",
+];
+const routingRules = [
+  "DOMAIN,ios.chat.openai.com",
+  "DOMAIN,android.chat.openai.com",
+  "DOMAIN-SUFFIX,auth.openai.com",
+  "DOMAIN-SUFFIX,challenges.cloudflare.com",
+  "DOMAIN-SUFFIX,workos.com",
+  "DOMAIN-SUFFIX,statsigapi.net",
+  "DOMAIN-SUFFIX,featuregates.org",
+  "DOMAIN-SUFFIX,appattest.apple.com",
+  "DOMAIN-SUFFIX,devicecheck.apple.com",
+].map((rule) => ({
+  rule,
+  group: "AI平台",
+  origin: "openai-docs",
+  sourceUrl: "https://help.openai.com/en/articles/9247338-network-recommendations-for-chatgpt-errors-on-web-and-apps",
+}));
 
 const baseModule = moduleTemplate({
   id: "base.core",
@@ -782,6 +851,7 @@ const baseModule = moduleTemplate({
   title: "Core strategy scaffold",
   groups: uniq([
     ...strategyGroups.map((group) => group.name),
+    ...serviceCheckGroupNames,
     ...regionGroupNames,
     "漏网之鱼",
   ]),
@@ -800,8 +870,20 @@ const scenarioModules = [
     layer: "scenario",
     domain: "ai",
     title: "AI platforms",
-    groups: ["AI平台"],
-    ruleSets: uniq(["openai", "claude", "anthropic", "gemini", "copilot", RULES_GITHUB_REPO ? "cursor" : null]),
+    groups: ["AI平台", "AI检测"],
+    ruleSets: uniq(["openai", "claude", "anthropic", "copilot", RULES_GITHUB_REPO ? "cursor" : null]),
+    dependsOn: ["base.core"],
+    capabilities: {
+      routing: true,
+    },
+  }),
+  moduleTemplate({
+    id: "scenario.gemini",
+    layer: "scenario",
+    domain: "ai",
+    title: "Gemini",
+    groups: ["Gemini服务", "Gemini检测"],
+    ruleSets: ["gemini"],
     dependsOn: ["base.core"],
     capabilities: {
       routing: true,
@@ -812,7 +894,7 @@ const scenarioModules = [
     layer: "scenario",
     domain: "media",
     title: "Streaming media",
-    groups: ["国外媒体"],
+    groups: ["国外媒体", "媒体检测"],
     ruleSets: ["youtube", "netflix", "spotify", "tiktok", "globalmedia"],
     dependsOn: ["base.core"],
     capabilities: {
@@ -824,7 +906,7 @@ const scenarioModules = [
     layer: "scenario",
     domain: "dev",
     title: "Developer tools",
-    groups: ["开发工具与镜像"],
+    groups: ["国外网站"],
     ruleSets: ["github", "npmjs", "docker", "python", "gitlab"],
     dependsOn: ["base.core"],
     capabilities: {
@@ -836,7 +918,7 @@ const scenarioModules = [
     layer: "scenario",
     domain: "research",
     title: "Learning and research",
-    groups: ["学习与研究"],
+    groups: ["国外网站"],
     ruleSets: ["scholar", "wikipedia", "stackexchange"],
     dependsOn: ["base.core"],
     capabilities: {
@@ -860,7 +942,7 @@ const scenarioModules = [
     layer: "scenario",
     domain: "vendor",
     title: "Vendor services",
-    groups: ["微软服务", "苹果服务"],
+    groups: ["微软服务", "苹果服务", "苹果检测"],
     ruleSets: ["microsoft", "apple"],
     dependsOn: ["base.core"],
     capabilities: {
@@ -884,8 +966,8 @@ const scenarioModules = [
     layer: "scenario",
     domain: "web",
     title: "Global web",
-    groups: ["国外网站"],
-    ruleSets: ["google", "twitter"],
+    groups: ["国外网站", "Google检测"],
+    ruleSets: ["google", "twitter", "github", "npmjs", "docker", "python", "gitlab", "scholar", "wikipedia", "stackexchange"],
     dependsOn: ["base.core"],
     capabilities: {
       routing: true,
@@ -940,6 +1022,7 @@ const clientModules = [
     dependsOn: entryComposition,
     groups: uniq([
       ...strategyGroups.map((group) => group.name),
+      ...serviceCheckGroupNames,
       ...businessGroupNames,
     ]),
     output: {
@@ -962,6 +1045,7 @@ const clientModules = [
     dependsOn: entryComposition,
     groups: uniq([
       ...strategyGroups.map((group) => group.name),
+      ...serviceCheckGroupNames,
       ...businessGroupNames,
     ]),
     output: {
@@ -984,6 +1068,7 @@ const clientModules = [
     dependsOn: entryComposition,
     groups: uniq([
       ...strategyGroups.map((group) => group.name),
+      ...serviceCheckGroupNames,
       ...businessGroupNames,
     ]),
     output: {
@@ -1029,11 +1114,14 @@ function buildModuleIndex() {
     model: "unified-strategy-pack",
     defaultHealthCheck,
     strategyGroups,
+    serviceCheckGroups,
     businessGroups,
     regions,
     ruleSets: normalizedRuleSets,
+    routingRules,
     runtimeModules,
     runtimeSupportMatrix,
+    clashInlineRules,
     inlineRules: [
       "DOMAIN,localhost,DIRECT",
       "DOMAIN-SUFFIX,local,DIRECT",
@@ -1054,6 +1142,7 @@ module.exports = {
   defaultHealthCheck,
   regions,
   strategyGroups,
+  serviceCheckGroups,
   businessGroups,
   rulesets: normalizedRuleSets,
   surgeRuleSetLocation,
