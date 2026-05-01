@@ -807,6 +807,156 @@
   ],
   "routingRules": [
     {
+      "rule": "DOMAIN-SUFFIX,openai.com",
+      "group": "AI平台",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,chatgpt.com",
+      "group": "AI平台",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,anthropic.com",
+      "group": "AI平台",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,claude.ai",
+      "group": "AI平台",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,googlevideo.com",
+      "group": "国外媒体",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,youtube.com",
+      "group": "国外媒体",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,ytimg.com",
+      "group": "国外媒体",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,telegram.org",
+      "group": "即时通讯",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,t.me",
+      "group": "即时通讯",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,discord.com",
+      "group": "即时通讯",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,discordapp.com",
+      "group": "即时通讯",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,google.com",
+      "group": "国外网站",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,googleapis.com",
+      "group": "国外网站",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,gstatic.com",
+      "group": "国外网站",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,googleusercontent.com",
+      "group": "国外网站",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,ggpht.com",
+      "group": "国外网站",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,github.com",
+      "group": "国外网站",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,githubusercontent.com",
+      "group": "国外网站",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,githubassets.com",
+      "group": "国外网站",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,npmjs.com",
+      "group": "国外网站",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,docker.com",
+      "group": "国外网站",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,pythonhosted.org",
+      "group": "国外网站",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,gitlab.com",
+      "group": "国外网站",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,x.com",
+      "group": "国外网站",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,twitter.com",
+      "group": "国外网站",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
       "rule": "DOMAIN,ios.chat.openai.com",
       "group": "AI平台",
       "origin": "openai-docs",

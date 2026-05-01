@@ -771,7 +771,55 @@ const serviceCheckGroupNames = serviceCheckGroups.map((group) => group.name);
 const clashInlineRules = [
   "AND,((NETWORK,UDP),(DST-PORT,443)),REJECT",
 ];
-const routingRules = [
+const bootstrapDomainsByGroup = {
+  AI平台: [
+    "openai.com",
+    "chatgpt.com",
+    "anthropic.com",
+    "claude.ai",
+  ],
+  国外媒体: [
+    "googlevideo.com",
+    "youtube.com",
+    "ytimg.com",
+  ],
+  即时通讯: [
+    "telegram.org",
+    "t.me",
+    "discord.com",
+    "discordapp.com",
+  ],
+  国外网站: [
+    "google.com",
+    "googleapis.com",
+    "gstatic.com",
+    "googleusercontent.com",
+    "ggpht.com",
+    "github.com",
+    "githubusercontent.com",
+    "githubassets.com",
+    "npmjs.com",
+    "docker.com",
+    "pythonhosted.org",
+    "gitlab.com",
+    "x.com",
+    "twitter.com",
+  ],
+};
+
+function buildBootstrapRules(domainsByGroup) {
+  return Object.entries(domainsByGroup).flatMap(([group, domains]) =>
+    domains.map((domain) => ({
+      rule: `DOMAIN-SUFFIX,${domain}`,
+      group,
+      origin: "bootstrap",
+      sourceUrl: null,
+    }))
+  );
+}
+
+const globalBootstrapRules = buildBootstrapRules(bootstrapDomainsByGroup);
+const aiRoutingRules = [
   "DOMAIN,ios.chat.openai.com",
   "DOMAIN,android.chat.openai.com",
   "DOMAIN-SUFFIX,auth.openai.com",
@@ -787,6 +835,10 @@ const routingRules = [
   origin: "openai-docs",
   sourceUrl: "https://help.openai.com/en/articles/9247338-network-recommendations-for-chatgpt-errors-on-web-and-apps",
 }));
+const routingRules = [
+  ...globalBootstrapRules,
+  ...aiRoutingRules,
+];
 
 const baseModule = moduleTemplate({
   id: "base.core",
