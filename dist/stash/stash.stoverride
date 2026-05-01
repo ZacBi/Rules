@@ -481,6 +481,9 @@ http:
     - "^https?:\\/\\/m\\.client\\.10010\\.com\\/mobileService\\/(activity|customer)\\/(accountListData|get_client_adv|get_startadv) - reject"
     - "^https?:\\/\\/sso\\.lxjapp\\.com\\/\\/chims\\/servlet\\/csGetLatestSoftwareVersionServlet - reject"
     - "^https?:\\/\\/www\\.meituan\\.com\\/api\\/v\\d\\/appstatus\\? - reject"
+    # google-no-country-redirect
+    - "^https?:\\/\\/www\\.google\\.com\\.hk\\/?$ https://www.google.com/ncr 302"
+    - "^https?:\\/\\/www\\.google\\.com\\.hk\\/(.*) https://www.google.com/$1 302"
   script:
     - match: "^https?:\\/\\/testflight\\.apple\\.com\\/v\\d\\/accounts\\/.+?\\/install$"
       name: "testflight-download-fix"
@@ -501,6 +504,7 @@ http:
     - "m.client.10010.com"
     - "sso.lxjapp.com"
     - "www.meituan.com"
+    - "www.google.com.hk"
     - "testflight.apple.com"
 
 script-providers:
