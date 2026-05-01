@@ -11,24 +11,24 @@ log-level: info
 ipv6: false
 
 proxy-groups: #!replace
-  - name: "Rules 手动节点"
+  - name: "手动节点"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png"
     include-all: true
     filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset)).*$"
     proxies:
-      - "Rules 自动优选"
-      - "Rules 香港"
-      - "Rules 台湾"
-      - "Rules 日本"
-      - "Rules 新加坡"
-      - "Rules 美国"
-      - "Rules 英国"
-      - "Rules 澳洲"
-      - "Rules 马来西亚"
-      - "Rules 阿根廷"
+      - "自动优选"
+      - "香港"
+      - "台湾"
+      - "日本"
+      - "新加坡"
+      - "美国"
+      - "英国"
+      - "澳洲"
+      - "马来西亚"
+      - "阿根廷"
       - DIRECT
-  - name: "Rules 自动优选"
+  - name: "自动优选"
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png"
     include-all: true
@@ -37,177 +37,98 @@ proxy-groups: #!replace
     interval: 600
     tolerance: 100
     lazy: true
-  - name: "Rules AI 检测"
-    type: url-test
-    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/AI.png"
-    proxies:
-      - "Rules 香港"
-      - "Rules 日本"
-      - "Rules 新加坡"
-      - "Rules 美国"
-    url: "https://auth.openai.com/.well-known/openid-configuration"
-    interval: 600
-    tolerance: 100
-    lazy: true
-  - name: "Rules Gemini 检测"
-    type: url-test
-    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png"
-    proxies:
-      - "Rules 香港"
-      - "Rules 日本"
-      - "Rules 新加坡"
-      - "Rules 美国"
-    url: "https://gemini.google.com"
-    interval: 600
-    tolerance: 100
-    lazy: true
-  - name: "Rules 媒体检测"
-    type: url-test
-    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png"
-    proxies:
-      - "Rules 香港"
-      - "Rules 台湾"
-      - "Rules 日本"
-      - "Rules 新加坡"
-      - "Rules 美国"
-    url: "https://www.youtube.com/generate_204"
-    interval: 600
-    tolerance: 100
-    lazy: true
-  - name: "Rules 苹果检测"
-    type: url-test
-    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_2.png"
-    proxies:
-      - "DIRECT"
-      - "Rules 香港"
-      - "Rules 台湾"
-      - "Rules 日本"
-      - "Rules 新加坡"
-      - "Rules 美国"
-    url: "https://www.apple.com/library/test/success.html"
-    interval: 600
-    tolerance: 100
-    lazy: true
-  - name: "Rules Google 检测"
-    type: url-test
-    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png"
-    proxies:
-      - "Rules 香港"
-      - "Rules 台湾"
-      - "Rules 日本"
-      - "Rules 新加坡"
-      - "Rules 美国"
-    url: "https://www.google.com/generate_204"
-    interval: 600
-    tolerance: 100
-    lazy: true
-  - name: "Rules 流媒体"
+  - name: "流媒体"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ForeignMedia.png"
     proxies:
-      - "Rules 媒体检测"
-      - "Rules 手动节点"
-      - "Rules 自动优选"
-      - "Rules 香港"
-      - "Rules 台湾"
-      - "Rules 日本"
-      - "Rules 新加坡"
-      - "Rules 美国"
-  - name: "Rules AI 平台"
+      - "手动节点"
+      - "自动优选"
+      - "香港"
+      - "台湾"
+      - "日本"
+      - "新加坡"
+      - "美国"
+  - name: "AI 平台"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/AI.png"
     proxies:
-      - "Rules AI 检测"
-      - "Rules 手动节点"
-      - "Rules 自动优选"
-      - "Rules 香港"
-      - "Rules 日本"
-      - "Rules 新加坡"
-      - "Rules 美国"
-  - name: "Rules Gemini"
-    type: select
-    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png"
-    proxies:
-      - "Rules Gemini 检测"
-      - "Rules 手动节点"
-      - "Rules 自动优选"
-      - "Rules 香港"
-      - "Rules 日本"
-      - "Rules 新加坡"
-      - "Rules 美国"
-  - name: "Rules 即时通讯"
+      - "手动节点"
+      - "自动优选"
+      - "香港"
+      - "日本"
+      - "新加坡"
+      - "美国"
+  - name: "即时通讯"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png"
     proxies:
-      - "Rules 手动节点"
-      - "Rules 自动优选"
-      - "Rules 香港"
-      - "Rules 台湾"
-      - "Rules 日本"
-      - "Rules 新加坡"
-      - "Rules 美国"
-  - name: "Rules 微软服务"
+      - "手动节点"
+      - "自动优选"
+      - "香港"
+      - "台湾"
+      - "日本"
+      - "新加坡"
+      - "美国"
+  - name: "微软服务"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png"
     proxies:
       - "DIRECT"
-      - "Rules 手动节点"
-      - "Rules 自动优选"
-      - "Rules 香港"
-      - "Rules 日本"
-      - "Rules 新加坡"
-      - "Rules 美国"
-  - name: "Rules 苹果服务"
+      - "手动节点"
+      - "自动优选"
+      - "香港"
+      - "日本"
+      - "新加坡"
+      - "美国"
+  - name: "苹果服务"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_2.png"
     proxies:
       - "DIRECT"
-      - "Rules 苹果检测"
-      - "Rules 手动节点"
-      - "Rules 自动优选"
-  - name: "Rules 游戏平台"
+      - "手动节点"
+      - "自动优选"
+  - name: "游戏平台"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png"
     proxies:
-      - "Rules 手动节点"
-      - "Rules 自动优选"
-      - "Rules 香港"
-      - "Rules 台湾"
-      - "Rules 日本"
-      - "Rules 新加坡"
-      - "Rules 美国"
-  - name: "Rules 全球网站"
+      - "手动节点"
+      - "自动优选"
+      - "香港"
+      - "台湾"
+      - "日本"
+      - "新加坡"
+      - "美国"
+  - name: "全球网站"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png"
     proxies:
-      - "Rules Google 检测"
-      - "Rules 手动节点"
-      - "Rules 自动优选"
-      - "Rules 香港"
-      - "Rules 台湾"
-      - "Rules 日本"
-      - "Rules 新加坡"
-      - "Rules 美国"
-  - name: "Rules 国内直连"
+      - "手动节点"
+      - "自动优选"
+      - "香港"
+      - "台湾"
+      - "日本"
+      - "新加坡"
+      - "美国"
+  - name: "国内直连"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Domestic.png"
     proxies:
       - "DIRECT"
-      - "Rules 手动节点"
-  - name: "Rules 广告拦截"
+      - "手动节点"
+  - name: "广告拦截"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png"
     proxies:
       - "REJECT"
       - "DIRECT"
-  - name: "Rules 默认出口"
+  - name: "默认出口"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png"
     proxies:
-      - "Rules 手动节点"
-      - "Rules 自动优选"
+      - "手动节点"
+      - "自动优选"
       - "DIRECT"
-  - name: "Rules 香港"
+  - name: "香港"
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png"
     include-all: true
@@ -216,7 +137,7 @@ proxy-groups: #!replace
     interval: 600
     tolerance: 100
     lazy: true
-  - name: "Rules 台湾"
+  - name: "台湾"
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png"
     include-all: true
@@ -225,7 +146,7 @@ proxy-groups: #!replace
     interval: 600
     tolerance: 100
     lazy: true
-  - name: "Rules 日本"
+  - name: "日本"
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png"
     include-all: true
@@ -234,7 +155,7 @@ proxy-groups: #!replace
     interval: 600
     tolerance: 100
     lazy: true
-  - name: "Rules 新加坡"
+  - name: "新加坡"
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png"
     include-all: true
@@ -243,7 +164,7 @@ proxy-groups: #!replace
     interval: 600
     tolerance: 100
     lazy: true
-  - name: "Rules 美国"
+  - name: "美国"
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States_Map.png"
     include-all: true
@@ -252,7 +173,7 @@ proxy-groups: #!replace
     interval: 600
     tolerance: 100
     lazy: true
-  - name: "Rules 英国"
+  - name: "英国"
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_Kingdom.png"
     include-all: true
@@ -261,7 +182,7 @@ proxy-groups: #!replace
     interval: 600
     tolerance: 100
     lazy: true
-  - name: "Rules 澳洲"
+  - name: "澳洲"
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Australia.png"
     include-all: true
@@ -270,7 +191,7 @@ proxy-groups: #!replace
     interval: 600
     tolerance: 100
     lazy: true
-  - name: "Rules 马来西亚"
+  - name: "马来西亚"
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Malaysia.png"
     include-all: true
@@ -279,7 +200,7 @@ proxy-groups: #!replace
     interval: 600
     tolerance: 100
     lazy: true
-  - name: "Rules 阿根廷"
+  - name: "阿根廷"
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Argentina.png"
     include-all: true
@@ -477,46 +398,46 @@ rules: #!replace
   - "DOMAIN-SUFFIX,local,DIRECT"
   - "IP-CIDR,127.0.0.0/8,DIRECT,no-resolve"
   - "IP-CIDR6,::1/128,DIRECT,no-resolve"
-  - "DOMAIN,ios.chat.openai.com,Rules AI 平台"
-  - "DOMAIN,android.chat.openai.com,Rules AI 平台"
-  - "DOMAIN-SUFFIX,auth.openai.com,Rules AI 平台"
-  - "DOMAIN-SUFFIX,challenges.cloudflare.com,Rules AI 平台"
-  - "DOMAIN-SUFFIX,workos.com,Rules AI 平台"
-  - "DOMAIN-SUFFIX,statsigapi.net,Rules AI 平台"
-  - "DOMAIN-SUFFIX,featuregates.org,Rules AI 平台"
-  - "DOMAIN-SUFFIX,appattest.apple.com,Rules AI 平台"
-  - "DOMAIN-SUFFIX,devicecheck.apple.com,Rules AI 平台"
-  - "RULE-SET,advertising,Rules 广告拦截"
-  - "RULE-SET,lan,Rules 国内直连"
-  - "RULE-SET,china,Rules 国内直连"
-  - "RULE-SET,chinamedia,Rules 国内直连"
-  - "RULE-SET,openai,Rules AI 平台"
-  - "RULE-SET,claude,Rules AI 平台"
-  - "RULE-SET,anthropic,Rules AI 平台"
-  - "RULE-SET,gemini,Rules Gemini"
-  - "RULE-SET,copilot,Rules AI 平台"
-  - "RULE-SET,youtube,Rules 流媒体"
-  - "RULE-SET,netflix,Rules 流媒体"
-  - "RULE-SET,spotify,Rules 流媒体"
-  - "RULE-SET,tiktok,Rules 流媒体"
-  - "RULE-SET,globalmedia,Rules 流媒体"
-  - "RULE-SET,github,Rules 全球网站"
-  - "RULE-SET,npmjs,Rules 全球网站"
-  - "RULE-SET,docker,Rules 全球网站"
-  - "RULE-SET,python,Rules 全球网站"
-  - "RULE-SET,gitlab,Rules 全球网站"
-  - "RULE-SET,scholar,Rules 全球网站"
-  - "RULE-SET,wikipedia,Rules 全球网站"
-  - "RULE-SET,stackexchange,Rules 全球网站"
-  - "RULE-SET,google,Rules 全球网站"
-  - "RULE-SET,telegram,Rules 即时通讯"
-  - "RULE-SET,discord,Rules 即时通讯"
-  - "RULE-SET,twitter,Rules 全球网站"
-  - "RULE-SET,microsoft,Rules 微软服务"
-  - "RULE-SET,apple,Rules 苹果服务"
-  - "RULE-SET,steam,Rules 游戏平台"
-  - "RULE-SET,epic,Rules 游戏平台"
-  - "MATCH,Rules 默认出口"
+  - "DOMAIN,ios.chat.openai.com,AI 平台"
+  - "DOMAIN,android.chat.openai.com,AI 平台"
+  - "DOMAIN-SUFFIX,auth.openai.com,AI 平台"
+  - "DOMAIN-SUFFIX,challenges.cloudflare.com,AI 平台"
+  - "DOMAIN-SUFFIX,workos.com,AI 平台"
+  - "DOMAIN-SUFFIX,statsigapi.net,AI 平台"
+  - "DOMAIN-SUFFIX,featuregates.org,AI 平台"
+  - "DOMAIN-SUFFIX,appattest.apple.com,AI 平台"
+  - "DOMAIN-SUFFIX,devicecheck.apple.com,AI 平台"
+  - "RULE-SET,advertising,广告拦截"
+  - "RULE-SET,lan,国内直连"
+  - "RULE-SET,china,国内直连"
+  - "RULE-SET,chinamedia,国内直连"
+  - "RULE-SET,openai,AI 平台"
+  - "RULE-SET,claude,AI 平台"
+  - "RULE-SET,anthropic,AI 平台"
+  - "RULE-SET,gemini,AI 平台"
+  - "RULE-SET,copilot,AI 平台"
+  - "RULE-SET,youtube,流媒体"
+  - "RULE-SET,netflix,流媒体"
+  - "RULE-SET,spotify,流媒体"
+  - "RULE-SET,tiktok,流媒体"
+  - "RULE-SET,globalmedia,流媒体"
+  - "RULE-SET,github,全球网站"
+  - "RULE-SET,npmjs,全球网站"
+  - "RULE-SET,docker,全球网站"
+  - "RULE-SET,python,全球网站"
+  - "RULE-SET,gitlab,全球网站"
+  - "RULE-SET,scholar,全球网站"
+  - "RULE-SET,wikipedia,全球网站"
+  - "RULE-SET,stackexchange,全球网站"
+  - "RULE-SET,google,全球网站"
+  - "RULE-SET,telegram,即时通讯"
+  - "RULE-SET,discord,即时通讯"
+  - "RULE-SET,twitter,全球网站"
+  - "RULE-SET,microsoft,微软服务"
+  - "RULE-SET,apple,苹果服务"
+  - "RULE-SET,steam,游戏平台"
+  - "RULE-SET,epic,游戏平台"
+  - "MATCH,默认出口"
 
 http:
   url-rewrite:

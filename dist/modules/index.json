@@ -33,93 +33,12 @@
       ]
     }
   ],
-  "serviceCheckGroups": [
-    {
-      "key": "ai",
-      "name": "AI检测",
-      "type": "url-test",
-      "proxies": [
-        "香港节点",
-        "日本节点",
-        "新加坡节点",
-        "美国节点"
-      ],
-      "url": "https://auth.openai.com/.well-known/openid-configuration",
-      "interval": 600,
-      "tolerance": 100,
-      "timeout": 3
-    },
-    {
-      "key": "gemini",
-      "name": "Gemini检测",
-      "type": "url-test",
-      "proxies": [
-        "香港节点",
-        "日本节点",
-        "新加坡节点",
-        "美国节点"
-      ],
-      "url": "https://gemini.google.com",
-      "interval": 600,
-      "tolerance": 100,
-      "timeout": 3
-    },
-    {
-      "key": "media",
-      "name": "媒体检测",
-      "type": "url-test",
-      "proxies": [
-        "香港节点",
-        "台湾节点",
-        "日本节点",
-        "新加坡节点",
-        "美国节点"
-      ],
-      "url": "https://www.youtube.com/generate_204",
-      "interval": 600,
-      "tolerance": 100,
-      "timeout": 3
-    },
-    {
-      "key": "apple",
-      "name": "苹果检测",
-      "type": "url-test",
-      "proxies": [
-        "DIRECT",
-        "香港节点",
-        "台湾节点",
-        "日本节点",
-        "新加坡节点",
-        "美国节点"
-      ],
-      "url": "https://www.apple.com/library/test/success.html",
-      "interval": 600,
-      "tolerance": 100,
-      "timeout": 3
-    },
-    {
-      "key": "google",
-      "name": "Google检测",
-      "type": "url-test",
-      "proxies": [
-        "香港节点",
-        "台湾节点",
-        "日本节点",
-        "新加坡节点",
-        "美国节点"
-      ],
-      "url": "https://www.google.com/generate_204",
-      "interval": 600,
-      "tolerance": 100,
-      "timeout": 3
-    }
-  ],
+  "serviceCheckGroups": [],
   "businessGroups": [
     {
       "name": "国外媒体",
       "type": "select",
       "proxies": [
-        "媒体检测",
         "节点选择",
         "自动选择",
         "香港节点",
@@ -133,20 +52,6 @@
       "name": "AI平台",
       "type": "select",
       "proxies": [
-        "AI检测",
-        "节点选择",
-        "自动选择",
-        "香港节点",
-        "日本节点",
-        "新加坡节点",
-        "美国节点"
-      ]
-    },
-    {
-      "name": "Gemini服务",
-      "type": "select",
-      "proxies": [
-        "Gemini检测",
         "节点选择",
         "自动选择",
         "香港节点",
@@ -186,7 +91,6 @@
       "type": "select",
       "proxies": [
         "DIRECT",
-        "苹果检测",
         "节点选择",
         "自动选择"
       ]
@@ -208,7 +112,6 @@
       "name": "国外网站",
       "type": "select",
       "proxies": [
-        "Google检测",
         "节点选择",
         "自动选择",
         "香港节点",
@@ -444,7 +347,7 @@
     {
       "id": "gemini",
       "sourceName": "Gemini",
-      "group": "Gemini服务",
+      "group": "AI平台",
       "behavior": "classical",
       "origin": "blackmatrix7",
       "sourceUrl": null,
@@ -1326,11 +1229,6 @@
       "groups": [
         "自动选择",
         "节点选择",
-        "AI检测",
-        "Gemini检测",
-        "媒体检测",
-        "苹果检测",
-        "Google检测",
         "香港节点",
         "台湾节点",
         "日本节点",
@@ -1369,44 +1267,14 @@
       "domain": "ai",
       "title": "AI platforms",
       "groups": [
-        "AI平台",
-        "AI检测"
+        "AI平台"
       ],
       "ruleSets": [
         "openai",
         "claude",
         "anthropic",
+        "gemini",
         "copilot"
-      ],
-      "dependsOn": [
-        "base.core"
-      ],
-      "output": null,
-      "supportedClients": [
-        "stash",
-        "mihomo",
-        "surge"
-      ],
-      "capabilities": {
-        "routing": true,
-        "rewrite": false,
-        "script": false,
-        "mitm": false
-      },
-      "conflicts": [],
-      "notes": []
-    },
-    {
-      "id": "scenario.gemini",
-      "layer": "scenario",
-      "domain": "ai",
-      "title": "Gemini",
-      "groups": [
-        "Gemini服务",
-        "Gemini检测"
-      ],
-      "ruleSets": [
-        "gemini"
       ],
       "dependsOn": [
         "base.core"
@@ -1432,8 +1300,7 @@
       "domain": "media",
       "title": "Streaming media",
       "groups": [
-        "国外媒体",
-        "媒体检测"
+        "国外媒体"
       ],
       "ruleSets": [
         "youtube",
@@ -1561,8 +1428,7 @@
       "title": "Vendor services",
       "groups": [
         "微软服务",
-        "苹果服务",
-        "苹果检测"
+        "苹果服务"
       ],
       "ruleSets": [
         "microsoft",
@@ -1622,8 +1488,7 @@
       "domain": "web",
       "title": "Global web",
       "groups": [
-        "国外网站",
-        "Google检测"
+        "国外网站"
       ],
       "ruleSets": [
         "google",
@@ -1746,14 +1611,8 @@
       "groups": [
         "自动选择",
         "节点选择",
-        "AI检测",
-        "Gemini检测",
-        "媒体检测",
-        "苹果检测",
-        "Google检测",
         "国外媒体",
         "AI平台",
-        "Gemini服务",
         "即时通讯",
         "微软服务",
         "苹果服务",
@@ -1767,7 +1626,6 @@
       "dependsOn": [
         "base.core",
         "scenario.ai",
-        "scenario.gemini",
         "scenario.media",
         "scenario.dev",
         "scenario.research",
@@ -1807,14 +1665,8 @@
       "groups": [
         "自动选择",
         "节点选择",
-        "AI检测",
-        "Gemini检测",
-        "媒体检测",
-        "苹果检测",
-        "Google检测",
         "国外媒体",
         "AI平台",
-        "Gemini服务",
         "即时通讯",
         "微软服务",
         "苹果服务",
@@ -1828,7 +1680,6 @@
       "dependsOn": [
         "base.core",
         "scenario.ai",
-        "scenario.gemini",
         "scenario.media",
         "scenario.dev",
         "scenario.research",
@@ -1868,14 +1719,8 @@
       "groups": [
         "自动选择",
         "节点选择",
-        "AI检测",
-        "Gemini检测",
-        "媒体检测",
-        "苹果检测",
-        "Google检测",
         "国外媒体",
         "AI平台",
-        "Gemini服务",
         "即时通讯",
         "微软服务",
         "苹果服务",
@@ -1889,7 +1734,6 @@
       "dependsOn": [
         "base.core",
         "scenario.ai",
-        "scenario.gemini",
         "scenario.media",
         "scenario.dev",
         "scenario.research",
@@ -1928,7 +1772,6 @@
       "modules": [
         "base.core",
         "scenario.ai",
-        "scenario.gemini",
         "scenario.media",
         "scenario.dev",
         "scenario.research",
@@ -1948,7 +1791,6 @@
       "modules": [
         "base.core",
         "scenario.ai",
-        "scenario.gemini",
         "scenario.media",
         "scenario.dev",
         "scenario.research",
@@ -1968,7 +1810,6 @@
       "modules": [
         "base.core",
         "scenario.ai",
-        "scenario.gemini",
         "scenario.media",
         "scenario.dev",
         "scenario.research",
