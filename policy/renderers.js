@@ -59,6 +59,7 @@ const STASH_DISPLAY_NAME_BY_GROUP = {
   漏网之鱼: "默认出口",
 };
 const STASH_ICON_FILENAME_BY_GROUP = {
+  全部节点: "Proxy.png",
   自动选择: "Speedtest.png",
   节点选择: "Proxy.png",
   香港节点: "Hong_Kong.png",
@@ -138,14 +139,21 @@ function renderStashAutoGroup(index) {
   ].join("\n");
 }
 
+function renderStashAllProxiesGroup(index) {
+  return [
+    ...renderStashGroupHeader("全部节点", "select"),
+    "    include-all: true",
+    `    filter: ${yamlScalar(stashPolicyFilter())}`,
+  ].join("\n");
+}
+
 function renderStashSelectGroup(index) {
   const stashRuleGroupName = (name) => yamlScalar(toStashGroupName(name));
   return [
     ...renderStashGroupHeader("节点选择", "select"),
-    "    include-all: true",
-    `    filter: ${yamlScalar(stashPolicyFilter())}`,
     "    proxies:",
     `      - ${stashRuleGroupName("自动选择")}`,
+    `      - ${stashRuleGroupName("全部节点")}`,
     ...index.regions.map((region) => `      - ${yamlScalar(toStashGroupName(region.groupName))}`),
     "      - DIRECT",
   ].join("\n");
@@ -278,6 +286,7 @@ function renderStashEntry(index) {
     "ipv6: false",
     "",
     "proxy-groups: #!replace",
+    renderStashAllProxiesGroup(index),
     renderStashSelectGroup(index),
     renderStashAutoGroup(index),
     ...index.serviceCheckGroups.map((group) => renderStashServiceCheckGroup(group)),
