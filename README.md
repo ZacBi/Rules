@@ -51,7 +51,7 @@
 
 3. 先在客户端导入 `Sub-Store` 产物，再叠加本仓库入口。
    - Stash：先导入 `Sub-Store` 输出的节点订阅，再追加远程覆写 `dist/stash/stash.stoverride`。
-   - Clash Party：先导入 `Sub-Store` 输出的节点订阅，再用链接导入远程覆写 `dist/mihomo/clash-party.js`。
+   - Clash Party：优先用内置 `Sub-Store` 管理原始订阅，再用链接导入远程覆写 `dist/mihomo/clash-party.js`。
    - 其他 Mihomo 客户端：若支持 JavaScript 覆写，可使用 `dist/mihomo/override.js`；若只支持 YAML 订阅，则需要先生成最终配置。
    - Surge：先让 profile 通过 `Sub-Store` 或远程 `#!include` 拿到真实代理节点，再叠加 `dist/surge/module.sgmodule`。
 
@@ -112,24 +112,27 @@ DNS 解析失败不是规则集能完全解决的问题。如果 Stash 日志出
 
 ### Clash Party
 
-1. 用 `Sub-Store` 把原始订阅整理成标准代理订阅。
+1. 打开 Clash Party 内置 `Sub-Store`。
+   不需要单独安装 Sub-Store 服务；原始订阅在本机客户端内处理。
 
-2. 在 Clash Party 里先导入这份节点订阅。
+2. 在内置 `Sub-Store` 里新增 source，填入原始订阅链接。
+
+3. 新增 Clash.Meta / Mihomo 输出，并把输出订阅导入 Clash Party。
    先确认客户端已经能看到真实节点，再做覆写。
 
-3. 在“覆写”里用链接导入 `dist/mihomo/clash-party.js`。
+4. 在“覆写”里用链接导入 `dist/mihomo/clash-party.js`。
    这个入口不包含 CommonJS 导出，适合 Clash Party 远程 JavaScript 覆写。
 
    ```text
    https://raw.githubusercontent.com/ZacBi/Rules/master/dist/mihomo/clash-party.js
    ```
 
-4. 回到订阅管理，把刚导入的覆写绑定到对应订阅。
+5. 回到订阅管理，把刚导入的覆写绑定到对应订阅。
 
-5. 更新订阅并启用配置。
+6. 更新订阅并启用配置。
 
-6. 如需进一步私有化：
-   节点重命名、节点过滤、机场信息去噪继续放在 `Sub-Store`，不要回写到本仓库。
+7. 如需进一步私有化：
+   节点重命名、节点过滤、机场信息去噪继续放在内置 `Sub-Store`，不要回写到本仓库。
 
 ### 其他 Mihomo 客户端
 
