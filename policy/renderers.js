@@ -309,7 +309,8 @@ function renderStashEntry(index) {
   return lines.join("\n");
 }
 
-function renderMihomoEntry(index) {
+function renderMihomoEntry(index, options = {}) {
+  const { commonJs = true } = options;
   const groupsSource = [
     "  const defaultUrl = MODULE_INDEX.defaultHealthCheck.url;",
     "  const defaultInterval = MODULE_INDEX.defaultHealthCheck.interval;",
@@ -398,7 +399,7 @@ function renderMihomoEntry(index) {
     "  }",
   ].join("\n");
 
-  return [
+  const lines = [
     `const MODULE_INDEX = ${JSON.stringify(index, null, 2)};`,
     "",
     "function uniq(items) {",
@@ -425,12 +426,23 @@ function renderMihomoEntry(index) {
     "  config[\"x-runtime-support\"] = MODULE_INDEX.runtimeSupportMatrix;",
     "  return config;",
     "}",
-    "",
-    "module.exports = {",
-    "  main,",
-    "  MODULE_INDEX,",
-    "};",
-  ].join("\n");
+  ];
+
+  if (commonJs) {
+    lines.push(
+      "",
+      "module.exports = {",
+      "  main,",
+      "  MODULE_INDEX,",
+      "};"
+    );
+  }
+
+  return lines.join("\n");
+}
+
+function renderClashPartyEntry(index) {
+  return renderMihomoEntry(index, { commonJs: false });
 }
 
 function renderSurgeEntry(index) {
@@ -507,6 +519,7 @@ function renderSurgeEntry(index) {
 
 module.exports = {
   renderMihomoEntry,
+  renderClashPartyEntry,
   renderStashEntry,
   renderSurgeEntry,
 };

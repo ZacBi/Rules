@@ -1,4 +1,4 @@
-{
+const MODULE_INDEX = {
   "schemaVersion": 1,
   "model": "unified-strategy-pack",
   "defaultHealthCheck": {
@@ -2093,4 +2093,113 @@
       "format": "surge-module"
     }
   }
+};
+
+function uniq(items) {
+  return [...new Set((items || []).filter(Boolean))];
+}
+
+function main(config = {}) {
+  config.proxies ??= [];
+  config["proxy-groups"] ??= [];
+  config["rule-providers"] ??= {};
+  config.rules ??= [];
+
+  const defaultUrl = MODULE_INDEX.defaultHealthCheck.url;
+  const defaultInterval = MODULE_INDEX.defaultHealthCheck.interval;
+  const defaultTolerance = MODULE_INDEX.defaultHealthCheck.tolerance;
+
+  function buildProxyNames(config) {
+    return uniq((config.proxies || []).map((proxy) => proxy && proxy.name));
+  }
+
+  function buildRegionGroups(proxyNames) {
+    return MODULE_INDEX.regions.map((region) => {
+      const matched = proxyNames.filter((name) => new RegExp(region.match, "i").test(name));
+      return {
+        name: region.groupName,
+        type: "url-test",
+        hidden: true,
+        proxies: matched.length ? uniq(matched) : ["节点选择"],
+        url: defaultUrl,
+        interval: defaultInterval,
+        tolerance: defaultTolerance,
+      };
+    });
+  }
+
+  function buildStrategyGroups(proxyNames) {
+    return MODULE_INDEX.strategyGroups.map((group) => {
+      if (group.mode === "all-proxies") {
+        return {
+          name: group.name,
+          type: group.type,
+          proxies: proxyNames.length ? uniq(proxyNames) : ["DIRECT"],
+          url: defaultUrl,
+          interval: defaultInterval,
+          tolerance: defaultTolerance,
+        };
+      }
+
+      return {
+        name: group.name,
+        type: group.type,
+        proxies: uniq(group.proxies),
+      };
+    });
+  }
+
+  function buildServiceCheckGroups() {
+    return MODULE_INDEX.serviceCheckGroups.map((group) => ({
+      name: group.name,
+      type: group.type,
+      proxies: uniq(group.proxies),
+      url: group.url,
+      interval: group.interval,
+      tolerance: group.tolerance,
+    }));
+  }
+
+  function buildBusinessGroups() {
+    return MODULE_INDEX.businessGroups.map((group) => ({
+      name: group.name,
+      type: group.type,
+      proxies: uniq(group.proxies),
+    }));
+  }
+
+  function buildRuleProviders() {
+    return MODULE_INDEX.ruleSets.reduce((providers, ruleSet) => {
+      providers[ruleSet.id] = {
+        type: "http",
+        behavior: ruleSet.behavior,
+        url: ruleSet.urls.mihomo,
+        path: ruleSet.paths.mihomo,
+        interval: 86400,
+      };
+      return providers;
+    }, {});
+  }
+
+  function buildRules() {
+    return [
+      ...MODULE_INDEX.clashInlineRules,
+      ...MODULE_INDEX.inlineRules,
+      ...MODULE_INDEX.routingRules.map((route) => `${route.rule},${route.group}`),
+      ...MODULE_INDEX.ruleSets.map((ruleSet) => `RULE-SET,${ruleSet.id},${ruleSet.group}`),
+      "MATCH,漏网之鱼",
+    ];
+  }
+
+  const proxyNames = buildProxyNames(config);
+  config["proxy-groups"] = [
+    ...buildStrategyGroups(proxyNames),
+    ...buildServiceCheckGroups(),
+    ...buildRegionGroups(proxyNames),
+    ...buildBusinessGroups(),
+  ];
+  config["rule-providers"] = buildRuleProviders();
+  config.rules = buildRules();
+  config["x-runtime-support"] = MODULE_INDEX.runtimeSupportMatrix;
+  return config;
 }
