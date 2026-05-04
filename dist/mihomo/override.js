@@ -2204,7 +2204,9 @@ function main(config = {}) {
   return config;
 }
 
-module.exports = {
-  main,
-  MODULE_INDEX,
-};
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = {
+    main,
+    MODULE_INDEX,
+  };
+}

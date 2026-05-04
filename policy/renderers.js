@@ -431,10 +431,12 @@ function renderMihomoEntry(index, options = {}) {
   if (commonJs) {
     lines.push(
       "",
-      "module.exports = {",
-      "  main,",
-      "  MODULE_INDEX,",
-      "};"
+      "if (typeof module !== \"undefined\" && module.exports) {",
+      "  module.exports = {",
+      "    main,",
+      "    MODULE_INDEX,",
+      "  };",
+      "}"
     );
   }
 
