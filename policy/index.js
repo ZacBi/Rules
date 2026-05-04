@@ -2,6 +2,7 @@
 
 const { buildModuleIndex } = require("./catalog");
 const {
+  renderClashPartyEntry,
   renderMihomoEntry,
   renderStashEntry,
   renderSurgeEntry,
@@ -24,6 +25,10 @@ function buildArtifacts() {
       {
         path: moduleIndex.entrypoints.mihomo.outputPath,
         content: renderMihomoEntry(moduleIndex),
+      },
+      {
+        path: moduleIndex.entrypoints.clashParty.outputPath,
+        content: renderClashPartyEntry(moduleIndex),
       },
       {
         path: moduleIndex.entrypoints.surge.outputPath,

@@ -1909,6 +1909,58 @@ const MODULE_INDEX = {
       ]
     },
     {
+      "id": "client.clash-party.entry",
+      "layer": "client",
+      "domain": "clash-party",
+      "title": "Clash Party remote override",
+      "groups": [
+        "自动选择",
+        "节点选择",
+        "国外媒体",
+        "AI平台",
+        "即时通讯",
+        "微软服务",
+        "苹果服务",
+        "游戏平台",
+        "国外网站",
+        "国内网站",
+        "广告拦截",
+        "漏网之鱼"
+      ],
+      "ruleSets": [],
+      "dependsOn": [
+        "base.core",
+        "scenario.ai",
+        "scenario.media",
+        "scenario.dev",
+        "scenario.research",
+        "scenario.chat",
+        "scenario.vendor",
+        "scenario.games",
+        "scenario.web",
+        "scenario.domestic",
+        "scenario.ads",
+        "scenario.fallback"
+      ],
+      "output": {
+        "path": "dist/mihomo/clash-party.js",
+        "format": "clash-party-override-js"
+      },
+      "supportedClients": [
+        "clash-party"
+      ],
+      "capabilities": {
+        "routing": true,
+        "rewrite": false,
+        "script": false,
+        "mitm": false
+      },
+      "conflicts": [],
+      "notes": [
+        "Rendered without CommonJS exports so Clash Party can import it as a remote JavaScript override."
+      ]
+    },
+    {
       "id": "client.surge.entry",
       "layer": "client",
       "domain": "surge",
@@ -2001,6 +2053,25 @@ const MODULE_INDEX = {
       ],
       "outputPath": "dist/mihomo/override.js",
       "format": "mihomo-override-js"
+    },
+    "clashParty": {
+      "moduleId": "client.clash-party.entry",
+      "modules": [
+        "base.core",
+        "scenario.ai",
+        "scenario.media",
+        "scenario.dev",
+        "scenario.research",
+        "scenario.chat",
+        "scenario.vendor",
+        "scenario.games",
+        "scenario.web",
+        "scenario.domestic",
+        "scenario.ads",
+        "scenario.fallback"
+      ],
+      "outputPath": "dist/mihomo/clash-party.js",
+      "format": "clash-party-override-js"
     },
     "surge": {
       "moduleId": "client.surge.entry",

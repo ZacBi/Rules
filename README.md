@@ -18,6 +18,7 @@
 
 - `dist/stash/stash.stoverride`
 - `dist/mihomo/override.js`
+- `dist/mihomo/clash-party.js`
 - `dist/surge/module.sgmodule`
 - `dist/modules/index.json`
 
@@ -50,7 +51,8 @@
 
 3. 先在客户端导入 `Sub-Store` 产物，再叠加本仓库入口。
    - Stash：先导入 `Sub-Store` 输出的节点订阅，再追加远程覆写 `dist/stash/stash.stoverride`。
-   - Mihomo / Clash Party：先导入 `Sub-Store` 输出的节点，再把覆写脚本指向 `dist/mihomo/override.js`。
+   - Clash Party：先导入 `Sub-Store` 输出的节点订阅，再用链接导入远程覆写 `dist/mihomo/clash-party.js`。
+   - 其他 Mihomo 客户端：若支持 JavaScript 覆写，可使用 `dist/mihomo/override.js`；若只支持 YAML 订阅，则需要先生成最终配置。
    - Surge：先让 profile 通过 `Sub-Store` 或远程 `#!include` 拿到真实代理节点，再叠加 `dist/surge/module.sgmodule`。
 
 4. 需要运行时脚本时，再打开 `Script Hub`。
@@ -108,18 +110,36 @@ DNS 解析失败不是规则集能完全解决的问题。如果 Stash 日志出
 - DNS 服务器控制在 1-2 个稳定可达的本地 DNS；不要在公开覆写里强行接管 `nameserver` 或全局开启 `follow-rule`。
 - 如需特殊 DNS 策略，应放在用户自己的本地覆写或独立可选模块里，而不是并入公开主入口。
 
-### Mihomo / Clash Party
+### Clash Party
 
 1. 用 `Sub-Store` 把原始订阅整理成标准代理订阅。
 
-2. 在客户端里先导入这份节点订阅。
+2. 在 Clash Party 里先导入这份节点订阅。
    先确认客户端已经能看到真实节点，再做覆写。
 
-3. 把覆写脚本指向 `dist/mihomo/override.js`。
-   这个入口会基于现有节点去生成地区组、业务组和规则集引用。
+3. 在“覆写”里用链接导入 `dist/mihomo/clash-party.js`。
+   这个入口不包含 CommonJS 导出，适合 Clash Party 远程 JavaScript 覆写。
 
-4. 如需进一步私有化：
+   ```text
+   https://raw.githubusercontent.com/ZacBi/Rules/master/dist/mihomo/clash-party.js
+   ```
+
+4. 回到订阅管理，把刚导入的覆写绑定到对应订阅。
+
+5. 更新订阅并启用配置。
+
+6. 如需进一步私有化：
    节点重命名、节点过滤、机场信息去噪继续放在 `Sub-Store`，不要回写到本仓库。
+
+### 其他 Mihomo 客户端
+
+1. 先确认客户端已经能消费节点订阅。
+
+2. 如果客户端支持 JavaScript 覆写，可使用 `dist/mihomo/override.js`。
+   这个入口保留 `module.exports`，方便 Node 环境和兼容 CommonJS 的工具链检查。
+
+3. 如果客户端只支持远程 YAML 订阅，不能直接使用本仓库的 JS 覆写链接。
+   这种场景需要由私有服务或前置工具先合成最终 Mihomo 配置，再把最终 YAML URL 交给客户端。
 
 ### Surge
 
@@ -149,7 +169,7 @@ DNS 解析失败不是规则集能完全解决的问题。如果 Stash 日志出
 
 当前实现采用“轻默认 + 可选运行时能力”：
 
-| 能力 | Stash | Surge | Mihomo / Clash |
+| 能力 | Stash | Surge | Mihomo / Clash Party |
 | --- | --- | --- | --- |
 | Rewrite | Full | Full | Partial |
 | Script | Full | Full | Unsupported |
@@ -174,7 +194,7 @@ DNS 解析失败不是规则集能完全解决的问题。如果 Stash 日志出
 - `openai-tls-hosts`、`anthropic-tls-hosts`、`githubusercontent-tls-hosts`
   拆分后的 MITM 主机集合，仅保留元数据，供私有入口按需渲染。
 
-默认公开入口只下发小规模 Stash rewrite/script/MITM，避免通用策略包过重。`Mihomo / Clash` 的入口目前会显式暴露运行时能力降级信息，但不会伪造脚本或 MITM 段，避免形成“看起来支持、实际上不可用”的假象。
+默认公开入口只下发小规模 Stash rewrite/script/MITM，避免通用策略包过重。`Mihomo / Clash Party` 的入口目前会显式暴露运行时能力降级信息，但不会伪造脚本或 MITM 段，避免形成“看起来支持、实际上不可用”的假象。
 
 ## 构建
 
@@ -184,7 +204,9 @@ DNS 解析失败不是规则集能完全解决的问题。如果 Stash 日志出
 node scripts/build.js
 ```
 
-构建会刷新 `dist/` 下的模块索引和三类客户端入口产物。
+构建会刷新 `dist/` 下的模块索引和客户端入口产物。
+
+推送到 `master` 后，GitHub Actions 会自动运行构建，并在产物变化时提交刷新后的 `dist/` 文件。Pull Request 中同一工作流只做校验，要求源码与生成产物保持同步。
 
 如需让 Cursor 规则集 raw 地址指向你的 fork，可在构建时设置：
 
