@@ -97,11 +97,17 @@ const mediaRegionGroupNames = pickRegionGroupNames([
   "singapore",
   "united_states",
 ]);
-const defaultProxyGroupNames = ["节点选择", "自动选择"];
+const defaultProxyGroupNames = ["节点选择", "自动选择", "全部节点"];
 
 const serviceCheckGroups = [];
 
 const strategyGroups = [
+  {
+    key: "all",
+    name: "全部节点",
+    type: "select",
+    mode: "all-proxies",
+  },
   {
     key: "auto",
     name: "自动选择",
@@ -112,7 +118,7 @@ const strategyGroups = [
     key: "select",
     name: "节点选择",
     type: "select",
-    proxies: ["自动选择", ...regions.map((region) => region.groupName), "DIRECT"],
+    proxies: ["自动选择", "全部节点", ...regions.map((region) => region.groupName), "DIRECT"],
   },
 ];
 
@@ -130,7 +136,7 @@ const businessGroups = [
   {
     name: "Claude",
     type: "select",
-    proxies: [...defaultProxyGroupNames, ...aiRegionGroupNames],
+    proxies: [...defaultProxyGroupNames, ...regions.map((region) => region.groupName)],
   },
   {
     name: "即时通讯",

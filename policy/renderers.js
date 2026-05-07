@@ -11,10 +11,6 @@ function yamlScalar(value) {
   return JSON.stringify(String(value));
 }
 
-function renderYamlListItem(value, indent = 2) {
-  return `${" ".repeat(indent)}- ${yamlScalar(value)}`;
-}
-
 function renderRuleProviderBlock(ruleSet) {
   return [
     `  ${ruleSet.id}:`,
@@ -34,31 +30,7 @@ function runtimeModulesByKind(index, kind, options = {}) {
 
 const QURE_ICON_BASE_URL = "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color";
 const NOISE_POLICY_PATTERN = "剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset";
-const RESERVED_POLICY_PATTERN = "自动选择|节点选择|DIRECT|REJECT";
-const STASH_DISPLAY_NAME_BY_GROUP = {
-  自动选择: "自动优选",
-  节点选择: "手动节点",
-  香港节点: "香港",
-  台湾节点: "台湾",
-  日本节点: "日本",
-  新加坡节点: "新加坡",
-  美国节点: "美国",
-  英国节点: "英国",
-  澳洲节点: "澳洲",
-  马来西亚节点: "马来西亚",
-  阿根廷节点: "阿根廷",
-  国外媒体: "流媒体",
-  AI平台: "AI 平台",
-  Claude: "Claude",
-  即时通讯: "即时通讯",
-  微软服务: "微软服务",
-  苹果服务: "苹果服务",
-  游戏平台: "游戏平台",
-  国外网站: "全球网站",
-  国内网站: "国内直连",
-  广告拦截: "广告拦截",
-  漏网之鱼: "默认出口",
-};
+const RESERVED_POLICY_PATTERN = "全部节点|自动选择|节点选择|DIRECT|REJECT";
 const STASH_ICON_FILENAME_BY_GROUP = {
   全部节点: "Proxy.png",
   自动选择: "Speedtest.png",
@@ -86,10 +58,7 @@ const STASH_ICON_FILENAME_BY_GROUP = {
 };
 
 function toStashGroupName(name) {
-  if (name === "DIRECT" || name === "REJECT") {
-    return name;
-  }
-  return STASH_DISPLAY_NAME_BY_GROUP[name] || name;
+  return name;
 }
 
 function stashGroupIcon(name) {
@@ -128,37 +97,25 @@ function renderStashGroupHeader(name, type) {
   return lines;
 }
 
-function renderStashAutoGroup(index) {
+function renderStashStrategyGroup(index, group) {
   const healthCheck = index.defaultHealthCheck;
-  return [
-    ...renderStashGroupHeader("自动选择", "url-test"),
-    "    include-all: true",
-    `    filter: ${yamlScalar(stashPolicyFilter())}`,
-    `    url: ${yamlScalar(healthCheck.url)}`,
-    `    interval: ${healthCheck.interval}`,
-    `    tolerance: ${healthCheck.tolerance}`,
-    "    lazy: true",
-  ].join("\n");
-}
+  const lines = renderStashGroupHeader(group.name, group.type);
 
-function renderStashAllProxiesGroup(index) {
-  return [
-    ...renderStashGroupHeader("全部节点", "select"),
-    "    include-all: true",
-    `    filter: ${yamlScalar(stashPolicyFilter())}`,
-  ].join("\n");
-}
+  if (group.mode === "all-proxies") {
+    lines.push("    include-all: true", `    filter: ${yamlScalar(stashPolicyFilter())}`);
+    if (group.type !== "select") {
+      lines.push(
+        `    url: ${yamlScalar(healthCheck.url)}`,
+        `    interval: ${healthCheck.interval}`,
+        `    tolerance: ${healthCheck.tolerance}`,
+        "    lazy: true"
+      );
+    }
+    return lines.join("\n");
+  }
 
-function renderStashSelectGroup(index) {
-  const stashRuleGroupName = (name) => yamlScalar(toStashGroupName(name));
-  return [
-    ...renderStashGroupHeader("节点选择", "select"),
-    "    proxies:",
-    `      - ${stashRuleGroupName("自动选择")}`,
-    `      - ${stashRuleGroupName("全部节点")}`,
-    ...index.regions.map((region) => `      - ${yamlScalar(toStashGroupName(region.groupName))}`),
-    "      - DIRECT",
-  ].join("\n");
+  lines.push("    proxies:", ...uniq(group.proxies).map((proxy) => `      - ${yamlScalar(toStashGroupName(proxy))}`));
+  return lines.join("\n");
 }
 
 function renderStashRegionGroup(index, region) {
@@ -288,9 +245,7 @@ function renderStashEntry(index) {
     "ipv6: false",
     "",
     "proxy-groups: #!replace",
-    renderStashAllProxiesGroup(index),
-    renderStashSelectGroup(index),
-    renderStashAutoGroup(index),
+    ...index.strategyGroups.map((group) => renderStashStrategyGroup(index, group)),
     ...index.serviceCheckGroups.map((group) => renderStashServiceCheckGroup(group)),
     ...index.businessGroups.map((group) => renderStashBusinessGroup(group)),
     ...index.regions.map((region) => renderStashRegionGroup(index, region)),
@@ -340,14 +295,17 @@ function renderMihomoEntry(index, options = {}) {
     "  function buildStrategyGroups(proxyNames) {",
     "    return MODULE_INDEX.strategyGroups.map((group) => {",
     "      if (group.mode === \"all-proxies\") {",
-    "        return {",
+    "        const generated = {",
     "          name: group.name,",
     "          type: group.type,",
     "          proxies: proxyNames.length ? uniq(proxyNames) : [\"DIRECT\"],",
-    "          url: defaultUrl,",
-    "          interval: defaultInterval,",
-    "          tolerance: defaultTolerance,",
     "        };",
+    "        if (group.type !== \"select\") {",
+    "          generated.url = defaultUrl;",
+    "          generated.interval = defaultInterval;",
+    "          generated.tolerance = defaultTolerance;",
+    "        }",
+    "        return generated;",
     "      }",
     "",
     "      return {",
@@ -449,9 +407,20 @@ function renderClashPartyEntry(index) {
   return renderMihomoEntry(index, { commonJs: false });
 }
 
+function renderSurgeStrategyGroup(group, healthCheck, allPolicyRegex) {
+  if (group.mode === "all-proxies") {
+    const line = `${group.name} = ${group.type}, include-all-proxies=true, policy-regex-filter='${allPolicyRegex}'`;
+    if (group.type === "select") {
+      return line;
+    }
+    return `${line}, url=${healthCheck.url}, interval=${healthCheck.interval}, tolerance=${healthCheck.tolerance}, timeout=${healthCheck.timeout}`;
+  }
+
+  return `${group.name} = ${group.type}, ${uniq(group.proxies).join(", ")}`;
+}
+
 function renderSurgeEntry(index) {
   const healthCheck = index.defaultHealthCheck;
-  const regionNames = index.regions.map((region) => region.groupName);
   const allPolicyRegex = surgePolicyFilter();
   const rewriteModules = runtimeModulesByKind(index, "rewrite", { defaultOnly: true })
     .map((module) =>
@@ -479,8 +448,7 @@ function renderSurgeEntry(index) {
     "enhanced-mode-by-rule = true",
     "",
     "[Proxy Group]",
-    `自动选择 = url-test, include-all-proxies=true, policy-regex-filter='${allPolicyRegex}', url=${healthCheck.url}, interval=${healthCheck.interval}, tolerance=${healthCheck.tolerance}, timeout=${healthCheck.timeout}`,
-    `节点选择 = select, 自动选择, ${regionNames.join(", ")}, DIRECT, include-all-proxies=true, policy-regex-filter='${allPolicyRegex}'`,
+    ...index.strategyGroups.map((group) => renderSurgeStrategyGroup(group, healthCheck, allPolicyRegex)),
     ...index.serviceCheckGroups.map(
       (group) =>
         `${group.name} = url-test, ${uniq(group.proxies).join(", ")}, url=${group.url}, interval=${group.interval}, tolerance=${group.tolerance}, timeout=${group.timeout}`

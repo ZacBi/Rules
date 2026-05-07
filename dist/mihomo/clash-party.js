@@ -9,6 +9,12 @@ const MODULE_INDEX = {
   },
   "strategyGroups": [
     {
+      "key": "all",
+      "name": "全部节点",
+      "type": "select",
+      "mode": "all-proxies"
+    },
+    {
       "key": "auto",
       "name": "自动选择",
       "type": "url-test",
@@ -20,6 +26,7 @@ const MODULE_INDEX = {
       "type": "select",
       "proxies": [
         "自动选择",
+        "全部节点",
         "香港节点",
         "台湾节点",
         "日本节点",
@@ -41,6 +48,7 @@ const MODULE_INDEX = {
       "proxies": [
         "节点选择",
         "自动选择",
+        "全部节点",
         "香港节点",
         "台湾节点",
         "日本节点",
@@ -54,6 +62,7 @@ const MODULE_INDEX = {
       "proxies": [
         "节点选择",
         "自动选择",
+        "全部节点",
         "香港节点",
         "日本节点",
         "新加坡节点",
@@ -66,10 +75,16 @@ const MODULE_INDEX = {
       "proxies": [
         "节点选择",
         "自动选择",
+        "全部节点",
         "香港节点",
+        "台湾节点",
         "日本节点",
         "新加坡节点",
-        "美国节点"
+        "美国节点",
+        "英国节点",
+        "澳洲节点",
+        "马来西亚节点",
+        "阿根廷节点"
       ]
     },
     {
@@ -78,6 +93,7 @@ const MODULE_INDEX = {
       "proxies": [
         "节点选择",
         "自动选择",
+        "全部节点",
         "香港节点",
         "台湾节点",
         "日本节点",
@@ -92,6 +108,7 @@ const MODULE_INDEX = {
         "DIRECT",
         "节点选择",
         "自动选择",
+        "全部节点",
         "香港节点",
         "日本节点",
         "新加坡节点",
@@ -104,7 +121,8 @@ const MODULE_INDEX = {
       "proxies": [
         "DIRECT",
         "节点选择",
-        "自动选择"
+        "自动选择",
+        "全部节点"
       ]
     },
     {
@@ -113,6 +131,7 @@ const MODULE_INDEX = {
       "proxies": [
         "节点选择",
         "自动选择",
+        "全部节点",
         "香港节点",
         "台湾节点",
         "日本节点",
@@ -126,6 +145,7 @@ const MODULE_INDEX = {
       "proxies": [
         "节点选择",
         "自动选择",
+        "全部节点",
         "香港节点",
         "台湾节点",
         "日本节点",
@@ -1436,6 +1456,7 @@ const MODULE_INDEX = {
       "domain": "core",
       "title": "Core strategy scaffold",
       "groups": [
+        "全部节点",
         "自动选择",
         "节点选择",
         "香港节点",
@@ -1819,6 +1840,7 @@ const MODULE_INDEX = {
       "domain": "stash",
       "title": "Stash entry override",
       "groups": [
+        "全部节点",
         "自动选择",
         "节点选择",
         "国外媒体",
@@ -1874,6 +1896,7 @@ const MODULE_INDEX = {
       "domain": "mihomo",
       "title": "Mihomo entry override",
       "groups": [
+        "全部节点",
         "自动选择",
         "节点选择",
         "国外媒体",
@@ -1929,6 +1952,7 @@ const MODULE_INDEX = {
       "domain": "clash-party",
       "title": "Clash Party remote override",
       "groups": [
+        "全部节点",
         "自动选择",
         "节点选择",
         "国外媒体",
@@ -1982,6 +2006,7 @@ const MODULE_INDEX = {
       "domain": "surge",
       "title": "Surge entry module",
       "groups": [
+        "全部节点",
         "自动选择",
         "节点选择",
         "国外媒体",
@@ -2148,14 +2173,17 @@ function main(config = {}) {
   function buildStrategyGroups(proxyNames) {
     return MODULE_INDEX.strategyGroups.map((group) => {
       if (group.mode === "all-proxies") {
-        return {
+        const generated = {
           name: group.name,
           type: group.type,
           proxies: proxyNames.length ? uniq(proxyNames) : ["DIRECT"],
-          url: defaultUrl,
-          interval: defaultInterval,
-          tolerance: defaultTolerance,
         };
+        if (group.type !== "select") {
+          generated.url = defaultUrl;
+          generated.interval = defaultInterval;
+          generated.tolerance = defaultTolerance;
+        }
+        return generated;
       }
 
       return {

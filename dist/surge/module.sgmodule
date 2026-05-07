@@ -8,25 +8,26 @@ ipv6 = false
 enhanced-mode-by-rule = true
 
 [Proxy Group]
-自动选择 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
-节点选择 = select, 自动选择, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 英国节点, 澳洲节点, 马来西亚节点, 阿根廷节点, DIRECT, include-all-proxies=true, policy-regex-filter='^(?!(?:自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset)).*$'
-香港节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:香港|HK|Hong\s*Kong)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
-台湾节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:台湾|TW|Taiwan|Taipei)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
-日本节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:日本|JP|Japan|Tokyo|Osaka)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
-新加坡节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:新加坡|狮城|SG|Singapore)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
-美国节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:美国|US|USA|United\s*States|America|Los\s*Angeles|San\s*Jose|Seattle)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
-英国节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:英国|UK|United\s*Kingdom|Britain|England|London|Manchester)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
-澳洲节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:澳洲|澳大利亚|AU|Australia|Sydney|Melbourne|Perth)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
-马来西亚节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:马来西亚|MY|Malaysia|Kuala\s*Lumpur)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
-阿根廷节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:阿根廷|AR|Argentina|Buenos\s*Aires)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
-国外媒体 = select, 节点选择, 自动选择, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点
-AI平台 = select, 节点选择, 自动选择, 香港节点, 日本节点, 新加坡节点, 美国节点
-Claude = select, 节点选择, 自动选择, 香港节点, 日本节点, 新加坡节点, 美国节点
-即时通讯 = select, 节点选择, 自动选择, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点
-微软服务 = select, DIRECT, 节点选择, 自动选择, 香港节点, 日本节点, 新加坡节点, 美国节点
-苹果服务 = select, DIRECT, 节点选择, 自动选择
-游戏平台 = select, 节点选择, 自动选择, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点
-国外网站 = select, 节点选择, 自动选择, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点
+全部节点 = select, include-all-proxies=true, policy-regex-filter='^(?!(?:全部节点|自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset)).*$'
+自动选择 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:全部节点|自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
+节点选择 = select, 自动选择, 全部节点, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 英国节点, 澳洲节点, 马来西亚节点, 阿根廷节点, DIRECT
+香港节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:全部节点|自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:香港|HK|Hong\s*Kong)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
+台湾节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:全部节点|自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:台湾|TW|Taiwan|Taipei)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
+日本节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:全部节点|自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:日本|JP|Japan|Tokyo|Osaka)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
+新加坡节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:全部节点|自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:新加坡|狮城|SG|Singapore)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
+美国节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:全部节点|自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:美国|US|USA|United\s*States|America|Los\s*Angeles|San\s*Jose|Seattle)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
+英国节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:全部节点|自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:英国|UK|United\s*Kingdom|Britain|England|London|Manchester)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
+澳洲节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:全部节点|自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:澳洲|澳大利亚|AU|Australia|Sydney|Melbourne|Perth)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
+马来西亚节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:全部节点|自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:马来西亚|MY|Malaysia|Kuala\s*Lumpur)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
+阿根廷节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:全部节点|自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:阿根廷|AR|Argentina|Buenos\s*Aires)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
+国外媒体 = select, 节点选择, 自动选择, 全部节点, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点
+AI平台 = select, 节点选择, 自动选择, 全部节点, 香港节点, 日本节点, 新加坡节点, 美国节点
+Claude = select, 节点选择, 自动选择, 全部节点, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 英国节点, 澳洲节点, 马来西亚节点, 阿根廷节点
+即时通讯 = select, 节点选择, 自动选择, 全部节点, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点
+微软服务 = select, DIRECT, 节点选择, 自动选择, 全部节点, 香港节点, 日本节点, 新加坡节点, 美国节点
+苹果服务 = select, DIRECT, 节点选择, 自动选择, 全部节点
+游戏平台 = select, 节点选择, 自动选择, 全部节点, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点
+国外网站 = select, 节点选择, 自动选择, 全部节点, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点
 国内网站 = select, DIRECT, 节点选择
 广告拦截 = select, REJECT, DIRECT
 漏网之鱼 = select, 节点选择, 自动选择, DIRECT
