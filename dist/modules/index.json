@@ -61,6 +61,18 @@
       ]
     },
     {
+      "name": "Claude",
+      "type": "select",
+      "proxies": [
+        "节点选择",
+        "自动选择",
+        "香港节点",
+        "日本节点",
+        "新加坡节点",
+        "美国节点"
+      ]
+    },
+    {
       "name": "即时通讯",
       "type": "select",
       "proxies": [
@@ -307,7 +319,7 @@
     {
       "id": "claude",
       "sourceName": "Claude",
-      "group": "AI平台",
+      "group": "Claude",
       "behavior": "classical",
       "origin": "blackmatrix7",
       "sourceUrl": null,
@@ -327,7 +339,7 @@
     {
       "id": "anthropic",
       "sourceName": "Anthropic",
-      "group": "AI平台",
+      "group": "Claude",
       "behavior": "classical",
       "origin": "blackmatrix7",
       "sourceUrl": null,
@@ -820,13 +832,13 @@
     },
     {
       "rule": "DOMAIN-SUFFIX,anthropic.com",
-      "group": "AI平台",
+      "group": "Claude",
       "origin": "bootstrap",
       "sourceUrl": null
     },
     {
       "rule": "DOMAIN-SUFFIX,claude.ai",
-      "group": "AI平台",
+      "group": "Claude",
       "origin": "bootstrap",
       "sourceUrl": null
     },
@@ -1069,12 +1081,12 @@
         "supportLevel": {
           "stash": "partial",
           "surge": "partial",
-          "mihomo": "partial"
+          "mihomo": "unsupported"
         },
         "notes": {
           "stash": "Metadata only. The previous broad redirect dropped useful URL state and is intentionally not emitted.",
           "surge": "Metadata only. The previous broad redirect dropped useful URL state and is intentionally not emitted.",
-          "mihomo": "Documented in metadata only; override.js does not emit rewrite rules."
+          "mihomo": "Mihomo and Clash Party do not consume Stash or Surge HTTP rewrite sections."
         }
       },
       "dependencies": [
@@ -1403,7 +1415,7 @@
       "mitm": "full"
     },
     "mihomo": {
-      "rewrite": "partial",
+      "rewrite": "unsupported",
       "script": "unsupported",
       "mitm": "unsupported"
     }
@@ -1464,7 +1476,8 @@
       "domain": "ai",
       "title": "AI platforms",
       "groups": [
-        "AI平台"
+        "AI平台",
+        "Claude"
       ],
       "ruleSets": [
         "openai",
@@ -1810,6 +1823,7 @@
         "节点选择",
         "国外媒体",
         "AI平台",
+        "Claude",
         "即时通讯",
         "微软服务",
         "苹果服务",
@@ -1864,6 +1878,7 @@
         "节点选择",
         "国外媒体",
         "AI平台",
+        "Claude",
         "即时通讯",
         "微软服务",
         "苹果服务",
@@ -1918,6 +1933,7 @@
         "节点选择",
         "国外媒体",
         "AI平台",
+        "Claude",
         "即时通讯",
         "微软服务",
         "苹果服务",
@@ -1970,6 +1986,7 @@
         "节点选择",
         "国外媒体",
         "AI平台",
+        "Claude",
         "即时通讯",
         "微软服务",
         "苹果服务",

@@ -121,7 +121,7 @@ DNS 解析失败不是规则集能完全解决的问题。如果 Stash 日志出
    先确认客户端已经能看到真实节点，再做覆写。
 
 4. 在“覆写”里用链接导入 `dist/mihomo/clash-party.js`。
-   这个入口不包含 CommonJS 导出，适合 Clash Party 远程 JavaScript 覆写。
+   这个入口不包含 CommonJS 导出，适合 Clash Party 远程 JavaScript 配置覆写。
 
    ```text
    https://raw.githubusercontent.com/ZacBi/Rules/master/dist/mihomo/clash-party.js
@@ -131,7 +131,10 @@ DNS 解析失败不是规则集能完全解决的问题。如果 Stash 日志出
 
 6. 更新订阅并启用配置。
 
-7. 如需进一步私有化：
+7. 注意 Clash Party 的“覆写”是修改 Mihomo 配置，不是 Stash / Surge 的 HTTP URL 改写。
+   本入口只生成策略组、规则集和分流规则，不下发 rewrite、script 或 MITM。
+
+8. 如需进一步私有化：
    节点重命名、节点过滤、机场信息去噪继续放在内置 `Sub-Store`，不要回写到本仓库。
 
 ### 其他 Mihomo 客户端
@@ -174,14 +177,13 @@ DNS 解析失败不是规则集能完全解决的问题。如果 Stash 日志出
 
 | 能力 | Stash | Surge | Mihomo / Clash Party |
 | --- | --- | --- | --- |
-| Rewrite | Full | Full | Partial |
+| Rewrite | Full | Full | Unsupported |
 | Script | Full | Full | Unsupported |
 | MITM | Full | Full | Unsupported |
 
 解释：
 
 - `Full`：该客户端可以消费对应能力；默认入口不强制注入。
-- `Partial`：本仓库保留统一模型和元数据，但不会在该客户端入口里生成完整等价能力。
 - `Unsupported`：本仓库只在索引和文档里声明，不伪造产物。
 
 当前内置的运行时模块以常见场景为主：
@@ -197,7 +199,7 @@ DNS 解析失败不是规则集能完全解决的问题。如果 Stash 日志出
 - `openai-tls-hosts`、`anthropic-tls-hosts`、`githubusercontent-tls-hosts`
   拆分后的 MITM 主机集合，仅保留元数据，供私有入口按需渲染。
 
-默认公开入口只下发小规模 Stash rewrite/script/MITM，避免通用策略包过重。`Mihomo / Clash Party` 的入口目前会显式暴露运行时能力降级信息，但不会伪造脚本或 MITM 段，避免形成“看起来支持、实际上不可用”的假象。
+默认公开入口只下发小规模 Stash rewrite/script/MITM，避免通用策略包过重。`Mihomo / Clash Party` 的入口目前只处理配置覆写和分流规则，不伪造 rewrite、script 或 MITM 段，避免形成“看起来支持、实际上不可用”的假象。
 
 ## 构建
 

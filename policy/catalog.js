@@ -128,6 +128,11 @@ const businessGroups = [
     proxies: [...defaultProxyGroupNames, ...aiRegionGroupNames],
   },
   {
+    name: "Claude",
+    type: "select",
+    proxies: [...defaultProxyGroupNames, ...aiRegionGroupNames],
+  },
+  {
     name: "即时通讯",
     type: "select",
     proxies: [...defaultProxyGroupNames, ...coreRegionGroupNames],
@@ -204,13 +209,13 @@ const rawRuleSets = [
   {
     key: "claude",
     sourceName: "Claude",
-    group: "AI平台",
+    group: "Claude",
     behavior: "classical",
   },
   {
     key: "anthropic",
     sourceName: "Anthropic",
-    group: "AI平台",
+    group: "Claude",
     behavior: "classical",
   },
   {
@@ -450,12 +455,12 @@ const runtimeModules = [
       supportLevel: {
         stash: "partial",
         surge: "partial",
-        mihomo: "partial",
+        mihomo: "unsupported",
       },
       notes: {
         stash: "Metadata only. The previous broad redirect dropped useful URL state and is intentionally not emitted.",
         surge: "Metadata only. The previous broad redirect dropped useful URL state and is intentionally not emitted.",
-        mihomo: "Documented in metadata only; override.js does not emit rewrite rules.",
+        mihomo: "Mihomo and Clash Party do not consume Stash or Surge HTTP rewrite sections.",
       },
     },
     dependencies: ["scenario.media"],
@@ -743,7 +748,7 @@ const runtimeSupportMatrix = {
     mitm: "full",
   },
   mihomo: {
-    rewrite: "partial",
+    rewrite: "unsupported",
     script: "unsupported",
     mitm: "unsupported",
   },
@@ -817,6 +822,8 @@ const bootstrapDomainsByGroup = {
   AI平台: [
     "openai.com",
     "chatgpt.com",
+  ],
+  Claude: [
     "anthropic.com",
     "claude.ai",
   ],
@@ -908,7 +915,7 @@ const scenarioModules = [
     layer: "scenario",
     domain: "ai",
     title: "AI platforms",
-    groups: ["AI平台"],
+    groups: ["AI平台", "Claude"],
     ruleSets: uniq(["openai", "claude", "anthropic", "gemini", "copilot", RULES_GITHUB_REPO ? "cursor" : null]),
     dependsOn: ["base.core"],
     capabilities: {
