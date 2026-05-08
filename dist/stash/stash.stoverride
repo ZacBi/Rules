@@ -16,23 +16,7 @@ proxy-groups: #!replace
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png"
     include-all: true
     filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset)).*$"
-  - name: "手动节点"
-    type: select
-    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png"
-    proxies:
-      - "自动优选"
-      - "全部节点"
-      - "香港"
-      - "台湾"
-      - "日本"
-      - "新加坡"
-      - "美国"
-      - "英国"
-      - "澳洲"
-      - "马来西亚"
-      - "阿根廷"
-      - DIRECT
-  - name: "自动优选"
+  - name: "自动选择"
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png"
     include-all: true
@@ -41,98 +25,137 @@ proxy-groups: #!replace
     interval: 600
     tolerance: 100
     lazy: true
-  - name: "流媒体"
+  - name: "节点选择"
+    type: select
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png"
+    proxies:
+      - "自动选择"
+      - "全部节点"
+      - "香港节点"
+      - "台湾节点"
+      - "日本节点"
+      - "新加坡节点"
+      - "美国节点"
+      - "英国节点"
+      - "澳洲节点"
+      - "马来西亚节点"
+      - "阿根廷节点"
+      - "DIRECT"
+  - name: "国外媒体"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ForeignMedia.png"
     proxies:
-      - "手动节点"
-      - "自动优选"
-      - "香港"
-      - "台湾"
-      - "日本"
-      - "新加坡"
-      - "美国"
-  - name: "AI 平台"
+      - "节点选择"
+      - "自动选择"
+      - "全部节点"
+      - "香港节点"
+      - "台湾节点"
+      - "日本节点"
+      - "新加坡节点"
+      - "美国节点"
+  - name: "AI平台"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/AI.png"
     proxies:
-      - "手动节点"
-      - "自动优选"
-      - "香港"
-      - "日本"
-      - "新加坡"
-      - "美国"
+      - "节点选择"
+      - "自动选择"
+      - "全部节点"
+      - "香港节点"
+      - "日本节点"
+      - "新加坡节点"
+      - "美国节点"
+  - name: "Claude"
+    type: select
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/AI.png"
+    proxies:
+      - "节点选择"
+      - "自动选择"
+      - "全部节点"
+      - "香港节点"
+      - "台湾节点"
+      - "日本节点"
+      - "新加坡节点"
+      - "美国节点"
+      - "英国节点"
+      - "澳洲节点"
+      - "马来西亚节点"
+      - "阿根廷节点"
   - name: "即时通讯"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png"
     proxies:
-      - "手动节点"
-      - "自动优选"
-      - "香港"
-      - "台湾"
-      - "日本"
-      - "新加坡"
-      - "美国"
+      - "节点选择"
+      - "自动选择"
+      - "全部节点"
+      - "香港节点"
+      - "台湾节点"
+      - "日本节点"
+      - "新加坡节点"
+      - "美国节点"
   - name: "微软服务"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png"
     proxies:
       - "DIRECT"
-      - "手动节点"
-      - "自动优选"
-      - "香港"
-      - "日本"
-      - "新加坡"
-      - "美国"
+      - "节点选择"
+      - "自动选择"
+      - "全部节点"
+      - "香港节点"
+      - "日本节点"
+      - "新加坡节点"
+      - "美国节点"
   - name: "苹果服务"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_2.png"
     proxies:
       - "DIRECT"
-      - "手动节点"
-      - "自动优选"
+      - "节点选择"
+      - "自动选择"
+      - "全部节点"
   - name: "游戏平台"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png"
     proxies:
-      - "手动节点"
-      - "自动优选"
-      - "香港"
-      - "台湾"
-      - "日本"
-      - "新加坡"
-      - "美国"
-  - name: "全球网站"
+      - "节点选择"
+      - "自动选择"
+      - "全部节点"
+      - "香港节点"
+      - "台湾节点"
+      - "日本节点"
+      - "新加坡节点"
+      - "美国节点"
+  - name: "国外网站"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png"
     proxies:
-      - "手动节点"
-      - "自动优选"
-      - "香港"
-      - "台湾"
-      - "日本"
-      - "新加坡"
-      - "美国"
-  - name: "国内直连"
+      - "节点选择"
+      - "自动选择"
+      - "全部节点"
+      - "香港节点"
+      - "台湾节点"
+      - "日本节点"
+      - "新加坡节点"
+      - "美国节点"
+  - name: "国内网站"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Domestic.png"
     proxies:
       - "DIRECT"
-      - "手动节点"
+      - "节点选择"
   - name: "广告拦截"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png"
     proxies:
       - "REJECT"
       - "DIRECT"
-  - name: "默认出口"
+  - name: "漏网之鱼"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png"
     proxies:
-      - "手动节点"
-      - "自动优选"
+      - "节点选择"
+      - "自动选择"
       - "DIRECT"
-  - name: "香港"
+  - name: "香港节点"
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png"
     include-all: true
@@ -141,7 +164,7 @@ proxy-groups: #!replace
     interval: 600
     tolerance: 100
     lazy: true
-  - name: "台湾"
+  - name: "台湾节点"
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png"
     include-all: true
@@ -150,7 +173,7 @@ proxy-groups: #!replace
     interval: 600
     tolerance: 100
     lazy: true
-  - name: "日本"
+  - name: "日本节点"
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png"
     include-all: true
@@ -159,7 +182,7 @@ proxy-groups: #!replace
     interval: 600
     tolerance: 100
     lazy: true
-  - name: "新加坡"
+  - name: "新加坡节点"
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png"
     include-all: true
@@ -168,7 +191,7 @@ proxy-groups: #!replace
     interval: 600
     tolerance: 100
     lazy: true
-  - name: "美国"
+  - name: "美国节点"
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States_Map.png"
     include-all: true
@@ -177,7 +200,7 @@ proxy-groups: #!replace
     interval: 600
     tolerance: 100
     lazy: true
-  - name: "英国"
+  - name: "英国节点"
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_Kingdom.png"
     include-all: true
@@ -186,7 +209,7 @@ proxy-groups: #!replace
     interval: 600
     tolerance: 100
     lazy: true
-  - name: "澳洲"
+  - name: "澳洲节点"
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Australia.png"
     include-all: true
@@ -195,7 +218,7 @@ proxy-groups: #!replace
     interval: 600
     tolerance: 100
     lazy: true
-  - name: "马来西亚"
+  - name: "马来西亚节点"
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Malaysia.png"
     include-all: true
@@ -204,7 +227,7 @@ proxy-groups: #!replace
     interval: 600
     tolerance: 100
     lazy: true
-  - name: "阿根廷"
+  - name: "阿根廷节点"
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Argentina.png"
     include-all: true
@@ -402,71 +425,71 @@ rules: #!replace
   - "DOMAIN-SUFFIX,local,DIRECT"
   - "IP-CIDR,127.0.0.0/8,DIRECT,no-resolve"
   - "IP-CIDR6,::1/128,DIRECT,no-resolve"
-  - "DOMAIN-SUFFIX,openai.com,AI 平台"
-  - "DOMAIN-SUFFIX,chatgpt.com,AI 平台"
-  - "DOMAIN-SUFFIX,anthropic.com,AI 平台"
-  - "DOMAIN-SUFFIX,claude.ai,AI 平台"
-  - "DOMAIN-SUFFIX,googlevideo.com,流媒体"
-  - "DOMAIN-SUFFIX,youtube.com,流媒体"
-  - "DOMAIN-SUFFIX,ytimg.com,流媒体"
+  - "DOMAIN-SUFFIX,openai.com,AI平台"
+  - "DOMAIN-SUFFIX,chatgpt.com,AI平台"
+  - "DOMAIN-SUFFIX,anthropic.com,Claude"
+  - "DOMAIN-SUFFIX,claude.ai,Claude"
+  - "DOMAIN-SUFFIX,googlevideo.com,国外媒体"
+  - "DOMAIN-SUFFIX,youtube.com,国外媒体"
+  - "DOMAIN-SUFFIX,ytimg.com,国外媒体"
   - "DOMAIN-SUFFIX,telegram.org,即时通讯"
   - "DOMAIN-SUFFIX,t.me,即时通讯"
   - "DOMAIN-SUFFIX,discord.com,即时通讯"
   - "DOMAIN-SUFFIX,discordapp.com,即时通讯"
-  - "DOMAIN-SUFFIX,google.com,全球网站"
-  - "DOMAIN-SUFFIX,googleapis.com,全球网站"
-  - "DOMAIN-SUFFIX,gstatic.com,全球网站"
-  - "DOMAIN-SUFFIX,googleusercontent.com,全球网站"
-  - "DOMAIN-SUFFIX,ggpht.com,全球网站"
-  - "DOMAIN-SUFFIX,github.com,全球网站"
-  - "DOMAIN-SUFFIX,githubusercontent.com,全球网站"
-  - "DOMAIN-SUFFIX,githubassets.com,全球网站"
-  - "DOMAIN-SUFFIX,npmjs.com,全球网站"
-  - "DOMAIN-SUFFIX,docker.com,全球网站"
-  - "DOMAIN-SUFFIX,pythonhosted.org,全球网站"
-  - "DOMAIN-SUFFIX,gitlab.com,全球网站"
-  - "DOMAIN-SUFFIX,x.com,全球网站"
-  - "DOMAIN-SUFFIX,twitter.com,全球网站"
-  - "DOMAIN,ios.chat.openai.com,AI 平台"
-  - "DOMAIN,android.chat.openai.com,AI 平台"
-  - "DOMAIN-SUFFIX,auth.openai.com,AI 平台"
-  - "DOMAIN-SUFFIX,challenges.cloudflare.com,AI 平台"
-  - "DOMAIN-SUFFIX,workos.com,AI 平台"
-  - "DOMAIN-SUFFIX,statsigapi.net,AI 平台"
-  - "DOMAIN-SUFFIX,featuregates.org,AI 平台"
-  - "DOMAIN-SUFFIX,appattest.apple.com,AI 平台"
-  - "DOMAIN-SUFFIX,devicecheck.apple.com,AI 平台"
+  - "DOMAIN-SUFFIX,google.com,国外网站"
+  - "DOMAIN-SUFFIX,googleapis.com,国外网站"
+  - "DOMAIN-SUFFIX,gstatic.com,国外网站"
+  - "DOMAIN-SUFFIX,googleusercontent.com,国外网站"
+  - "DOMAIN-SUFFIX,ggpht.com,国外网站"
+  - "DOMAIN-SUFFIX,github.com,国外网站"
+  - "DOMAIN-SUFFIX,githubusercontent.com,国外网站"
+  - "DOMAIN-SUFFIX,githubassets.com,国外网站"
+  - "DOMAIN-SUFFIX,npmjs.com,国外网站"
+  - "DOMAIN-SUFFIX,docker.com,国外网站"
+  - "DOMAIN-SUFFIX,pythonhosted.org,国外网站"
+  - "DOMAIN-SUFFIX,gitlab.com,国外网站"
+  - "DOMAIN-SUFFIX,x.com,国外网站"
+  - "DOMAIN-SUFFIX,twitter.com,国外网站"
+  - "DOMAIN,ios.chat.openai.com,AI平台"
+  - "DOMAIN,android.chat.openai.com,AI平台"
+  - "DOMAIN-SUFFIX,auth.openai.com,AI平台"
+  - "DOMAIN-SUFFIX,challenges.cloudflare.com,AI平台"
+  - "DOMAIN-SUFFIX,workos.com,AI平台"
+  - "DOMAIN-SUFFIX,statsigapi.net,AI平台"
+  - "DOMAIN-SUFFIX,featuregates.org,AI平台"
+  - "DOMAIN-SUFFIX,appattest.apple.com,AI平台"
+  - "DOMAIN-SUFFIX,devicecheck.apple.com,AI平台"
   - "RULE-SET,advertising,广告拦截"
-  - "RULE-SET,lan,国内直连"
-  - "RULE-SET,china,国内直连"
-  - "RULE-SET,chinamedia,国内直连"
-  - "RULE-SET,openai,AI 平台"
-  - "RULE-SET,claude,AI 平台"
-  - "RULE-SET,anthropic,AI 平台"
-  - "RULE-SET,gemini,AI 平台"
-  - "RULE-SET,copilot,AI 平台"
-  - "RULE-SET,youtube,流媒体"
-  - "RULE-SET,netflix,流媒体"
-  - "RULE-SET,spotify,流媒体"
-  - "RULE-SET,tiktok,流媒体"
-  - "RULE-SET,globalmedia,流媒体"
-  - "RULE-SET,github,全球网站"
-  - "RULE-SET,npmjs,全球网站"
-  - "RULE-SET,docker,全球网站"
-  - "RULE-SET,python,全球网站"
-  - "RULE-SET,gitlab,全球网站"
-  - "RULE-SET,scholar,全球网站"
-  - "RULE-SET,wikipedia,全球网站"
-  - "RULE-SET,stackexchange,全球网站"
-  - "RULE-SET,google,全球网站"
+  - "RULE-SET,lan,国内网站"
+  - "RULE-SET,china,国内网站"
+  - "RULE-SET,chinamedia,国内网站"
+  - "RULE-SET,openai,AI平台"
+  - "RULE-SET,claude,Claude"
+  - "RULE-SET,anthropic,Claude"
+  - "RULE-SET,gemini,AI平台"
+  - "RULE-SET,copilot,AI平台"
+  - "RULE-SET,youtube,国外媒体"
+  - "RULE-SET,netflix,国外媒体"
+  - "RULE-SET,spotify,国外媒体"
+  - "RULE-SET,tiktok,国外媒体"
+  - "RULE-SET,globalmedia,国外媒体"
+  - "RULE-SET,github,国外网站"
+  - "RULE-SET,npmjs,国外网站"
+  - "RULE-SET,docker,国外网站"
+  - "RULE-SET,python,国外网站"
+  - "RULE-SET,gitlab,国外网站"
+  - "RULE-SET,scholar,国外网站"
+  - "RULE-SET,wikipedia,国外网站"
+  - "RULE-SET,stackexchange,国外网站"
+  - "RULE-SET,google,国外网站"
   - "RULE-SET,telegram,即时通讯"
   - "RULE-SET,discord,即时通讯"
-  - "RULE-SET,twitter,全球网站"
+  - "RULE-SET,twitter,国外网站"
   - "RULE-SET,microsoft,微软服务"
   - "RULE-SET,apple,苹果服务"
   - "RULE-SET,steam,游戏平台"
   - "RULE-SET,epic,游戏平台"
-  - "MATCH,默认出口"
+  - "MATCH,漏网之鱼"
 
 http:
   url-rewrite:

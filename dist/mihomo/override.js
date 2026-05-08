@@ -9,6 +9,12 @@ const MODULE_INDEX = {
   },
   "strategyGroups": [
     {
+      "key": "all",
+      "name": "全部节点",
+      "type": "select",
+      "mode": "all-proxies"
+    },
+    {
       "key": "auto",
       "name": "自动选择",
       "type": "url-test",
@@ -20,6 +26,7 @@ const MODULE_INDEX = {
       "type": "select",
       "proxies": [
         "自动选择",
+        "全部节点",
         "香港节点",
         "台湾节点",
         "日本节点",
@@ -41,6 +48,7 @@ const MODULE_INDEX = {
       "proxies": [
         "节点选择",
         "自动选择",
+        "全部节点",
         "香港节点",
         "台湾节点",
         "日本节点",
@@ -54,10 +62,29 @@ const MODULE_INDEX = {
       "proxies": [
         "节点选择",
         "自动选择",
+        "全部节点",
         "香港节点",
         "日本节点",
         "新加坡节点",
         "美国节点"
+      ]
+    },
+    {
+      "name": "Claude",
+      "type": "select",
+      "proxies": [
+        "节点选择",
+        "自动选择",
+        "全部节点",
+        "香港节点",
+        "台湾节点",
+        "日本节点",
+        "新加坡节点",
+        "美国节点",
+        "英国节点",
+        "澳洲节点",
+        "马来西亚节点",
+        "阿根廷节点"
       ]
     },
     {
@@ -66,6 +93,7 @@ const MODULE_INDEX = {
       "proxies": [
         "节点选择",
         "自动选择",
+        "全部节点",
         "香港节点",
         "台湾节点",
         "日本节点",
@@ -80,6 +108,7 @@ const MODULE_INDEX = {
         "DIRECT",
         "节点选择",
         "自动选择",
+        "全部节点",
         "香港节点",
         "日本节点",
         "新加坡节点",
@@ -92,7 +121,8 @@ const MODULE_INDEX = {
       "proxies": [
         "DIRECT",
         "节点选择",
-        "自动选择"
+        "自动选择",
+        "全部节点"
       ]
     },
     {
@@ -101,6 +131,7 @@ const MODULE_INDEX = {
       "proxies": [
         "节点选择",
         "自动选择",
+        "全部节点",
         "香港节点",
         "台湾节点",
         "日本节点",
@@ -114,6 +145,7 @@ const MODULE_INDEX = {
       "proxies": [
         "节点选择",
         "自动选择",
+        "全部节点",
         "香港节点",
         "台湾节点",
         "日本节点",
@@ -307,7 +339,7 @@ const MODULE_INDEX = {
     {
       "id": "claude",
       "sourceName": "Claude",
-      "group": "AI平台",
+      "group": "Claude",
       "behavior": "classical",
       "origin": "blackmatrix7",
       "sourceUrl": null,
@@ -327,7 +359,7 @@ const MODULE_INDEX = {
     {
       "id": "anthropic",
       "sourceName": "Anthropic",
-      "group": "AI平台",
+      "group": "Claude",
       "behavior": "classical",
       "origin": "blackmatrix7",
       "sourceUrl": null,
@@ -820,13 +852,13 @@ const MODULE_INDEX = {
     },
     {
       "rule": "DOMAIN-SUFFIX,anthropic.com",
-      "group": "AI平台",
+      "group": "Claude",
       "origin": "bootstrap",
       "sourceUrl": null
     },
     {
       "rule": "DOMAIN-SUFFIX,claude.ai",
-      "group": "AI平台",
+      "group": "Claude",
       "origin": "bootstrap",
       "sourceUrl": null
     },
@@ -1069,12 +1101,12 @@ const MODULE_INDEX = {
         "supportLevel": {
           "stash": "partial",
           "surge": "partial",
-          "mihomo": "partial"
+          "mihomo": "unsupported"
         },
         "notes": {
           "stash": "Metadata only. The previous broad redirect dropped useful URL state and is intentionally not emitted.",
           "surge": "Metadata only. The previous broad redirect dropped useful URL state and is intentionally not emitted.",
-          "mihomo": "Documented in metadata only; override.js does not emit rewrite rules."
+          "mihomo": "Mihomo and Clash Party do not consume Stash or Surge HTTP rewrite sections."
         }
       },
       "dependencies": [
@@ -1403,7 +1435,7 @@ const MODULE_INDEX = {
       "mitm": "full"
     },
     "mihomo": {
-      "rewrite": "partial",
+      "rewrite": "unsupported",
       "script": "unsupported",
       "mitm": "unsupported"
     }
@@ -1424,6 +1456,7 @@ const MODULE_INDEX = {
       "domain": "core",
       "title": "Core strategy scaffold",
       "groups": [
+        "全部节点",
         "自动选择",
         "节点选择",
         "香港节点",
@@ -1464,7 +1497,8 @@ const MODULE_INDEX = {
       "domain": "ai",
       "title": "AI platforms",
       "groups": [
-        "AI平台"
+        "AI平台",
+        "Claude"
       ],
       "ruleSets": [
         "openai",
@@ -1806,10 +1840,12 @@ const MODULE_INDEX = {
       "domain": "stash",
       "title": "Stash entry override",
       "groups": [
+        "全部节点",
         "自动选择",
         "节点选择",
         "国外媒体",
         "AI平台",
+        "Claude",
         "即时通讯",
         "微软服务",
         "苹果服务",
@@ -1860,10 +1896,12 @@ const MODULE_INDEX = {
       "domain": "mihomo",
       "title": "Mihomo entry override",
       "groups": [
+        "全部节点",
         "自动选择",
         "节点选择",
         "国外媒体",
         "AI平台",
+        "Claude",
         "即时通讯",
         "微软服务",
         "苹果服务",
@@ -1914,10 +1952,12 @@ const MODULE_INDEX = {
       "domain": "clash-party",
       "title": "Clash Party remote override",
       "groups": [
+        "全部节点",
         "自动选择",
         "节点选择",
         "国外媒体",
         "AI平台",
+        "Claude",
         "即时通讯",
         "微软服务",
         "苹果服务",
@@ -1966,10 +2006,12 @@ const MODULE_INDEX = {
       "domain": "surge",
       "title": "Surge entry module",
       "groups": [
+        "全部节点",
         "自动选择",
         "节点选择",
         "国外媒体",
         "AI平台",
+        "Claude",
         "即时通讯",
         "微软服务",
         "苹果服务",
@@ -2131,14 +2173,17 @@ function main(config = {}) {
   function buildStrategyGroups(proxyNames) {
     return MODULE_INDEX.strategyGroups.map((group) => {
       if (group.mode === "all-proxies") {
-        return {
+        const generated = {
           name: group.name,
           type: group.type,
           proxies: proxyNames.length ? uniq(proxyNames) : ["DIRECT"],
-          url: defaultUrl,
-          interval: defaultInterval,
-          tolerance: defaultTolerance,
         };
+        if (group.type !== "select") {
+          generated.url = defaultUrl;
+          generated.interval = defaultInterval;
+          generated.tolerance = defaultTolerance;
+        }
+        return generated;
       }
 
       return {

@@ -97,11 +97,17 @@ const mediaRegionGroupNames = pickRegionGroupNames([
   "singapore",
   "united_states",
 ]);
-const defaultProxyGroupNames = ["节点选择", "自动选择"];
+const defaultProxyGroupNames = ["节点选择", "自动选择", "全部节点"];
 
 const serviceCheckGroups = [];
 
 const strategyGroups = [
+  {
+    key: "all",
+    name: "全部节点",
+    type: "select",
+    mode: "all-proxies",
+  },
   {
     key: "auto",
     name: "自动选择",
@@ -112,7 +118,7 @@ const strategyGroups = [
     key: "select",
     name: "节点选择",
     type: "select",
-    proxies: ["自动选择", ...regions.map((region) => region.groupName), "DIRECT"],
+    proxies: ["自动选择", "全部节点", ...regions.map((region) => region.groupName), "DIRECT"],
   },
 ];
 
@@ -126,6 +132,11 @@ const businessGroups = [
     name: "AI平台",
     type: "select",
     proxies: [...defaultProxyGroupNames, ...aiRegionGroupNames],
+  },
+  {
+    name: "Claude",
+    type: "select",
+    proxies: [...defaultProxyGroupNames, ...regions.map((region) => region.groupName)],
   },
   {
     name: "即时通讯",
@@ -204,13 +215,13 @@ const rawRuleSets = [
   {
     key: "claude",
     sourceName: "Claude",
-    group: "AI平台",
+    group: "Claude",
     behavior: "classical",
   },
   {
     key: "anthropic",
     sourceName: "Anthropic",
-    group: "AI平台",
+    group: "Claude",
     behavior: "classical",
   },
   {
@@ -450,12 +461,12 @@ const runtimeModules = [
       supportLevel: {
         stash: "partial",
         surge: "partial",
-        mihomo: "partial",
+        mihomo: "unsupported",
       },
       notes: {
         stash: "Metadata only. The previous broad redirect dropped useful URL state and is intentionally not emitted.",
         surge: "Metadata only. The previous broad redirect dropped useful URL state and is intentionally not emitted.",
-        mihomo: "Documented in metadata only; override.js does not emit rewrite rules.",
+        mihomo: "Mihomo and Clash Party do not consume Stash or Surge HTTP rewrite sections.",
       },
     },
     dependencies: ["scenario.media"],
@@ -743,7 +754,7 @@ const runtimeSupportMatrix = {
     mitm: "full",
   },
   mihomo: {
-    rewrite: "partial",
+    rewrite: "unsupported",
     script: "unsupported",
     mitm: "unsupported",
   },
@@ -817,6 +828,8 @@ const bootstrapDomainsByGroup = {
   AI平台: [
     "openai.com",
     "chatgpt.com",
+  ],
+  Claude: [
     "anthropic.com",
     "claude.ai",
   ],
@@ -908,7 +921,7 @@ const scenarioModules = [
     layer: "scenario",
     domain: "ai",
     title: "AI platforms",
-    groups: ["AI平台"],
+    groups: ["AI平台", "Claude"],
     ruleSets: uniq(["openai", "claude", "anthropic", "gemini", "copilot", RULES_GITHUB_REPO ? "cursor" : null]),
     dependsOn: ["base.core"],
     capabilities: {
