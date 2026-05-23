@@ -85,6 +85,14 @@ function surgePolicyFilter(match = null) {
   return `^${clauses.join("")}.*$`;
 }
 
+function quantumultxPolicyFilter(match = null) {
+  const clauses = [`(?!.*(${NOISE_POLICY_PATTERN}))`];
+  if (match) {
+    clauses.push(`(?=.*(${match}))`);
+  }
+  return `^${clauses.join("")}.*$`;
+}
+
 function renderStashGroupHeader(name, type) {
   const lines = [
     `  - name: ${yamlScalar(toStashGroupName(name))}`,
@@ -489,9 +497,91 @@ function renderSurgeEntry(index) {
   return lines.join("\n");
 }
 
+function toQuantumultxPolicyName(name) {
+  if (name === "DIRECT") {
+    return "direct";
+  }
+  if (name === "REJECT") {
+    return "reject";
+  }
+  return name;
+}
+
+function renderQuantumultxPolicyGroup(group, index) {
+  const healthCheck = index.defaultHealthCheck;
+  if (group.mode === "all-proxies") {
+    const filter = quantumultxPolicyFilter();
+    if (group.type === "url-test") {
+      return `url-latency-benchmark = ${group.name}, server-tag-regex=${filter}, check-interval=${healthCheck.interval}, tolerance=${healthCheck.tolerance}`;
+    }
+    return `static = ${group.name}, server-tag-regex=${filter}`;
+  }
+
+  return `static = ${group.name}, ${uniq(group.proxies).map(toQuantumultxPolicyName).join(", ")}`;
+}
+
+function renderQuantumultxRegionGroup(region, index) {
+  const healthCheck = index.defaultHealthCheck;
+  return `url-latency-benchmark = ${region.groupName}, server-tag-regex=${quantumultxPolicyFilter(region.match)}, check-interval=${healthCheck.interval}, tolerance=${healthCheck.tolerance}`;
+}
+
+function renderQuantumultxServiceCheckGroup(group) {
+  return `${group.type} = ${group.name}, ${uniq(group.proxies).map(toQuantumultxPolicyName).join(", ")}, check-interval=${group.interval}, tolerance=${group.tolerance}`;
+}
+
+function renderQuantumultxBusinessGroup(group) {
+  return `static = ${group.name}, ${uniq(group.proxies).map(toQuantumultxPolicyName).join(", ")}`;
+}
+
+function renderQuantumultxRouteRule(rule, groupName) {
+  return `${rule},${toQuantumultxPolicyName(groupName)}`;
+}
+
+function renderQuantumultxInlineRule(rule) {
+  const parts = rule.split(",");
+  if (parts.length < 3) {
+    return rule;
+  }
+  const policyIndex = parts[parts.length - 1] === "no-resolve" ? parts.length - 2 : parts.length - 1;
+  parts[policyIndex] = toQuantumultxPolicyName(parts[policyIndex]);
+  return parts.join(",");
+}
+
+function renderQuantumultxEntry(index) {
+  const lines = [
+    "; Generated from the unified strategy model",
+    "; Import server subscriptions separately, then enable this policy and filter profile.",
+    "",
+    "[general]",
+    "server_check_url = " + index.defaultHealthCheck.url,
+    "geo_location_checker = disabled",
+    "",
+    "[policy]",
+    ...index.strategyGroups.map((group) => renderQuantumultxPolicyGroup(group, index)),
+    ...index.serviceCheckGroups.map((group) => renderQuantumultxServiceCheckGroup(group)),
+    ...index.regions.map((region) => renderQuantumultxRegionGroup(region, index)),
+    ...index.businessGroups.map((group) => renderQuantumultxBusinessGroup(group)),
+    "",
+    "[filter_remote]",
+    "FILTER_LAN, tag=LAN, force-policy=direct, inserted-resource=true, enabled=true",
+    ...index.ruleSets.map(
+      (ruleSet) =>
+        `${ruleSet.urls.quantumultx}, tag=${ruleSet.sourceName}, force-policy=${toQuantumultxPolicyName(ruleSet.group)}, update-interval=86400, opt-parser=true, enabled=true`
+    ),
+    "",
+    "[filter_local]",
+    ...index.inlineRules.map((rule) => renderQuantumultxInlineRule(rule)),
+    ...index.routingRules.map((route) => renderQuantumultxRouteRule(route.rule, route.group)),
+    "FINAL,漏网之鱼",
+  ];
+
+  return lines.join("\n");
+}
+
 module.exports = {
   renderMihomoEntry,
   renderClashPartyEntry,
+  renderQuantumultxEntry,
   renderStashEntry,
   renderSurgeEntry,
 };
