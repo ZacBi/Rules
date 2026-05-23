@@ -245,7 +245,8 @@
       "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Advertising/Advertising.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Advertising/Advertising.list"
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Advertising/Advertising.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Advertising/Advertising.list"
       },
       "paths": {
         "mihomo": "./ruleset/Advertising.yaml"
@@ -253,7 +254,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ]
     },
     {
@@ -265,7 +267,8 @@
       "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Lan/Lan.list"
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Lan/Lan.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Lan/Lan.list"
       },
       "paths": {
         "mihomo": "./ruleset/Lan.yaml"
@@ -273,7 +276,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ]
     },
     {
@@ -285,7 +289,8 @@
       "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax_Domain.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ChinaMax/ChinaMax.list"
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ChinaMax/ChinaMax.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/ChinaMax/ChinaMax.list"
       },
       "paths": {
         "mihomo": "./ruleset/ChinaMax_Domain.yaml"
@@ -293,7 +298,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ]
     },
     {
@@ -305,7 +311,8 @@
       "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMedia/ChinaMedia.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ChinaMedia/ChinaMedia.list"
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ChinaMedia/ChinaMedia.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/ChinaMedia/ChinaMedia.list"
       },
       "paths": {
         "mihomo": "./ruleset/ChinaMedia.yaml"
@@ -313,7 +320,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ]
     },
     {
@@ -325,7 +333,8 @@
       "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/OpenAI/OpenAI.list"
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/OpenAI/OpenAI.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/OpenAI/OpenAI.list"
       },
       "paths": {
         "mihomo": "./ruleset/OpenAI.yaml"
@@ -333,7 +342,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ]
     },
     {
@@ -345,7 +355,8 @@
       "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Claude/Claude.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Claude/Claude.list"
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Claude/Claude.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Claude/Claude.list"
       },
       "paths": {
         "mihomo": "./ruleset/Claude.yaml"
@@ -353,7 +364,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ]
     },
     {
@@ -365,7 +377,8 @@
       "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Anthropic/Anthropic.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Anthropic/Anthropic.list"
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Anthropic/Anthropic.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Anthropic/Anthropic.list"
       },
       "paths": {
         "mihomo": "./ruleset/Anthropic.yaml"
@@ -373,7 +386,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ]
     },
     {
@@ -385,7 +399,8 @@
       "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Gemini/Gemini.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Gemini/Gemini.list"
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Gemini/Gemini.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Gemini/Gemini.list"
       },
       "paths": {
         "mihomo": "./ruleset/Gemini.yaml"
@@ -393,7 +408,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ]
     },
     {
@@ -405,7 +421,8 @@
       "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Copilot/Copilot.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Copilot/Copilot.list"
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Copilot/Copilot.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Copilot/Copilot.list"
       },
       "paths": {
         "mihomo": "./ruleset/Copilot.yaml"
@@ -413,7 +430,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ]
     },
     {
@@ -425,7 +443,8 @@
       "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/YouTube/YouTube.list"
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/YouTube/YouTube.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/YouTube/YouTube.list"
       },
       "paths": {
         "mihomo": "./ruleset/YouTube.yaml"
@@ -433,7 +452,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ]
     },
     {
@@ -445,7 +465,8 @@
       "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Netflix/Netflix.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Netflix/Netflix.list"
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Netflix/Netflix.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Netflix/Netflix.list"
       },
       "paths": {
         "mihomo": "./ruleset/Netflix.yaml"
@@ -453,7 +474,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ]
     },
     {
@@ -465,7 +487,8 @@
       "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Spotify/Spotify.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Spotify/Spotify.list"
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Spotify/Spotify.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Spotify/Spotify.list"
       },
       "paths": {
         "mihomo": "./ruleset/Spotify.yaml"
@@ -473,7 +496,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ]
     },
     {
@@ -485,7 +509,8 @@
       "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TikTok/TikTok.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/TikTok/TikTok.list"
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/TikTok/TikTok.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/TikTok/TikTok.list"
       },
       "paths": {
         "mihomo": "./ruleset/TikTok.yaml"
@@ -493,7 +518,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ]
     },
     {
@@ -505,7 +531,8 @@
       "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GlobalMedia/GlobalMedia.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/GlobalMedia/GlobalMedia.list"
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/GlobalMedia/GlobalMedia.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/GlobalMedia/GlobalMedia.list"
       },
       "paths": {
         "mihomo": "./ruleset/GlobalMedia.yaml"
@@ -513,7 +540,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ]
     },
     {
@@ -525,7 +553,8 @@
       "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/GitHub/GitHub.list"
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/GitHub/GitHub.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/GitHub/GitHub.list"
       },
       "paths": {
         "mihomo": "./ruleset/GitHub.yaml"
@@ -533,7 +562,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ]
     },
     {
@@ -545,7 +575,8 @@
       "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Npmjs/Npmjs.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Npmjs/Npmjs.list"
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Npmjs/Npmjs.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Npmjs/Npmjs.list"
       },
       "paths": {
         "mihomo": "./ruleset/Npmjs.yaml"
@@ -553,7 +584,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ]
     },
     {
@@ -565,7 +597,8 @@
       "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Docker/Docker.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Docker/Docker.list"
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Docker/Docker.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Docker/Docker.list"
       },
       "paths": {
         "mihomo": "./ruleset/Docker.yaml"
@@ -573,7 +606,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ]
     },
     {
@@ -585,7 +619,8 @@
       "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Python/Python.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Python/Python.list"
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Python/Python.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Python/Python.list"
       },
       "paths": {
         "mihomo": "./ruleset/Python.yaml"
@@ -593,7 +628,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ]
     },
     {
@@ -605,7 +641,8 @@
       "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitLab/GitLab.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/GitLab/GitLab.list"
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/GitLab/GitLab.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/GitLab/GitLab.list"
       },
       "paths": {
         "mihomo": "./ruleset/GitLab.yaml"
@@ -613,7 +650,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ]
     },
     {
@@ -625,7 +663,8 @@
       "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Scholar/Scholar.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Scholar/Scholar.list"
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Scholar/Scholar.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Scholar/Scholar.list"
       },
       "paths": {
         "mihomo": "./ruleset/Scholar.yaml"
@@ -633,7 +672,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ]
     },
     {
@@ -645,7 +685,8 @@
       "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Wikipedia/Wikipedia.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Wikipedia/Wikipedia.list"
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Wikipedia/Wikipedia.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Wikipedia/Wikipedia.list"
       },
       "paths": {
         "mihomo": "./ruleset/Wikipedia.yaml"
@@ -653,7 +694,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ]
     },
     {
@@ -665,7 +707,8 @@
       "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Stackexchange/Stackexchange.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Stackexchange/Stackexchange.list"
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Stackexchange/Stackexchange.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Stackexchange/Stackexchange.list"
       },
       "paths": {
         "mihomo": "./ruleset/Stackexchange.yaml"
@@ -673,7 +716,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ]
     },
     {
@@ -685,7 +729,8 @@
       "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Google/Google.list"
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Google/Google.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Google/Google.list"
       },
       "paths": {
         "mihomo": "./ruleset/Google.yaml"
@@ -693,7 +738,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ]
     },
     {
@@ -705,7 +751,8 @@
       "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Telegram/Telegram.list"
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Telegram/Telegram.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Telegram/Telegram.list"
       },
       "paths": {
         "mihomo": "./ruleset/Telegram.yaml"
@@ -713,7 +760,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ]
     },
     {
@@ -725,7 +773,8 @@
       "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Discord/Discord.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Discord/Discord.list"
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Discord/Discord.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Discord/Discord.list"
       },
       "paths": {
         "mihomo": "./ruleset/Discord.yaml"
@@ -733,7 +782,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ]
     },
     {
@@ -745,7 +795,8 @@
       "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Twitter/Twitter.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Twitter/Twitter.list"
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Twitter/Twitter.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Twitter/Twitter.list"
       },
       "paths": {
         "mihomo": "./ruleset/Twitter.yaml"
@@ -753,7 +804,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ]
     },
     {
@@ -765,7 +817,8 @@
       "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Microsoft/Microsoft.list"
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Microsoft/Microsoft.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Microsoft/Microsoft.list"
       },
       "paths": {
         "mihomo": "./ruleset/Microsoft.yaml"
@@ -773,7 +826,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ]
     },
     {
@@ -785,7 +839,8 @@
       "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Apple/Apple.list"
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Apple/Apple.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Apple/Apple.list"
       },
       "paths": {
         "mihomo": "./ruleset/Apple.yaml"
@@ -793,7 +848,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ]
     },
     {
@@ -805,7 +861,8 @@
       "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Steam/Steam.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Steam/Steam.list"
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Steam/Steam.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Steam/Steam.list"
       },
       "paths": {
         "mihomo": "./ruleset/Steam.yaml"
@@ -813,7 +870,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ]
     },
     {
@@ -825,7 +883,8 @@
       "sourceUrl": null,
       "urls": {
         "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Epic/Epic.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Epic/Epic.list"
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Epic/Epic.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Epic/Epic.list"
       },
       "paths": {
         "mihomo": "./ruleset/Epic.yaml"
@@ -833,7 +892,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ]
     }
   ],
@@ -1055,7 +1115,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ],
       "support": {
         "supportLevel": {
@@ -1095,7 +1156,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ],
       "support": {
         "supportLevel": {
@@ -1300,7 +1362,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ],
       "support": {
         "supportLevel": {
@@ -1344,7 +1407,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ],
       "support": {
         "supportLevel": {
@@ -1388,7 +1452,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ],
       "support": {
         "supportLevel": {
@@ -1438,6 +1503,11 @@
       "rewrite": "unsupported",
       "script": "unsupported",
       "mitm": "unsupported"
+    },
+    "quantumultx": {
+      "rewrite": "metadata-only",
+      "script": "metadata-only",
+      "mitm": "metadata-only"
     }
   },
   "clashInlineRules": [
@@ -1480,7 +1550,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ],
       "capabilities": {
         "routing": true,
@@ -1514,7 +1585,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ],
       "capabilities": {
         "routing": true,
@@ -1547,7 +1619,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ],
       "capabilities": {
         "routing": true,
@@ -1580,7 +1653,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ],
       "capabilities": {
         "routing": true,
@@ -1611,7 +1685,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ],
       "capabilities": {
         "routing": true,
@@ -1641,7 +1716,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ],
       "capabilities": {
         "routing": true,
@@ -1672,7 +1748,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ],
       "capabilities": {
         "routing": true,
@@ -1702,7 +1779,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ],
       "capabilities": {
         "routing": true,
@@ -1740,7 +1818,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ],
       "capabilities": {
         "routing": true,
@@ -1769,7 +1848,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ],
       "capabilities": {
         "routing": true,
@@ -1796,7 +1876,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ],
       "capabilities": {
         "routing": true,
@@ -1823,7 +1904,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ],
       "capabilities": {
         "routing": true,
@@ -1877,7 +1959,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ],
       "capabilities": {
         "routing": true,
@@ -1933,7 +2016,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ],
       "capabilities": {
         "routing": true,
@@ -2043,7 +2127,8 @@
       "supportedClients": [
         "stash",
         "mihomo",
-        "surge"
+        "surge",
+        "quantumultx"
       ],
       "capabilities": {
         "routing": true,
@@ -2054,6 +2139,63 @@
       "conflicts": [],
       "notes": [
         "Rendered as a reusable Surge module fragment rather than a full profile."
+      ]
+    },
+    {
+      "id": "client.quantumultx.entry",
+      "layer": "client",
+      "domain": "quantumultx",
+      "title": "Quantumult X entry profile",
+      "groups": [
+        "全部节点",
+        "自动选择",
+        "节点选择",
+        "国外媒体",
+        "AI平台",
+        "Claude",
+        "即时通讯",
+        "微软服务",
+        "苹果服务",
+        "游戏平台",
+        "国外网站",
+        "国内网站",
+        "广告拦截",
+        "漏网之鱼"
+      ],
+      "ruleSets": [],
+      "dependsOn": [
+        "base.core",
+        "scenario.ai",
+        "scenario.media",
+        "scenario.dev",
+        "scenario.research",
+        "scenario.chat",
+        "scenario.vendor",
+        "scenario.games",
+        "scenario.web",
+        "scenario.domestic",
+        "scenario.ads",
+        "scenario.fallback"
+      ],
+      "output": {
+        "path": "dist/quantumultx/rules.conf",
+        "format": "quantumultx-profile"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge",
+        "quantumultx"
+      ],
+      "capabilities": {
+        "routing": true,
+        "rewrite": false,
+        "script": false,
+        "mitm": false
+      },
+      "conflicts": [],
+      "notes": [
+        "Rendered as a policy and filter profile that expects server subscriptions to be imported separately."
       ]
     }
   ],
@@ -2133,6 +2275,25 @@
       ],
       "outputPath": "dist/surge/module.sgmodule",
       "format": "surge-module"
+    },
+    "quantumultx": {
+      "moduleId": "client.quantumultx.entry",
+      "modules": [
+        "base.core",
+        "scenario.ai",
+        "scenario.media",
+        "scenario.dev",
+        "scenario.research",
+        "scenario.chat",
+        "scenario.vendor",
+        "scenario.games",
+        "scenario.web",
+        "scenario.domestic",
+        "scenario.ads",
+        "scenario.fallback"
+      ],
+      "outputPath": "dist/quantumultx/rules.conf",
+      "format": "quantumultx-profile"
     }
   }
 }

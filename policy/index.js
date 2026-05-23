@@ -4,6 +4,7 @@ const { buildModuleIndex } = require("./catalog");
 const {
   renderClashPartyEntry,
   renderMihomoEntry,
+  renderQuantumultxEntry,
   renderStashEntry,
   renderSurgeEntry,
 } = require("./renderers");
@@ -33,6 +34,10 @@ function buildArtifacts() {
       {
         path: moduleIndex.entrypoints.surge.outputPath,
         content: renderSurgeEntry(moduleIndex),
+      },
+      {
+        path: moduleIndex.entrypoints.quantumultx.outputPath,
+        content: renderQuantumultxEntry(moduleIndex),
       },
     ],
   };

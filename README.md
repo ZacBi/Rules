@@ -1,6 +1,6 @@
 # Rules
 
-`Rules` 现在是一个面向 Stash、Mihomo、Surge 的**策略发行仓**，不是“订阅模板仓”。
+`Rules` 现在是一个面向 Stash、Mihomo、Surge、Quantumult X 的**策略发行仓**，不是“订阅模板仓”。
 
 默认前提是：订阅解析、节点清洗、格式转换已经由客户端能力或前置工具完成，例如 `Sub-Store`、`Script Hub`，以及客户端自带的覆写、重写、脚本、MITM 能力。本仓库只负责维护统一策略模型，并输出可远程引用的轻量策略产物。
 
@@ -20,6 +20,7 @@
 - `dist/mihomo/override.js`
 - `dist/mihomo/clash-party.js`
 - `dist/surge/module.sgmodule`
+- `dist/quantumultx/rules.conf`
 - `dist/modules/index.json`
 
 其中 `index.json` 是机器可读模块索引，描述模块标识、层级、支持客户端、依赖关系和能力矩阵。
@@ -54,6 +55,7 @@
    - Clash Party：优先用内置 `Sub-Store` 管理原始订阅，再用链接导入远程覆写 `dist/mihomo/clash-party.js`。
    - 其他 Mihomo 客户端：若支持 JavaScript 覆写，可使用 `dist/mihomo/override.js`；若只支持 YAML 订阅，则需要先生成最终配置。
    - Surge：先让 profile 通过 `Sub-Store` 或远程 `#!include` 拿到真实代理节点，再叠加 `dist/surge/module.sgmodule`。
+   - Quantumult X：先导入节点订阅，再引用 `dist/quantumultx/rules.conf` 作为策略和分流配置。
 
 4. 需要运行时脚本时，再打开 `Script Hub`。
    `Script Hub` 适合承接脚本、重写、MITM 这类客户端运行时能力；本仓库负责给出统一策略入口，不负责托管个人脚本状态。
@@ -161,6 +163,21 @@ DNS 解析失败不是规则集能完全解决的问题。如果 Stash 日志出
 4. 如果节点名需要进一步整理：
    优先在 `Sub-Store` 完成，再让本仓模块按地区正则和业务分组消费这些节点。
 
+### Quantumult X
+
+1. 先在 Quantumult X 或 `Sub-Store` 中导入节点订阅。
+   本仓入口不包含 `[server_remote]`，不会托管真实订阅地址。
+
+2. 再引用 `dist/quantumultx/rules.conf`。
+   该入口生成 `[policy]`、`[filter_remote]` 和 `[filter_local]`，负责策略组、远程规则集和启动期兜底分流。
+
+   ```text
+   https://raw.githubusercontent.com/ZacBi/Rules/master/dist/quantumultx/rules.conf
+   ```
+
+3. 如需节点改名、去噪或机场信息清理：
+   继续放在订阅源或 `Sub-Store`，不要写回公开仓库。
+
 ### 什么时候用 Script Hub
 
 - 需要运行时脚本、面板、网络请求拦截脚本时，用 `Script Hub`
@@ -175,16 +192,17 @@ DNS 解析失败不是规则集能完全解决的问题。如果 Stash 日志出
 
 当前实现采用“轻默认 + 可选运行时能力”：
 
-| 能力 | Stash | Surge | Mihomo / Clash Party |
-| --- | --- | --- | --- |
-| Rewrite | Full | Full | Unsupported |
-| Script | Full | Full | Unsupported |
-| MITM | Full | Full | Unsupported |
+| 能力 | Stash | Surge | Mihomo / Clash Party | Quantumult X |
+| --- | --- | --- | --- | --- |
+| Rewrite | Full | Full | Unsupported | Metadata only |
+| Script | Full | Full | Unsupported | Metadata only |
+| MITM | Full | Full | Unsupported | Metadata only |
 
 解释：
 
 - `Full`：该客户端可以消费对应能力；默认入口不强制注入。
 - `Unsupported`：本仓库只在索引和文档里声明，不伪造产物。
+- `Metadata only`：索引保留能力元数据，公开入口当前只渲染策略和分流。
 
 当前内置的运行时模块以常见场景为主：
 

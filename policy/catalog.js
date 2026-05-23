@@ -378,6 +378,7 @@ if (RULES_RAW_BASE) {
     mihomoUrl: `${RULES_RAW_BASE}/mihomo/ruleset/Cursor.yaml`,
     mihomoPath: "./ruleset/Cursor.yaml",
     surgeUrl: `${RULES_RAW_BASE}/mihomo/ruleset/Cursor.list`,
+    quantumultxUrl: `${RULES_RAW_BASE}/mihomo/ruleset/Cursor.list`,
     surgeLocalRelativeToSurgeDir: "../mihomo/ruleset/Cursor.list",
   });
 }
@@ -398,6 +399,9 @@ function withDerivedUrls(entry) {
     surgeUrl:
       entry.surgeUrl ??
       `${base}/Surge/${entry.sourceName}/${entry.sourceName}.list`,
+    quantumultxUrl:
+      entry.quantumultxUrl ??
+      `${base}/QuantumultX/${entry.sourceName}/${entry.sourceName}.list`,
   };
 }
 
@@ -411,7 +415,7 @@ function surgeRuleSetLocation(ruleSet) {
   return ruleSet.surgeUrl;
 }
 
-const supportedClients = ["stash", "mihomo", "surge"];
+const supportedClients = ["stash", "mihomo", "surge", "quantumultx"];
 
 const runtimeModules = [
   {
@@ -758,6 +762,11 @@ const runtimeSupportMatrix = {
     script: "unsupported",
     mitm: "unsupported",
   },
+  quantumultx: {
+    rewrite: "metadata-only",
+    script: "metadata-only",
+    mitm: "metadata-only",
+  },
 };
 
 function withRuleSetMetadata(entry) {
@@ -771,6 +780,7 @@ function withRuleSetMetadata(entry) {
     urls: {
       mihomo: entry.mihomoUrl,
       surge: entry.surgeUrl,
+      quantumultx: entry.quantumultxUrl,
     },
     paths: {
       mihomo: entry.mihomoPath,
@@ -1146,6 +1156,29 @@ const clientModules = [
     },
     notes: ["Rendered as a reusable Surge module fragment rather than a full profile."],
   }),
+  moduleTemplate({
+    id: "client.quantumultx.entry",
+    layer: "client",
+    domain: "quantumultx",
+    title: "Quantumult X entry profile",
+    dependsOn: entryComposition,
+    groups: uniq([
+      ...strategyGroups.map((group) => group.name),
+      ...serviceCheckGroupNames,
+      ...businessGroupNames,
+    ]),
+    output: {
+      path: "dist/quantumultx/rules.conf",
+      format: "quantumultx-profile",
+    },
+    capabilities: {
+      routing: true,
+      rewrite: false,
+      script: false,
+      mitm: false,
+    },
+    notes: ["Rendered as a policy and filter profile that expects server subscriptions to be imported separately."],
+  }),
 ];
 
 function buildEntrypoints() {
@@ -1173,6 +1206,12 @@ function buildEntrypoints() {
       modules: entryComposition,
       outputPath: "dist/surge/module.sgmodule",
       format: "surge-module",
+    },
+    quantumultx: {
+      moduleId: "client.quantumultx.entry",
+      modules: entryComposition,
+      outputPath: "dist/quantumultx/rules.conf",
+      format: "quantumultx-profile",
     },
   };
 }
