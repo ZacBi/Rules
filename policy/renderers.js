@@ -630,10 +630,24 @@ function renderQuantumultxEntry(index) {
   return lines.join("\n");
 }
 
+function renderQuantumultxSubStoreAddon() {
+  return [
+    "; Optional Sub-Store runtime addon for Quantumult X.",
+    "; Import this separately only when you want Sub-Store rewrite/task support.",
+    "",
+    "[rewrite_remote]",
+    "https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/QX.snippet, tag=Sub-Store, update-interval=172800, opt-parser=false, enabled=true",
+    "",
+    "[task_local]",
+    "https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/QX-Task.json, tag=Sub-Store, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Server.png, enabled=true",
+  ].join("\n");
+}
+
 module.exports = {
   renderMihomoEntry,
   renderClashPartyEntry,
   renderQuantumultxEntry,
+  renderQuantumultxSubStoreAddon,
   renderStashEntry,
   renderSurgeEntry,
 };

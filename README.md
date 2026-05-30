@@ -21,6 +21,7 @@
 - `dist/mihomo/clash-party.js`
 - `dist/surge/module.sgmodule`
 - `dist/quantumultx/rules.conf`
+- `dist/quantumultx/sub-store.conf`
 - `dist/modules/index.json`
 
 其中 `index.json` 是机器可读模块索引，描述模块标识、层级、支持客户端、依赖关系和能力矩阵。
@@ -178,7 +179,17 @@ DNS 解析失败不是规则集能完全解决的问题。如果 Stash 日志出
 3. 如需节点改名、去噪或机场信息清理：
    继续放在 `Sub-Store`，不要写回公开仓库。
 
+4. 如需在 Quantumult X 内启用 Sub-Store 运行时：
+   另行引用 `dist/quantumultx/sub-store.conf`。
+   该增强入口只引用 Sub-Store 官方 Quantumult X rewrite 和 task 资源，不包含任何个人订阅地址。
+
+   ```text
+   https://raw.githubusercontent.com/ZacBi/Rules/refs/heads/master/dist/quantumultx/sub-store.conf
+   ```
+
 Quantumult X 入口定位为公开安全的轻量懒人配置：导入节点后，再引用本入口即可获得常用分组和分流。它默认使用 `blackmatrix7/ios_rule_script` 的原生 Quantumult X 分流规则，不对这类 `.list` 资源启用 parser。Profiles4limbo、ddgksf2013、Toperlock 等个人懒人配置可作为私有配置参考，但不会被整包并入本仓公开入口。
+
+Sub-Store 增强入口不是默认配置的一部分。启用前应理解它会引入 rewrite 和 task 运行时能力，并使用 Sub-Store 官方的 `sub.store` 访问方式；真实订阅、节点处理和访问安全仍由你的本地 Sub-Store/QX 环境负责。
 
 ### 什么时候用 Script Hub
 

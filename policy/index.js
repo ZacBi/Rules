@@ -5,6 +5,7 @@ const {
   renderClashPartyEntry,
   renderMihomoEntry,
   renderQuantumultxEntry,
+  renderQuantumultxSubStoreAddon,
   renderStashEntry,
   renderSurgeEntry,
 } = require("./renderers");
@@ -38,6 +39,10 @@ function buildArtifacts() {
       {
         path: moduleIndex.entrypoints.quantumultx.outputPath,
         content: renderQuantumultxEntry(moduleIndex),
+      },
+      {
+        path: moduleIndex.entrypoints.quantumultxSubStore.outputPath,
+        content: renderQuantumultxSubStoreAddon(moduleIndex),
       },
     ],
   };

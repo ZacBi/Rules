@@ -78,6 +78,9 @@ function validateQuantumultx() {
   if (!text.includes("FILTER_REGION") || !text.includes("FILTER_LAN")) {
     errors.push(`${file}: missing built-in FILTER_REGION/FILTER_LAN`);
   }
+  if (/sub-store-org\/Sub-Store|QX\.snippet|QX-Task\.json/.test(text)) {
+    errors.push(`${file}: Sub-Store addon must stay out of the default QX profile`);
+  }
   for (const group of ["全部节点", "自动选择", "节点选择", "国外媒体", "AI平台", "漏网之鱼"]) {
     const pattern = new RegExp(`^(?:static|url-latency-benchmark)=${group},.*img-url=https://raw\\.githubusercontent\\.com/Koolson/Qure/master/IconSet/Color/`, "m");
     if (!pattern.test(text)) {
@@ -97,6 +100,31 @@ function validateQuantumultx() {
       errors.push(`${file}:${lineNumber}: filter type should be lower-case`);
     }
   });
+
+  return errors;
+}
+
+function validateQuantumultxSubStore() {
+  const file = "dist/quantumultx/sub-store.conf";
+  const text = readText(file);
+  const errors = [];
+  const sections = sectionNames(text);
+  const required = ["rewrite_remote", "task_local"];
+
+  for (const section of required) {
+    if (!sections.includes(section)) {
+      errors.push(`${file}: missing [${section}]`);
+    }
+  }
+  if (!text.includes("https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/QX.snippet")) {
+    errors.push(`${file}: missing Sub-Store QX rewrite snippet`);
+  }
+  if (!text.includes("https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/QX-Task.json")) {
+    errors.push(`${file}: missing Sub-Store QX task resource`);
+  }
+  if (/\/download\/|\/api\/|SUB_STORE|Bearer|Cookie|\/Users\/zacbi|api_key|password|secret|token/i.test(text)) {
+    errors.push(`${file}: contains private or instance-specific Sub-Store marker`);
+  }
 
   return errors;
 }
@@ -187,6 +215,7 @@ function validateMihomo() {
 function validatePublicSafety() {
   const files = [
     "dist/quantumultx/rules.conf",
+    "dist/quantumultx/sub-store.conf",
     "dist/surge/module.sgmodule",
     "dist/stash/stash.stoverride",
     "dist/mihomo/override.js",
@@ -209,6 +238,7 @@ function validatePublicSafety() {
 function main() {
   const checks = {
     quantumultx: validateQuantumultx,
+    quantumultxSubStore: validateQuantumultxSubStore,
     surge: validateSurge,
     stash: validateStash,
     mihomo: validateMihomo,
