@@ -31,6 +31,7 @@ function runtimeModulesByKind(index, kind, options = {}) {
 const QURE_ICON_BASE_URL = "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color";
 const NOISE_POLICY_PATTERN = "剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset";
 const RESERVED_POLICY_PATTERN = "全部节点|自动选择|节点选择|DIRECT|REJECT";
+const QUANTUMULTX_RESOURCE_UPDATE_INTERVAL = 172800;
 const STASH_ICON_FILENAME_BY_GROUP = {
   全部节点: "Proxy.png",
   自动选择: "Speedtest.png",
@@ -512,7 +513,8 @@ function renderQuantumultxPolicyGroup(group, index) {
   if (group.mode === "all-proxies") {
     const filter = quantumultxPolicyFilter();
     if (group.type === "url-test") {
-      return `url-latency-benchmark = ${group.name}, server-tag-regex=${filter}, check-interval=${healthCheck.interval}, tolerance=${healthCheck.tolerance}`;
+      const candidates = index.regions.map((region) => region.groupName);
+      return `url-latency-benchmark = ${group.name}, ${candidates.join(", ")}, check-interval=${healthCheck.interval}, tolerance=${healthCheck.tolerance}`;
     }
     return `static = ${group.name}, server-tag-regex=${filter}`;
   }
@@ -521,8 +523,7 @@ function renderQuantumultxPolicyGroup(group, index) {
 }
 
 function renderQuantumultxRegionGroup(region, index) {
-  const healthCheck = index.defaultHealthCheck;
-  return `url-latency-benchmark = ${region.groupName}, server-tag-regex=${quantumultxPolicyFilter(region.match)}, check-interval=${healthCheck.interval}, tolerance=${healthCheck.tolerance}`;
+  return `static = ${region.groupName}, server-tag-regex=${quantumultxPolicyFilter(region.match)}`;
 }
 
 function renderQuantumultxServiceCheckGroup(group) {
@@ -563,10 +564,11 @@ function renderQuantumultxEntry(index) {
     ...index.businessGroups.map((group) => renderQuantumultxBusinessGroup(group)),
     "",
     "[filter_remote]",
+    "FILTER_REGION, tag=CN, force-policy=direct, inserted-resource=true, enabled=true",
     "FILTER_LAN, tag=LAN, force-policy=direct, inserted-resource=true, enabled=true",
     ...index.ruleSets.map(
       (ruleSet) =>
-        `${ruleSet.urls.quantumultx}, tag=${ruleSet.sourceName}, force-policy=${toQuantumultxPolicyName(ruleSet.group)}, update-interval=86400, opt-parser=true, enabled=true`
+        `${ruleSet.urls.quantumultx}, tag=${ruleSet.sourceName}, force-policy=${toQuantumultxPolicyName(ruleSet.group)}, update-interval=${QUANTUMULTX_RESOURCE_UPDATE_INTERVAL}, opt-parser=false, enabled=true`
     ),
     "",
     "[filter_local]",

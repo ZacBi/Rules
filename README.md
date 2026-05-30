@@ -165,8 +165,8 @@ DNS 解析失败不是规则集能完全解决的问题。如果 Stash 日志出
 
 ### Quantumult X
 
-1. 先在 Quantumult X 或 `Sub-Store` 中导入节点订阅。
-   本仓入口不包含 `[server_remote]`，不会托管真实订阅地址。
+1. 先用 `Sub-Store` 处理原始订阅，并输出 Quantumult X 可消费的节点订阅。
+   本仓入口不包含 `[server_remote]`，不会托管真实订阅地址。节点解析、改名、去噪、协议兼容和机场信息处理都应留在 `Sub-Store` 或你的私有 profile 中。
 
 2. 再引用 `dist/quantumultx/rules.conf`。
    该入口生成 `[policy]`、`[filter_remote]` 和 `[filter_local]`，负责策略组、远程规则集和启动期兜底分流。
@@ -176,7 +176,9 @@ DNS 解析失败不是规则集能完全解决的问题。如果 Stash 日志出
    ```
 
 3. 如需节点改名、去噪或机场信息清理：
-   继续放在订阅源或 `Sub-Store`，不要写回公开仓库。
+   继续放在 `Sub-Store`，不要写回公开仓库。
+
+Quantumult X 入口默认使用 `blackmatrix7/ios_rule_script` 的原生 Quantumult X 分流规则，不对这类 `.list` 资源启用 parser。Profiles4limbo、ddgksf2013、Toperlock 等个人懒人配置可作为私有配置参考，但不会被整包并入本仓公开入口。
 
 ### 什么时候用 Script Hub
 
