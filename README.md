@@ -172,7 +172,7 @@ DNS 解析失败不是规则集能完全解决的问题。如果 Stash 日志出
    该入口生成 `[policy]`、`[filter_remote]` 和 `[filter_local]`，负责策略组、远程规则集和启动期兜底分流。
 
    ```text
-   https://raw.githubusercontent.com/ZacBi/Rules/master/dist/quantumultx/rules.conf
+   https://raw.githubusercontent.com/ZacBi/Rules/refs/heads/master/dist/quantumultx/rules.conf
    ```
 
 3. 如需节点改名、去噪或机场信息清理：
