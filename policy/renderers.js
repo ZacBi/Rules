@@ -32,7 +32,6 @@ const QURE_ICON_BASE_URL = "https://raw.githubusercontent.com/Koolson/Qure/maste
 const NOISE_POLICY_PATTERN = "剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset";
 const RESERVED_POLICY_PATTERN = "全部节点|自动选择|节点选择|DIRECT|REJECT";
 const QUANTUMULTX_RESOURCE_UPDATE_INTERVAL = 172800;
-const QUANTUMULTX_SERVER_CHECK_URL = "http://www.gstatic.com/generate_204";
 const STASH_ICON_FILENAME_BY_GROUP = {
   全部节点: "Proxy.png",
   自动选择: "Speedtest.png",
@@ -514,29 +513,32 @@ function renderQuantumultxPolicyGroup(group, index) {
   if (group.mode === "all-proxies") {
     const filter = quantumultxPolicyFilter();
     if (group.type === "url-test") {
-      const candidates = index.regions.map((region) => region.groupName);
-      return `url-latency-benchmark = ${group.name}, ${candidates.join(", ")}, check-interval=${healthCheck.interval}, tolerance=${healthCheck.tolerance}`;
+      return `url-latency-benchmark=${group.name}, server-tag-regex=${filter}, check-interval=${healthCheck.interval}, tolerance=${healthCheck.tolerance}, alive-checking=false`;
     }
-    return `static = ${group.name}, server-tag-regex=${filter}`;
+    return `static=${group.name}, server-tag-regex=${filter}`;
   }
 
-  return `static = ${group.name}, ${uniq(group.proxies).map(toQuantumultxPolicyName).join(", ")}`;
+  return `static=${group.name}, ${uniq(group.proxies).map(toQuantumultxPolicyName).join(", ")}`;
 }
 
 function renderQuantumultxRegionGroup(region, index) {
-  return `static = ${region.groupName}, server-tag-regex=${quantumultxPolicyFilter(region.match)}`;
+  const healthCheck = index.defaultHealthCheck;
+  return `url-latency-benchmark=${region.groupName}, server-tag-regex=${quantumultxPolicyFilter(region.match)}, check-interval=${healthCheck.interval}, tolerance=${healthCheck.tolerance}, alive-checking=false`;
 }
 
 function renderQuantumultxServiceCheckGroup(group) {
-  return `${group.type} = ${group.name}, ${uniq(group.proxies).map(toQuantumultxPolicyName).join(", ")}, check-interval=${group.interval}, tolerance=${group.tolerance}`;
+  const type = group.type === "url-test" ? "url-latency-benchmark" : group.type;
+  return `${type}=${group.name}, ${uniq(group.proxies).map(toQuantumultxPolicyName).join(", ")}, check-interval=${group.interval}, tolerance=${group.tolerance}`;
 }
 
 function renderQuantumultxBusinessGroup(group) {
-  return `static = ${group.name}, ${uniq(group.proxies).map(toQuantumultxPolicyName).join(", ")}`;
+  return `static=${group.name}, ${uniq(group.proxies).map(toQuantumultxPolicyName).join(", ")}`;
 }
 
 function renderQuantumultxRouteRule(rule, groupName) {
-  return `${rule},${toQuantumultxPolicyName(groupName)}`;
+  const parts = rule.split(",");
+  parts[0] = parts[0].toLowerCase();
+  return `${parts.join(",")},${toQuantumultxPolicyName(groupName)}`;
 }
 
 function renderQuantumultxInlineRule(rule) {
@@ -545,6 +547,11 @@ function renderQuantumultxInlineRule(rule) {
     return rule;
   }
   const policyIndex = parts[parts.length - 1] === "no-resolve" ? parts.length - 2 : parts.length - 1;
+  if (parts[0] === "IP-CIDR6") {
+    parts[0] = "ip6-cidr";
+  } else {
+    parts[0] = parts[0].toLowerCase();
+  }
   parts[policyIndex] = toQuantumultxPolicyName(parts[policyIndex]);
   return parts.join(",");
 }
@@ -553,9 +560,6 @@ function renderQuantumultxEntry(index) {
   const lines = [
     "; Generated from the unified strategy model",
     "; Import server subscriptions separately, then enable this policy and filter profile.",
-    "",
-    "[general]",
-    `server_check_url=${QUANTUMULTX_SERVER_CHECK_URL}`,
     "",
     "[policy]",
     ...index.strategyGroups.map((group) => renderQuantumultxPolicyGroup(group, index)),
@@ -574,7 +578,7 @@ function renderQuantumultxEntry(index) {
     "[filter_local]",
     ...index.inlineRules.map((rule) => renderQuantumultxInlineRule(rule)),
     ...index.routingRules.map((route) => renderQuantumultxRouteRule(route.rule, route.group)),
-    "FINAL,漏网之鱼",
+    "final,漏网之鱼",
   ];
 
   return lines.join("\n");
