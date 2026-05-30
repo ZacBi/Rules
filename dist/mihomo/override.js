@@ -2145,7 +2145,7 @@ const MODULE_INDEX = {
       "id": "client.quantumultx.entry",
       "layer": "client",
       "domain": "quantumultx",
-      "title": "Quantumult X entry profile",
+      "title": "Quantumult X lightweight lazy profile",
       "groups": [
         "全部节点",
         "自动选择",
@@ -2195,7 +2195,7 @@ const MODULE_INDEX = {
       },
       "conflicts": [],
       "notes": [
-        "Rendered as a policy and filter profile that expects server subscriptions to be imported separately."
+        "Rendered as a public-safe lightweight lazy profile for policies and filters; server subscriptions are imported separately."
       ]
     }
   ],
