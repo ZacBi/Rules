@@ -21,7 +21,7 @@ function validateQuantumultx() {
   const file = "dist/quantumultx/rules.conf";
   const text = readText(file);
   const errors = [];
-  const required = ["general", "dns", "policy", "filter_remote", "filter_local"];
+  const required = ["general", "dns", "server_remote", "policy", "filter_remote", "filter_local"];
   const sections = sectionNames(text);
   const positions = Object.fromEntries(sections.map((section, index) => [section, index]));
 
@@ -40,8 +40,11 @@ function validateQuantumultx() {
   if (/server_check_url|geo_location_checker|resource_parser_url|network_check_url/.test(text)) {
     errors.push(`${file}: contains general URL key that should stay user-local`);
   }
-  if (/\[server_remote\]/.test(text)) {
-    errors.push(`${file}: contains [server_remote]`);
+  const serverRemoteBlock = text.match(/^\[server_remote\]\n([\s\S]*?)\n\[policy\]$/m);
+  if (!serverRemoteBlock) {
+    errors.push(`${file}: [server_remote] must be present before [policy]`);
+  } else if (serverRemoteBlock[1].trim()) {
+    errors.push(`${file}: [server_remote] must stay empty in the public profile`);
   }
   if (!/^no-ipv6$/m.test(text)) {
     errors.push(`${file}: missing no-ipv6`);
