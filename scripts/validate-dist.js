@@ -78,6 +78,12 @@ function validateQuantumultx() {
   if (!text.includes("FILTER_REGION") || !text.includes("FILTER_LAN")) {
     errors.push(`${file}: missing built-in FILTER_REGION/FILTER_LAN`);
   }
+  for (const group of ["全部节点", "自动选择", "节点选择", "国外媒体", "AI平台", "漏网之鱼"]) {
+    const pattern = new RegExp(`^(?:static|url-latency-benchmark)=${group},.*img-url=https://raw\\.githubusercontent\\.com/Koolson/Qure/master/IconSet/Color/`, "m");
+    if (!pattern.test(text)) {
+      errors.push(`${file}: missing Qure Color img-url for ${group}`);
+    }
+  }
 
   text.split(/\r?\n/).forEach((line, lineIndex) => {
     const lineNumber = lineIndex + 1;
