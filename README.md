@@ -55,7 +55,7 @@
    - Clash Party：优先用内置 `Sub-Store` 管理原始订阅，再用链接导入远程覆写 `dist/mihomo/clash-party.js`。
    - 其他 Mihomo 客户端：若支持 JavaScript 覆写，可使用 `dist/mihomo/override.js`；若只支持 YAML 订阅，则需要先生成最终配置。
    - Surge：先让 profile 通过 `Sub-Store` 或远程 `#!include` 拿到真实代理节点，再叠加 `dist/surge/module.sgmodule`。
-   - Quantumult X：先导入节点订阅，再引用 `dist/quantumultx/rules.conf` 作为策略和分流配置。
+   - Quantumult X：先导入节点订阅，再引用 `dist/quantumultx/rules.conf` 作为轻量懒人配置。
 
 4. 需要运行时脚本时，再打开 `Script Hub`。
    `Script Hub` 适合承接脚本、重写、MITM 这类客户端运行时能力；本仓库负责给出统一策略入口，不负责托管个人脚本状态。
@@ -168,8 +168,8 @@ DNS 解析失败不是规则集能完全解决的问题。如果 Stash 日志出
 1. 先用 `Sub-Store` 处理原始订阅，并输出 Quantumult X 可消费的节点订阅。
    本仓入口不包含 `[server_remote]`，不会托管真实订阅地址。节点解析、改名、去噪、协议兼容和机场信息处理都应留在 `Sub-Store` 或你的私有 profile 中。
 
-2. 再引用 `dist/quantumultx/rules.conf`。
-   该入口生成空 `[general]`、`[policy]`、`[filter_remote]` 和 `[filter_local]`，负责策略组、远程规则集和启动期兜底分流。
+2. 再引用 `dist/quantumultx/rules.conf` 作为轻量懒人配置。
+   该入口生成空 `[general]`、`[policy]`、`[filter_remote]` 和 `[filter_local]`，负责常用策略组、远程规则集、国内直连、广告拦截和漏网兜底。
 
    ```text
    https://raw.githubusercontent.com/ZacBi/Rules/refs/heads/master/dist/quantumultx/rules.conf
@@ -178,7 +178,7 @@ DNS 解析失败不是规则集能完全解决的问题。如果 Stash 日志出
 3. 如需节点改名、去噪或机场信息清理：
    继续放在 `Sub-Store`，不要写回公开仓库。
 
-Quantumult X 入口默认使用 `blackmatrix7/ios_rule_script` 的原生 Quantumult X 分流规则，不对这类 `.list` 资源启用 parser。Profiles4limbo、ddgksf2013、Toperlock 等个人懒人配置可作为私有配置参考，但不会被整包并入本仓公开入口。
+Quantumult X 入口定位为公开安全的轻量懒人配置：导入节点后，再引用本入口即可获得常用分组和分流。它默认使用 `blackmatrix7/ios_rule_script` 的原生 Quantumult X 分流规则，不对这类 `.list` 资源启用 parser。Profiles4limbo、ddgksf2013、Toperlock 等个人懒人配置可作为私有配置参考，但不会被整包并入本仓公开入口。
 
 ### 什么时候用 Script Hub
 
