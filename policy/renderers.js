@@ -32,6 +32,7 @@ const QURE_ICON_BASE_URL = "https://raw.githubusercontent.com/Koolson/Qure/maste
 const NOISE_POLICY_PATTERN = "剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset";
 const RESERVED_POLICY_PATTERN = "全部节点|自动选择|节点选择|DIRECT|REJECT";
 const QUANTUMULTX_RESOURCE_UPDATE_INTERVAL = 172800;
+const QUANTUMULTX_SERVER_CHECK_URL = "http://www.gstatic.com/generate_204";
 const STASH_ICON_FILENAME_BY_GROUP = {
   全部节点: "Proxy.png",
   自动选择: "Speedtest.png",
@@ -554,7 +555,7 @@ function renderQuantumultxEntry(index) {
     "; Import server subscriptions separately, then enable this policy and filter profile.",
     "",
     "[general]",
-    "server_check_url=" + index.defaultHealthCheck.url,
+    `server_check_url=${QUANTUMULTX_SERVER_CHECK_URL}`,
     "",
     "[policy]",
     ...index.strategyGroups.map((group) => renderQuantumultxPolicyGroup(group, index)),
