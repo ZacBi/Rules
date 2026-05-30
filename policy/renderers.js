@@ -561,6 +561,8 @@ function renderQuantumultxEntry(index) {
     "; Generated from the unified strategy model",
     "; Import server subscriptions separately, then enable this policy and filter profile.",
     "",
+    "[general]",
+    "",
     "[policy]",
     ...index.strategyGroups.map((group) => renderQuantumultxPolicyGroup(group, index)),
     ...index.serviceCheckGroups.map((group) => renderQuantumultxServiceCheckGroup(group)),

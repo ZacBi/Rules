@@ -169,7 +169,7 @@ DNS 解析失败不是规则集能完全解决的问题。如果 Stash 日志出
    本仓入口不包含 `[server_remote]`，不会托管真实订阅地址。节点解析、改名、去噪、协议兼容和机场信息处理都应留在 `Sub-Store` 或你的私有 profile 中。
 
 2. 再引用 `dist/quantumultx/rules.conf`。
-   该入口生成 `[policy]`、`[filter_remote]` 和 `[filter_local]`，负责策略组、远程规则集和启动期兜底分流。
+   该入口生成空 `[general]`、`[policy]`、`[filter_remote]` 和 `[filter_local]`，负责策略组、远程规则集和启动期兜底分流。
 
    ```text
    https://raw.githubusercontent.com/ZacBi/Rules/refs/heads/master/dist/quantumultx/rules.conf
