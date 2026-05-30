@@ -67,6 +67,11 @@ function stashGroupIcon(name) {
   return fileName ? `${QURE_ICON_BASE_URL}/${fileName}` : null;
 }
 
+function quantumultxPolicyIcon(name) {
+  const fileName = STASH_ICON_FILENAME_BY_GROUP[name];
+  return fileName ? `${QURE_ICON_BASE_URL}/${fileName}` : null;
+}
+
 function stashPolicyFilter(match = null) {
   const clauses = [`(?!.*(${NOISE_POLICY_PATTERN}))`];
   if (match) {
@@ -508,31 +513,51 @@ function toQuantumultxPolicyName(name) {
   return name;
 }
 
+function withQuantumultxPolicyIcon(line, name) {
+  const icon = quantumultxPolicyIcon(name);
+  return icon ? `${line}, img-url=${icon}` : line;
+}
+
 function renderQuantumultxPolicyGroup(group, index) {
   const healthCheck = index.defaultHealthCheck;
   if (group.mode === "all-proxies") {
     const filter = quantumultxPolicyFilter();
     if (group.type === "url-test") {
-      return `url-latency-benchmark=${group.name}, server-tag-regex=${filter}, check-interval=${healthCheck.interval}, tolerance=${healthCheck.tolerance}, alive-checking=false`;
+      return withQuantumultxPolicyIcon(
+        `url-latency-benchmark=${group.name}, server-tag-regex=${filter}, check-interval=${healthCheck.interval}, tolerance=${healthCheck.tolerance}, alive-checking=false`,
+        group.name
+      );
     }
-    return `static=${group.name}, server-tag-regex=${filter}`;
+    return withQuantumultxPolicyIcon(`static=${group.name}, server-tag-regex=${filter}`, group.name);
   }
 
-  return `static=${group.name}, ${uniq(group.proxies).map(toQuantumultxPolicyName).join(", ")}`;
+  return withQuantumultxPolicyIcon(
+    `static=${group.name}, ${uniq(group.proxies).map(toQuantumultxPolicyName).join(", ")}`,
+    group.name
+  );
 }
 
 function renderQuantumultxRegionGroup(region, index) {
   const healthCheck = index.defaultHealthCheck;
-  return `url-latency-benchmark=${region.groupName}, server-tag-regex=${quantumultxPolicyFilter(region.match)}, check-interval=${healthCheck.interval}, tolerance=${healthCheck.tolerance}, alive-checking=false`;
+  return withQuantumultxPolicyIcon(
+    `url-latency-benchmark=${region.groupName}, server-tag-regex=${quantumultxPolicyFilter(region.match)}, check-interval=${healthCheck.interval}, tolerance=${healthCheck.tolerance}, alive-checking=false`,
+    region.groupName
+  );
 }
 
 function renderQuantumultxServiceCheckGroup(group) {
   const type = group.type === "url-test" ? "url-latency-benchmark" : group.type;
-  return `${type}=${group.name}, ${uniq(group.proxies).map(toQuantumultxPolicyName).join(", ")}, check-interval=${group.interval}, tolerance=${group.tolerance}`;
+  return withQuantumultxPolicyIcon(
+    `${type}=${group.name}, ${uniq(group.proxies).map(toQuantumultxPolicyName).join(", ")}, check-interval=${group.interval}, tolerance=${group.tolerance}`,
+    group.name
+  );
 }
 
 function renderQuantumultxBusinessGroup(group) {
-  return `static=${group.name}, ${uniq(group.proxies).map(toQuantumultxPolicyName).join(", ")}`;
+  return withQuantumultxPolicyIcon(
+    `static=${group.name}, ${uniq(group.proxies).map(toQuantumultxPolicyName).join(", ")}`,
+    group.name
+  );
 }
 
 function renderQuantumultxRouteRule(rule, groupName) {
