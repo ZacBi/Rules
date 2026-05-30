@@ -568,6 +568,8 @@ function renderQuantumultxEntry(index) {
     "server=223.5.5.5",
     "server=119.29.29.29",
     "",
+    "[server_remote]",
+    "",
     "[policy]",
     ...index.strategyGroups.map((group) => renderQuantumultxPolicyGroup(group, index)),
     ...index.serviceCheckGroups.map((group) => renderQuantumultxServiceCheckGroup(group)),
