@@ -21,7 +21,20 @@ function validateQuantumultx() {
   const file = "dist/quantumultx/rules.conf";
   const text = readText(file);
   const errors = [];
-  const required = ["general", "dns", "server_remote", "policy", "filter_remote", "filter_local"];
+  const required = [
+    "general",
+    "dns",
+    "policy",
+    "server_remote",
+    "filter_remote",
+    "rewrite_remote",
+    "server_local",
+    "filter_local",
+    "rewrite_local",
+    "task_local",
+    "http_backend",
+    "mitm",
+  ];
   const sections = sectionNames(text);
   const positions = Object.fromEntries(sections.map((section, index) => [section, index]));
 
@@ -40,11 +53,21 @@ function validateQuantumultx() {
   if (/server_check_url|geo_location_checker|resource_parser_url|network_check_url/.test(text)) {
     errors.push(`${file}: contains general URL key that should stay user-local`);
   }
-  const serverRemoteBlock = text.match(/^\[server_remote\]\n([\s\S]*?)\n\[policy\]$/m);
-  if (!serverRemoteBlock) {
-    errors.push(`${file}: [server_remote] must be present before [policy]`);
-  } else if (serverRemoteBlock[1].trim()) {
-    errors.push(`${file}: [server_remote] must stay empty in the public profile`);
+  const emptyPublicSections = [
+    ["server_remote", "filter_remote"],
+    ["rewrite_remote", "server_local"],
+    ["server_local", "filter_local"],
+    ["rewrite_local", "task_local"],
+    ["task_local", "http_backend"],
+    ["http_backend", "mitm"],
+  ];
+  for (const [section, nextSection] of emptyPublicSections) {
+    const block = text.match(new RegExp(`^\\[${section}\\]\\n([\\s\\S]*?)\\n\\[${nextSection}\\]$`, "m"));
+    if (!block) {
+      errors.push(`${file}: [${section}] must be present before [${nextSection}]`);
+    } else if (block[1].trim()) {
+      errors.push(`${file}: [${section}] must stay empty in the public profile`);
+    }
   }
   if (!/^no-ipv6$/m.test(text)) {
     errors.push(`${file}: missing no-ipv6`);

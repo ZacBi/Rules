@@ -166,10 +166,10 @@ DNS 解析失败不是规则集能完全解决的问题。如果 Stash 日志出
 ### Quantumult X
 
 1. 先用 `Sub-Store` 处理原始订阅，并输出 Quantumult X 可消费的节点订阅。
-   本仓入口只保留空 `[server_remote]` 占位，不托管真实订阅地址。节点解析、改名、去噪、协议兼容和机场信息处理都应留在 `Sub-Store`、Quantumult X 资源管理或你的私有 profile 中。
+   本仓入口只保留空 `[server_remote]` 和 `[server_local]` 占位，不托管真实订阅地址或本地节点。节点解析、改名、去噪、协议兼容和机场信息处理都应留在 `Sub-Store`、Quantumult X 资源管理或你的私有 profile 中。
 
 2. 再引用 `dist/quantumultx/rules.conf` 作为轻量懒人配置。
-   该入口生成空 `[general]`、基础 `[dns]`、空 `[server_remote]`、`[policy]`、`[filter_remote]` 和 `[filter_local]`，负责常用策略组、远程规则集、国内直连、广告拦截和漏网兜底。
+   该入口生成 Quantumult X 官方 sample 的基础 section 骨架，其中节点、rewrite、task、backend、MITM 相关 section 保持为空，只负责常用策略组、远程规则集、国内直连、广告拦截和漏网兜底。
 
    ```text
    https://raw.githubusercontent.com/ZacBi/Rules/refs/heads/master/dist/quantumultx/rules.conf
