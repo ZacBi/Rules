@@ -1181,6 +1181,26 @@ const clientModules = [
       "Rendered as a public-safe lightweight lazy profile for policies and filters; server subscriptions are imported separately.",
     ],
   }),
+  moduleTemplate({
+    id: "client.quantumultx.sub-store",
+    layer: "client",
+    domain: "quantumultx",
+    title: "Quantumult X Sub-Store optional addon",
+    dependsOn: [],
+    output: {
+      path: "dist/quantumultx/sub-store.conf",
+      format: "quantumultx-profile-addon",
+    },
+    capabilities: {
+      routing: false,
+      rewrite: true,
+      script: true,
+      mitm: false,
+    },
+    notes: [
+      "Optional addon that imports Sub-Store official Quantumult X rewrite and task resources; not enabled by the default lightweight profile.",
+    ],
+  }),
 ];
 
 function buildEntrypoints() {
@@ -1214,6 +1234,12 @@ function buildEntrypoints() {
       modules: entryComposition,
       outputPath: "dist/quantumultx/rules.conf",
       format: "quantumultx-profile",
+    },
+    quantumultxSubStore: {
+      moduleId: "client.quantumultx.sub-store",
+      modules: ["client.quantumultx.sub-store"],
+      outputPath: "dist/quantumultx/sub-store.conf",
+      format: "quantumultx-profile-addon",
     },
   };
 }
