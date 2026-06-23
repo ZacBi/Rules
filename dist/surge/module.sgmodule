@@ -1,3 +1,9 @@
+#!name=Rules
+#!desc=Unified Surge strategy module. Use with a profile that already provides proxy nodes.
+#!category=Rules
+#!author=ZacBi
+#!homepage=https://github.com/ZacBi/Rules
+
 # Generated from the unified strategy model
 # The module is designed to be included on top of a profile that already resolves subscription parsing upstream.
 # No policy-path placeholder is used here.
