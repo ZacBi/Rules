@@ -8,6 +8,8 @@ const {
   renderQuantumultxSubStoreAddon,
   renderStashEntry,
   renderSurgeEntry,
+  renderSurgeProxyGroups,
+  renderSurgeRules,
 } = require("./renderers");
 
 function buildArtifacts() {
@@ -35,6 +37,18 @@ function buildArtifacts() {
       {
         path: moduleIndex.entrypoints.surge.outputPath,
         content: renderSurgeEntry(moduleIndex),
+      },
+      {
+        path: moduleIndex.entrypoints.surgeProxyGroups.outputPath,
+        content: renderSurgeProxyGroups(moduleIndex),
+      },
+      {
+        path: moduleIndex.entrypoints.surgeProxyGroupsCompact.outputPath,
+        content: renderSurgeProxyGroups(moduleIndex, { compact: true }),
+      },
+      {
+        path: moduleIndex.entrypoints.surgeRules.outputPath,
+        content: renderSurgeRules(moduleIndex),
       },
       {
         path: moduleIndex.entrypoints.quantumultx.outputPath,

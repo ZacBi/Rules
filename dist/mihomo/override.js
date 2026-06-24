@@ -2305,6 +2305,63 @@ const MODULE_INDEX = {
       "outputPath": "dist/surge/module.sgmodule",
       "format": "surge-module"
     },
+    "surgeProxyGroups": {
+      "moduleId": "client.surge.entry",
+      "modules": [
+        "base.core",
+        "scenario.ai",
+        "scenario.media",
+        "scenario.dev",
+        "scenario.research",
+        "scenario.chat",
+        "scenario.vendor",
+        "scenario.games",
+        "scenario.web",
+        "scenario.domestic",
+        "scenario.ads",
+        "scenario.fallback"
+      ],
+      "outputPath": "dist/surge/proxy-groups.dconf",
+      "format": "surge-detached-proxy-groups"
+    },
+    "surgeProxyGroupsCompact": {
+      "moduleId": "client.surge.entry",
+      "modules": [
+        "base.core",
+        "scenario.ai",
+        "scenario.media",
+        "scenario.dev",
+        "scenario.research",
+        "scenario.chat",
+        "scenario.vendor",
+        "scenario.games",
+        "scenario.web",
+        "scenario.domestic",
+        "scenario.ads",
+        "scenario.fallback"
+      ],
+      "outputPath": "dist/surge/proxy-groups.compact.dconf",
+      "format": "surge-detached-proxy-groups"
+    },
+    "surgeRules": {
+      "moduleId": "client.surge.entry",
+      "modules": [
+        "base.core",
+        "scenario.ai",
+        "scenario.media",
+        "scenario.dev",
+        "scenario.research",
+        "scenario.chat",
+        "scenario.vendor",
+        "scenario.games",
+        "scenario.web",
+        "scenario.domestic",
+        "scenario.ads",
+        "scenario.fallback"
+      ],
+      "outputPath": "dist/surge/rules.dconf",
+      "format": "surge-detached-rules"
+    },
     "quantumultx": {
       "moduleId": "client.quantumultx.entry",
       "modules": [

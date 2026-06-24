@@ -433,9 +433,61 @@ function renderSurgeStrategyGroup(group, healthCheck, allPolicyRegex) {
   return `${group.name} = ${group.type}, ${uniq(group.proxies).join(", ")}`;
 }
 
-function renderSurgeEntry(index) {
+const compactSurgeHiddenGroups = new Set([
+  "全部节点",
+  "自动选择",
+  "国外媒体",
+  "即时通讯",
+  "微软服务",
+  "苹果服务",
+  "游戏平台",
+  "国内网站",
+  "广告拦截",
+]);
+
+function hideSurgePolicyGroup(line, hidden) {
+  return hidden ? `${line}, hidden=true` : line;
+}
+
+function renderSurgeProxyGroups(index, { compact = false } = {}) {
   const healthCheck = index.defaultHealthCheck;
   const allPolicyRegex = surgePolicyFilter();
+  const hiddenGroups = compact ? compactSurgeHiddenGroups : new Set();
+  return [
+    "[Proxy Group]",
+    ...index.strategyGroups.map((group) =>
+      hideSurgePolicyGroup(renderSurgeStrategyGroup(group, healthCheck, allPolicyRegex), hiddenGroups.has(group.name))
+    ),
+    ...index.serviceCheckGroups.map((group) =>
+      hideSurgePolicyGroup(
+        `${group.name} = url-test, ${uniq(group.proxies).join(", ")}, url=${group.url}, interval=${group.interval}, tolerance=${group.tolerance}, timeout=${group.timeout}`,
+        hiddenGroups.has(group.name)
+      )
+    ),
+    ...index.regions.map((region) =>
+      hideSurgePolicyGroup(
+        `${region.groupName} = url-test, include-all-proxies=true, policy-regex-filter='${surgePolicyFilter(region.match)}', url=${healthCheck.url}, interval=${healthCheck.interval}, tolerance=${healthCheck.tolerance}, timeout=${healthCheck.timeout}`,
+        compact
+      )
+    ),
+    ...index.businessGroups.map((group) =>
+      hideSurgePolicyGroup(`${group.name} = select, ${uniq(group.proxies).join(", ")}`, hiddenGroups.has(group.name))
+    ),
+  ].join("\n");
+}
+
+function renderSurgeRules(index) {
+  return [
+    "[Rule]",
+    "RULE-SET,LAN,DIRECT",
+    ...index.inlineRules,
+    ...index.routingRules.map((route) => renderRouteRule(route.rule, route.group)),
+    ...index.ruleSets.map((ruleSet) => `RULE-SET,${ruleSet.urls.surge},${ruleSet.group},extended-matching`),
+    "FINAL,漏网之鱼",
+  ].join("\n");
+}
+
+function renderSurgeEntry(index) {
   const rewriteModules = runtimeModulesByKind(index, "rewrite", { defaultOnly: true })
     .map((module) =>
       module.render && module.render.surgeRewrite
@@ -467,24 +519,9 @@ function renderSurgeEntry(index) {
     "ipv6 = false",
     "enhanced-mode-by-rule = true",
     "",
-    "[Proxy Group]",
-    ...index.strategyGroups.map((group) => renderSurgeStrategyGroup(group, healthCheck, allPolicyRegex)),
-    ...index.serviceCheckGroups.map(
-      (group) =>
-        `${group.name} = url-test, ${uniq(group.proxies).join(", ")}, url=${group.url}, interval=${group.interval}, tolerance=${group.tolerance}, timeout=${group.timeout}`
-    ),
-    ...index.regions.map(
-      (region) =>
-        `${region.groupName} = url-test, include-all-proxies=true, policy-regex-filter='${surgePolicyFilter(region.match)}', url=${healthCheck.url}, interval=${healthCheck.interval}, tolerance=${healthCheck.tolerance}, timeout=${healthCheck.timeout}`
-    ),
-    ...index.businessGroups.map((group) => `${group.name} = select, ${uniq(group.proxies).join(", ")}`),
+    renderSurgeProxyGroups(index),
     "",
-    "[Rule]",
-    "RULE-SET,LAN,DIRECT",
-    ...index.inlineRules,
-    ...index.routingRules.map((route) => renderRouteRule(route.rule, route.group)),
-    ...index.ruleSets.map((ruleSet) => `RULE-SET,${ruleSet.urls.surge},${ruleSet.group},extended-matching`),
-    "FINAL,漏网之鱼",
+    renderSurgeRules(index),
   ];
 
   if (rewriteModules.length) {
@@ -656,4 +693,6 @@ module.exports = {
   renderQuantumultxSubStoreAddon,
   renderStashEntry,
   renderSurgeEntry,
+  renderSurgeProxyGroups,
+  renderSurgeRules,
 };
