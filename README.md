@@ -20,6 +20,9 @@
 - `dist/mihomo/override.js`
 - `dist/mihomo/clash-party.js`
 - `dist/surge/module.sgmodule`
+- `dist/surge/proxy-groups.dconf`
+- `dist/surge/proxy-groups.compact.dconf`
+- `dist/surge/rules.dconf`
 - `dist/quantumultx/rules.conf`
 - `dist/quantumultx/sub-store.conf`
 - `dist/modules/index.json`
@@ -55,7 +58,7 @@
    - Stash：先导入 `Sub-Store` 输出的节点订阅，再追加远程覆写 `dist/stash/stash.stoverride`。
    - Clash Party：优先用内置 `Sub-Store` 管理原始订阅，再用链接导入远程覆写 `dist/mihomo/clash-party.js`。
    - 其他 Mihomo 客户端：若支持 JavaScript 覆写，可使用 `dist/mihomo/override.js`；若只支持 YAML 订阅，则需要先生成最终配置。
-   - Surge：先让 profile 通过 `Sub-Store` 或远程 `#!include` 拿到真实代理节点，再叠加 `dist/surge/module.sgmodule`。
+   - Surge：先让 profile 通过 `Sub-Store` 或远程 `#!include` 拿到真实代理节点，再引用 `dist/surge/proxy-groups*.dconf` 和 `dist/surge/rules.dconf`。
    - Quantumult X：先导入节点订阅，再引用 `dist/quantumultx/rules.conf` 作为轻量懒人配置。
 
 4. 需要运行时脚本时，再打开 `Script Hub`。
@@ -155,14 +158,27 @@ DNS 解析失败不是规则集能完全解决的问题。如果 Stash 日志出
 1. 先用 `Sub-Store` 准备一个 Surge 可消费的代理源。
    可以是代理列表、远程 `[Proxy]` 片段，或你自己维护的可 include 远端片段；关键是 Surge 在叠加本仓模块前必须已经有真实节点。
 
-2. 在 Surge 中先导入基础 profile。
-   这个 profile 只负责拿到节点来源，不负责承载完整分流策略。
+2. 在 Surge 中使用 detached profile 组合节点、策略组和规则。
+   Profile 本身保留私有订阅入口；策略组和规则引用本仓库生成的公开片段。
 
-3. 再叠加 `dist/surge/module.sgmodule`。
-   本仓模块负责分组、规则和从已有 `[Proxy]` 中筛选节点，不再负责把原始订阅转换成 Surge 节点。
+   ```ini
+   [Proxy]
+   #!include http://sub.store/download/<your-sub-store-name>?target=SurgeMac
+
+   [Proxy Group]
+   #!include https://raw.githubusercontent.com/ZacBi/Rules/master/dist/surge/proxy-groups.compact.dconf
+
+   [Rule]
+   #!include https://raw.githubusercontent.com/ZacBi/Rules/master/dist/surge/rules.dconf
+   ```
+
+   如果希望主菜单展示完整地区和业务组，把 `proxy-groups.compact.dconf` 换成 `proxy-groups.dconf`。
+
+3. 再按需叠加 `dist/surge/module.sgmodule`。
+   Surge module 适合承接 rewrite、script、MITM 这类运行时补丁；主策略组和分流规则优先使用上面的 detached profile 片段。
 
 4. 如果节点名需要进一步整理：
-   优先在 `Sub-Store` 完成，再让本仓模块按地区正则和业务分组消费这些节点。
+   优先在 `Sub-Store` 完成，再让本仓策略组按地区正则和业务分组消费这些节点。
 
 ### Quantumult X
 

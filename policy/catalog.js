@@ -1229,6 +1229,24 @@ function buildEntrypoints() {
       outputPath: "dist/surge/module.sgmodule",
       format: "surge-module",
     },
+    surgeProxyGroups: {
+      moduleId: "client.surge.entry",
+      modules: entryComposition,
+      outputPath: "dist/surge/proxy-groups.dconf",
+      format: "surge-detached-proxy-groups",
+    },
+    surgeProxyGroupsCompact: {
+      moduleId: "client.surge.entry",
+      modules: entryComposition,
+      outputPath: "dist/surge/proxy-groups.compact.dconf",
+      format: "surge-detached-proxy-groups",
+    },
+    surgeRules: {
+      moduleId: "client.surge.entry",
+      modules: entryComposition,
+      outputPath: "dist/surge/rules.dconf",
+      format: "surge-detached-rules",
+    },
     quantumultx: {
       moduleId: "client.quantumultx.entry",
       modules: entryComposition,
