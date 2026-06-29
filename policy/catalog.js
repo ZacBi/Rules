@@ -64,6 +64,11 @@ const regions = [
   },
 ];
 
+const RULES_GITHUB_REPO = process.env.RULES_GITHUB_REPO || null;
+const RULES_RAW_BASE = RULES_GITHUB_REPO
+  ? `https://raw.githubusercontent.com/${RULES_GITHUB_REPO}/master`
+  : null;
+
 function pickRegionGroupNames(keys) {
   const wanted = new Set(keys);
   return regions
@@ -155,6 +160,11 @@ const businessGroups = [
   },
   {
     name: "游戏平台",
+    type: "select",
+    proxies: [...defaultProxyGroupNames, ...coreRegionGroupNames],
+  },
+  {
+    name: "金融网站",
     type: "select",
     proxies: [...defaultProxyGroupNames, ...coreRegionGroupNames],
   },
@@ -362,12 +372,21 @@ const rawRuleSets = [
     group: "游戏平台",
     behavior: "classical",
   },
+  {
+    key: "trade",
+    sourceName: "Global",
+    group: "金融网站",
+    behavior: "classical",
+    mihomoFile: "Global_Domain",
+  },
+  {
+    key: "tradeChina",
+    sourceName: "ChinaMax",
+    group: "金融网站",
+    behavior: "classical",
+    mihomoFile: "ChinaMax_Domain",
+  },
 ];
-
-const RULES_GITHUB_REPO = process.env.RULES_GITHUB_REPO || null;
-const RULES_RAW_BASE = RULES_GITHUB_REPO
-  ? `https://raw.githubusercontent.com/${RULES_GITHUB_REPO}/master`
-  : null;
 
 if (RULES_RAW_BASE) {
   rawRuleSets.splice(rawRuleSets.findIndex((ruleSet) => ruleSet.key === "youtube"), 0, {
@@ -853,6 +872,7 @@ const bootstrapDomainsByGroup = {
     "t.me",
     "discord.com",
     "discordapp.com",
+    "whop.com",
   ],
   国外网站: [
     "google.com",
@@ -869,6 +889,13 @@ const bootstrapDomainsByGroup = {
     "gitlab.com",
     "x.com",
     "twitter.com",
+  ],
+  金融网站: [
+    "longbridge.com",
+    "longbridgeapp.com",
+    "open.longbridge.com",
+    "api.longbridge.com",
+    "openapi.longbridge.com",
   ],
 };
 
@@ -1005,6 +1032,18 @@ const scenarioModules = [
     title: "Gaming platforms",
     groups: ["游戏平台"],
     ruleSets: ["steam", "epic"],
+    dependsOn: ["base.core"],
+    capabilities: {
+      routing: true,
+    },
+  }),
+  moduleTemplate({
+    id: "scenario.finance",
+    layer: "scenario",
+    domain: "finance",
+    title: "Financial platforms",
+    groups: ["金融网站"],
+    ruleSets: ["trade", "tradeChina"],
     dependsOn: ["base.core"],
     capabilities: {
       routing: true,
