@@ -129,7 +129,7 @@ https://raw.githubusercontent.com/ZacBi/Rules/master/dist/quantumultx/sub-store.
 - `scenario`：业务场景，例如 AI、Claude、媒体、开发工具、即时通讯、游戏平台、金融网站、国内直连、广告拦截。
 - `client`：客户端适配层，把统一模型渲染为 Stash、Mihomo、Surge、Quantumult X 产物。
 
-金融相关策略保留独立业务组，例如 `长桥`、`IBKR` 和通用 `金融网站`。具体站点优先用小规模精准域名规则，不把 `Global`、`ChinaMax` 这类宽泛大规则集塞进单一业务组。
+金融相关策略只在客户端显示通用 `金融网站` 策略组。`Longbridge`、`IBKR` 等细分站点作为本仓小型 ruleset 维护，`TigerFintech` 使用 `blackmatrix7/ios_rule_script` 的现成券商专项 ruleset，命中后统一进入 `金融网站`。具体站点优先使用小规模精准规则，不把 `Global`、`ChinaMax` 这类宽泛大规则集塞进单一业务组。
 
 ## 运行时能力
 

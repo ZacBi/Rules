@@ -1,0 +1,10 @@
+# NAME: IBKR
+# AUTHOR: Rules contributors
+# REPO: https://github.com/ZacBi/Rules
+# DOMAIN-SUFFIX: 5
+# TOTAL: 5
+DOMAIN-SUFFIX,interactivebrokers.com
+DOMAIN-SUFFIX,interactivebrokers.co.uk
+DOMAIN-SUFFIX,interactivebrokers.com.hk
+DOMAIN-SUFFIX,interactiveadvisors.com
+DOMAIN-SUFFIX,ibkr.com

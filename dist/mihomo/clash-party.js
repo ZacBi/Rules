@@ -140,42 +140,12 @@ const MODULE_INDEX = {
       ]
     },
     {
-      "name": "长桥",
-      "type": "select",
-      "proxies": [
-        "节点选择",
-        "自动选择",
-        "全部节点",
-        "香港节点",
-        "台湾节点",
-        "日本节点",
-        "新加坡节点",
-        "美国节点"
-      ]
-    },
-    {
-      "name": "IBKR",
-      "type": "select",
-      "proxies": [
-        "节点选择",
-        "自动选择",
-        "全部节点",
-        "香港节点",
-        "台湾节点",
-        "日本节点",
-        "新加坡节点",
-        "美国节点"
-      ]
-    },
-    {
       "name": "金融网站",
       "type": "select",
       "proxies": [
         "节点选择",
         "自动选择",
         "全部节点",
-        "长桥",
-        "IBKR",
         "香港节点",
         "台湾节点",
         "日本节点",
@@ -939,6 +909,72 @@ const MODULE_INDEX = {
         "surge",
         "quantumultx"
       ]
+    },
+    {
+      "id": "longbridge",
+      "sourceName": "Longbridge",
+      "group": "金融网站",
+      "behavior": "classical",
+      "origin": "project",
+      "sourceUrl": null,
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/ZacBi/Rules/master/rules/longbridge.yaml",
+        "surge": "https://raw.githubusercontent.com/ZacBi/Rules/master/rules/longbridge.list",
+        "quantumultx": "https://raw.githubusercontent.com/ZacBi/Rules/master/rules/longbridge.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/Longbridge.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge",
+        "quantumultx"
+      ]
+    },
+    {
+      "id": "ibkr",
+      "sourceName": "IBKR",
+      "group": "金融网站",
+      "behavior": "classical",
+      "origin": "project",
+      "sourceUrl": null,
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/ZacBi/Rules/master/rules/ibkr.yaml",
+        "surge": "https://raw.githubusercontent.com/ZacBi/Rules/master/rules/ibkr.list",
+        "quantumultx": "https://raw.githubusercontent.com/ZacBi/Rules/master/rules/ibkr.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/IBKR.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge",
+        "quantumultx"
+      ]
+    },
+    {
+      "id": "tigerfintech",
+      "sourceName": "TigerFintech",
+      "group": "金融网站",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "sourceUrl": null,
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TigerFintech/TigerFintech.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/TigerFintech/TigerFintech.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/TigerFintech/TigerFintech.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/TigerFintech.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge",
+        "quantumultx"
+      ]
     }
   ],
   "routingRules": [
@@ -1095,84 +1131,6 @@ const MODULE_INDEX = {
     {
       "rule": "DOMAIN-SUFFIX,twitter.com",
       "group": "国外网站",
-      "origin": "bootstrap",
-      "sourceUrl": null
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,longbridge.com",
-      "group": "长桥",
-      "origin": "bootstrap",
-      "sourceUrl": null
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,longbridgeapp.com",
-      "group": "长桥",
-      "origin": "bootstrap",
-      "sourceUrl": null
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,longbridge-inc.com",
-      "group": "长桥",
-      "origin": "bootstrap",
-      "sourceUrl": null
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,longbridge.hk",
-      "group": "长桥",
-      "origin": "bootstrap",
-      "sourceUrl": null
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,longbridge.sg",
-      "group": "长桥",
-      "origin": "bootstrap",
-      "sourceUrl": null
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,open.longbridge.com",
-      "group": "长桥",
-      "origin": "bootstrap",
-      "sourceUrl": null
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,api.longbridge.com",
-      "group": "长桥",
-      "origin": "bootstrap",
-      "sourceUrl": null
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,openapi.longbridge.com",
-      "group": "长桥",
-      "origin": "bootstrap",
-      "sourceUrl": null
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,interactivebrokers.com",
-      "group": "IBKR",
-      "origin": "bootstrap",
-      "sourceUrl": null
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,interactivebrokers.co.uk",
-      "group": "IBKR",
-      "origin": "bootstrap",
-      "sourceUrl": null
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,interactivebrokers.com.hk",
-      "group": "IBKR",
-      "origin": "bootstrap",
-      "sourceUrl": null
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,interactiveadvisors.com",
-      "group": "IBKR",
-      "origin": "bootstrap",
-      "sourceUrl": null
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,ibkr.com",
-      "group": "IBKR",
       "origin": "bootstrap",
       "sourceUrl": null
     },
@@ -1925,11 +1883,13 @@ const MODULE_INDEX = {
       "domain": "finance",
       "title": "Financial platforms",
       "groups": [
-        "金融网站",
-        "长桥",
-        "IBKR"
+        "金融网站"
       ],
-      "ruleSets": [],
+      "ruleSets": [
+        "longbridge",
+        "ibkr",
+        "tigerfintech"
+      ],
       "dependsOn": [
         "base.core"
       ],
@@ -2090,8 +2050,6 @@ const MODULE_INDEX = {
         "微软服务",
         "苹果服务",
         "游戏平台",
-        "长桥",
-        "IBKR",
         "金融网站",
         "国外网站",
         "国内网站",
@@ -2151,8 +2109,6 @@ const MODULE_INDEX = {
         "微软服务",
         "苹果服务",
         "游戏平台",
-        "长桥",
-        "IBKR",
         "金融网站",
         "国外网站",
         "国内网站",
@@ -2212,8 +2168,6 @@ const MODULE_INDEX = {
         "微软服务",
         "苹果服务",
         "游戏平台",
-        "长桥",
-        "IBKR",
         "金融网站",
         "国外网站",
         "国内网站",
@@ -2270,8 +2224,6 @@ const MODULE_INDEX = {
         "微软服务",
         "苹果服务",
         "游戏平台",
-        "长桥",
-        "IBKR",
         "金融网站",
         "国外网站",
         "国内网站",
@@ -2331,8 +2283,6 @@ const MODULE_INDEX = {
         "微软服务",
         "苹果服务",
         "游戏平台",
-        "长桥",
-        "IBKR",
         "金融网站",
         "国外网站",
         "国内网站",
