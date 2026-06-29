@@ -1,0 +1,14 @@
+# NAME: Longbridge
+# AUTHOR: Rules contributors
+# REPO: https://github.com/ZacBi/Rules
+# DOMAIN-SUFFIX: 8
+# TOTAL: 8
+payload:
+  - DOMAIN-SUFFIX,longbridge.com
+  - DOMAIN-SUFFIX,longbridgeapp.com
+  - DOMAIN-SUFFIX,longbridge-inc.com
+  - DOMAIN-SUFFIX,longbridge.hk
+  - DOMAIN-SUFFIX,longbridge.sg
+  - DOMAIN-SUFFIX,open.longbridge.com
+  - DOMAIN-SUFFIX,api.longbridge.com
+  - DOMAIN-SUFFIX,openapi.longbridge.com

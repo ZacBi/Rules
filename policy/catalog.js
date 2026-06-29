@@ -68,6 +68,8 @@ const RULES_GITHUB_REPO = process.env.RULES_GITHUB_REPO || null;
 const RULES_RAW_BASE = RULES_GITHUB_REPO
   ? `https://raw.githubusercontent.com/${RULES_GITHUB_REPO}/master`
   : null;
+const PROJECT_RAW_BASE =
+  RULES_RAW_BASE || "https://raw.githubusercontent.com/ZacBi/Rules/master";
 
 function pickRegionGroupNames(keys) {
   const wanted = new Set(keys);
@@ -164,19 +166,9 @@ const businessGroups = [
     proxies: [...defaultProxyGroupNames, ...coreRegionGroupNames],
   },
   {
-    name: "长桥",
-    type: "select",
-    proxies: [...defaultProxyGroupNames, ...coreRegionGroupNames],
-  },
-  {
-    name: "IBKR",
-    type: "select",
-    proxies: [...defaultProxyGroupNames, ...coreRegionGroupNames],
-  },
-  {
     name: "金融网站",
     type: "select",
-    proxies: [...defaultProxyGroupNames, "长桥", "IBKR", ...coreRegionGroupNames],
+    proxies: [...defaultProxyGroupNames, ...coreRegionGroupNames],
   },
   {
     name: "国外网站",
@@ -380,6 +372,34 @@ const rawRuleSets = [
     key: "epic",
     sourceName: "Epic",
     group: "游戏平台",
+    behavior: "classical",
+  },
+  {
+    key: "longbridge",
+    sourceName: "Longbridge",
+    group: "金融网站",
+    behavior: "classical",
+    origin: "project",
+    mihomoUrl: `${PROJECT_RAW_BASE}/rules/longbridge.yaml`,
+    mihomoPath: "./ruleset/Longbridge.yaml",
+    surgeUrl: `${PROJECT_RAW_BASE}/rules/longbridge.list`,
+    quantumultxUrl: `${PROJECT_RAW_BASE}/rules/longbridge.list`,
+  },
+  {
+    key: "ibkr",
+    sourceName: "IBKR",
+    group: "金融网站",
+    behavior: "classical",
+    origin: "project",
+    mihomoUrl: `${PROJECT_RAW_BASE}/rules/ibkr.yaml`,
+    mihomoPath: "./ruleset/IBKR.yaml",
+    surgeUrl: `${PROJECT_RAW_BASE}/rules/ibkr.list`,
+    quantumultxUrl: `${PROJECT_RAW_BASE}/rules/ibkr.list`,
+  },
+  {
+    key: "tigerfintech",
+    sourceName: "TigerFintech",
+    group: "金融网站",
     behavior: "classical",
   },
 ];
@@ -886,23 +906,6 @@ const bootstrapDomainsByGroup = {
     "x.com",
     "twitter.com",
   ],
-  长桥: [
-    "longbridge.com",
-    "longbridgeapp.com",
-    "longbridge-inc.com",
-    "longbridge.hk",
-    "longbridge.sg",
-    "open.longbridge.com",
-    "api.longbridge.com",
-    "openapi.longbridge.com",
-  ],
-  IBKR: [
-    "interactivebrokers.com",
-    "interactivebrokers.co.uk",
-    "interactivebrokers.com.hk",
-    "interactiveadvisors.com",
-    "ibkr.com",
-  ],
 };
 
 function buildBootstrapRules(domainsByGroup) {
@@ -1048,8 +1051,8 @@ const scenarioModules = [
     layer: "scenario",
     domain: "finance",
     title: "Financial platforms",
-    groups: ["金融网站", "长桥", "IBKR"],
-    ruleSets: [],
+    groups: ["金融网站"],
+    ruleSets: ["longbridge", "ibkr", "tigerfintech"],
     dependsOn: ["base.core"],
     capabilities: {
       routing: true,

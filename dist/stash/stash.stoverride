@@ -124,36 +124,12 @@ proxy-groups: #!replace
       - "日本节点"
       - "新加坡节点"
       - "美国节点"
-  - name: "长桥"
-    type: select
-    proxies:
-      - "节点选择"
-      - "自动选择"
-      - "全部节点"
-      - "香港节点"
-      - "台湾节点"
-      - "日本节点"
-      - "新加坡节点"
-      - "美国节点"
-  - name: "IBKR"
-    type: select
-    proxies:
-      - "节点选择"
-      - "自动选择"
-      - "全部节点"
-      - "香港节点"
-      - "台湾节点"
-      - "日本节点"
-      - "新加坡节点"
-      - "美国节点"
   - name: "金融网站"
     type: select
     proxies:
       - "节点选择"
       - "自动选择"
       - "全部节点"
-      - "长桥"
-      - "IBKR"
       - "香港节点"
       - "台湾节点"
       - "日本节点"
@@ -453,6 +429,24 @@ rule-providers: #!replace
     url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Epic/Epic.yaml"
     path: "./ruleset/Epic.yaml"
     interval: 86400
+  longbridge:
+    type: http
+    behavior: classical
+    url: "https://raw.githubusercontent.com/ZacBi/Rules/master/rules/longbridge.yaml"
+    path: "./ruleset/Longbridge.yaml"
+    interval: 86400
+  ibkr:
+    type: http
+    behavior: classical
+    url: "https://raw.githubusercontent.com/ZacBi/Rules/master/rules/ibkr.yaml"
+    path: "./ruleset/IBKR.yaml"
+    interval: 86400
+  tigerfintech:
+    type: http
+    behavior: classical
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TigerFintech/TigerFintech.yaml"
+    path: "./ruleset/TigerFintech.yaml"
+    interval: 86400
 
 rules: #!replace
   - "AND,((NETWORK,UDP),(DST-PORT,443)),REJECT"
@@ -486,19 +480,6 @@ rules: #!replace
   - "DOMAIN-SUFFIX,gitlab.com,国外网站"
   - "DOMAIN-SUFFIX,x.com,国外网站"
   - "DOMAIN-SUFFIX,twitter.com,国外网站"
-  - "DOMAIN-SUFFIX,longbridge.com,长桥"
-  - "DOMAIN-SUFFIX,longbridgeapp.com,长桥"
-  - "DOMAIN-SUFFIX,longbridge-inc.com,长桥"
-  - "DOMAIN-SUFFIX,longbridge.hk,长桥"
-  - "DOMAIN-SUFFIX,longbridge.sg,长桥"
-  - "DOMAIN-SUFFIX,open.longbridge.com,长桥"
-  - "DOMAIN-SUFFIX,api.longbridge.com,长桥"
-  - "DOMAIN-SUFFIX,openapi.longbridge.com,长桥"
-  - "DOMAIN-SUFFIX,interactivebrokers.com,IBKR"
-  - "DOMAIN-SUFFIX,interactivebrokers.co.uk,IBKR"
-  - "DOMAIN-SUFFIX,interactivebrokers.com.hk,IBKR"
-  - "DOMAIN-SUFFIX,interactiveadvisors.com,IBKR"
-  - "DOMAIN-SUFFIX,ibkr.com,IBKR"
   - "DOMAIN,ios.chat.openai.com,AI平台"
   - "DOMAIN,android.chat.openai.com,AI平台"
   - "DOMAIN-SUFFIX,auth.openai.com,AI平台"
@@ -538,6 +519,9 @@ rules: #!replace
   - "RULE-SET,apple,苹果服务"
   - "RULE-SET,steam,游戏平台"
   - "RULE-SET,epic,游戏平台"
+  - "RULE-SET,longbridge,金融网站"
+  - "RULE-SET,ibkr,金融网站"
+  - "RULE-SET,tigerfintech,金融网站"
   - "MATCH,漏网之鱼"
 
 http:
