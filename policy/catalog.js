@@ -372,20 +372,6 @@ const rawRuleSets = [
     group: "游戏平台",
     behavior: "classical",
   },
-  {
-    key: "trade",
-    sourceName: "Global",
-    group: "金融网站",
-    behavior: "classical",
-    mihomoFile: "Global_Domain",
-  },
-  {
-    key: "tradeChina",
-    sourceName: "ChinaMax",
-    group: "金融网站",
-    behavior: "classical",
-    mihomoFile: "ChinaMax_Domain",
-  },
 ];
 
 if (RULES_RAW_BASE) {
@@ -1043,7 +1029,7 @@ const scenarioModules = [
     domain: "finance",
     title: "Financial platforms",
     groups: ["金融网站"],
-    ruleSets: ["trade", "tradeChina"],
+    ruleSets: [],
     dependsOn: ["base.core"],
     capabilities: {
       routing: true,
