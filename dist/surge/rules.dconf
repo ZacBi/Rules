@@ -15,6 +15,7 @@ DOMAIN-SUFFIX,telegram.org,即时通讯
 DOMAIN-SUFFIX,t.me,即时通讯
 DOMAIN-SUFFIX,discord.com,即时通讯
 DOMAIN-SUFFIX,discordapp.com,即时通讯
+DOMAIN-SUFFIX,whop.com,即时通讯
 DOMAIN-SUFFIX,google.com,国外网站
 DOMAIN-SUFFIX,googleapis.com,国外网站
 DOMAIN-SUFFIX,gstatic.com,国外网站
@@ -29,6 +30,11 @@ DOMAIN-SUFFIX,pythonhosted.org,国外网站
 DOMAIN-SUFFIX,gitlab.com,国外网站
 DOMAIN-SUFFIX,x.com,国外网站
 DOMAIN-SUFFIX,twitter.com,国外网站
+DOMAIN-SUFFIX,longbridge.com,金融网站
+DOMAIN-SUFFIX,longbridgeapp.com,金融网站
+DOMAIN-SUFFIX,open.longbridge.com,金融网站
+DOMAIN-SUFFIX,api.longbridge.com,金融网站
+DOMAIN-SUFFIX,openapi.longbridge.com,金融网站
 DOMAIN,ios.chat.openai.com,AI平台
 DOMAIN,android.chat.openai.com,AI平台
 DOMAIN-SUFFIX,auth.openai.com,AI平台

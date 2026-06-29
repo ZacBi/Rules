@@ -909,50 +909,6 @@ const MODULE_INDEX = {
         "surge",
         "quantumultx"
       ]
-    },
-    {
-      "id": "trade",
-      "sourceName": "Global",
-      "group": "金融网站",
-      "behavior": "classical",
-      "origin": "blackmatrix7",
-      "sourceUrl": null,
-      "urls": {
-        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Global/Global_Domain.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Global/Global.list",
-        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Global/Global.list"
-      },
-      "paths": {
-        "mihomo": "./ruleset/Global_Domain.yaml"
-      },
-      "supportedClients": [
-        "stash",
-        "mihomo",
-        "surge",
-        "quantumultx"
-      ]
-    },
-    {
-      "id": "tradeChina",
-      "sourceName": "ChinaMax",
-      "group": "金融网站",
-      "behavior": "classical",
-      "origin": "blackmatrix7",
-      "sourceUrl": null,
-      "urls": {
-        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax_Domain.yaml",
-        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ChinaMax/ChinaMax.list",
-        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/ChinaMax/ChinaMax.list"
-      },
-      "paths": {
-        "mihomo": "./ruleset/ChinaMax_Domain.yaml"
-      },
-      "supportedClients": [
-        "stash",
-        "mihomo",
-        "surge",
-        "quantumultx"
-      ]
     }
   ],
   "routingRules": [
@@ -1893,10 +1849,7 @@ const MODULE_INDEX = {
       "groups": [
         "金融网站"
       ],
-      "ruleSets": [
-        "trade",
-        "tradeChina"
-      ],
+      "ruleSets": [],
       "dependsOn": [
         "base.core"
       ],
