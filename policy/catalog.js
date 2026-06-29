@@ -206,6 +206,12 @@ const rawRuleSets = [
     behavior: "classical",
   },
   {
+    key: "bilibili",
+    sourceName: "BiliBili",
+    group: "国内网站",
+    behavior: "classical",
+  },
+  {
     key: "china",
     sourceName: "ChinaMax",
     mihomoFile: "ChinaMax_Domain",
@@ -1076,7 +1082,7 @@ const scenarioModules = [
     domain: "domestic",
     title: "Domestic routing",
     groups: ["国内网站"],
-    ruleSets: ["chinamedia"],
+    ruleSets: ["bilibili", "chinamedia"],
     dependsOn: ["base.core"],
     capabilities: {
       routing: true,
