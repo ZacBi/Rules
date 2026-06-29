@@ -33,6 +33,7 @@ Claude = select, 节点选择, 自动选择, 全部节点, 香港节点, 台湾�
 微软服务 = select, DIRECT, 节点选择, 自动选择, 全部节点, 香港节点, 日本节点, 新加坡节点, 美国节点
 苹果服务 = select, DIRECT, 节点选择, 自动选择, 全部节点
 游戏平台 = select, 节点选择, 自动选择, 全部节点, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点
+金融网站 = select, 节点选择, 自动选择, 全部节点, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点
 国外网站 = select, 节点选择, 自动选择, 全部节点, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点
 国内网站 = select, DIRECT, 节点选择
 广告拦截 = select, REJECT, DIRECT
@@ -55,6 +56,7 @@ DOMAIN-SUFFIX,telegram.org,即时通讯
 DOMAIN-SUFFIX,t.me,即时通讯
 DOMAIN-SUFFIX,discord.com,即时通讯
 DOMAIN-SUFFIX,discordapp.com,即时通讯
+DOMAIN-SUFFIX,whop.com,即时通讯
 DOMAIN-SUFFIX,google.com,国外网站
 DOMAIN-SUFFIX,googleapis.com,国外网站
 DOMAIN-SUFFIX,gstatic.com,国外网站
@@ -69,6 +71,11 @@ DOMAIN-SUFFIX,pythonhosted.org,国外网站
 DOMAIN-SUFFIX,gitlab.com,国外网站
 DOMAIN-SUFFIX,x.com,国外网站
 DOMAIN-SUFFIX,twitter.com,国外网站
+DOMAIN-SUFFIX,longbridge.com,金融网站
+DOMAIN-SUFFIX,longbridgeapp.com,金融网站
+DOMAIN-SUFFIX,open.longbridge.com,金融网站
+DOMAIN-SUFFIX,api.longbridge.com,金融网站
+DOMAIN-SUFFIX,openapi.longbridge.com,金融网站
 DOMAIN,ios.chat.openai.com,AI平台
 DOMAIN,android.chat.openai.com,AI平台
 DOMAIN-SUFFIX,auth.openai.com,AI平台
@@ -108,4 +115,6 @@ RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/r
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Apple/Apple.list,苹果服务,extended-matching
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Steam/Steam.list,游戏平台,extended-matching
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Epic/Epic.list,游戏平台,extended-matching
+RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Global/Global.list,金融网站,extended-matching
+RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ChinaMax/ChinaMax.list,金融网站,extended-matching
 FINAL,漏网之鱼
