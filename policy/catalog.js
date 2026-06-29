@@ -164,9 +164,19 @@ const businessGroups = [
     proxies: [...defaultProxyGroupNames, ...coreRegionGroupNames],
   },
   {
-    name: "金融网站",
+    name: "长桥",
     type: "select",
     proxies: [...defaultProxyGroupNames, ...coreRegionGroupNames],
+  },
+  {
+    name: "IBKR",
+    type: "select",
+    proxies: [...defaultProxyGroupNames, ...coreRegionGroupNames],
+  },
+  {
+    name: "金融网站",
+    type: "select",
+    proxies: [...defaultProxyGroupNames, "长桥", "IBKR", ...coreRegionGroupNames],
   },
   {
     name: "国外网站",
@@ -876,12 +886,22 @@ const bootstrapDomainsByGroup = {
     "x.com",
     "twitter.com",
   ],
-  金融网站: [
+  长桥: [
     "longbridge.com",
     "longbridgeapp.com",
+    "longbridge-inc.com",
+    "longbridge.hk",
+    "longbridge.sg",
     "open.longbridge.com",
     "api.longbridge.com",
     "openapi.longbridge.com",
+  ],
+  IBKR: [
+    "interactivebrokers.com",
+    "interactivebrokers.co.uk",
+    "interactivebrokers.com.hk",
+    "interactiveadvisors.com",
+    "ibkr.com",
   ],
 };
 
@@ -1028,7 +1048,7 @@ const scenarioModules = [
     layer: "scenario",
     domain: "finance",
     title: "Financial platforms",
-    groups: ["金融网站"],
+    groups: ["金融网站", "长桥", "IBKR"],
     ruleSets: [],
     dependsOn: ["base.core"],
     capabilities: {
