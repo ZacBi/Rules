@@ -140,12 +140,42 @@
       ]
     },
     {
+      "name": "长桥",
+      "type": "select",
+      "proxies": [
+        "节点选择",
+        "自动选择",
+        "全部节点",
+        "香港节点",
+        "台湾节点",
+        "日本节点",
+        "新加坡节点",
+        "美国节点"
+      ]
+    },
+    {
+      "name": "IBKR",
+      "type": "select",
+      "proxies": [
+        "节点选择",
+        "自动选择",
+        "全部节点",
+        "香港节点",
+        "台湾节点",
+        "日本节点",
+        "新加坡节点",
+        "美国节点"
+      ]
+    },
+    {
       "name": "金融网站",
       "type": "select",
       "proxies": [
         "节点选择",
         "自动选择",
         "全部节点",
+        "长桥",
+        "IBKR",
         "香港节点",
         "台湾节点",
         "日本节点",
@@ -1070,31 +1100,79 @@
     },
     {
       "rule": "DOMAIN-SUFFIX,longbridge.com",
-      "group": "金融网站",
+      "group": "长桥",
       "origin": "bootstrap",
       "sourceUrl": null
     },
     {
       "rule": "DOMAIN-SUFFIX,longbridgeapp.com",
-      "group": "金融网站",
+      "group": "长桥",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,longbridge-inc.com",
+      "group": "长桥",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,longbridge.hk",
+      "group": "长桥",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,longbridge.sg",
+      "group": "长桥",
       "origin": "bootstrap",
       "sourceUrl": null
     },
     {
       "rule": "DOMAIN-SUFFIX,open.longbridge.com",
-      "group": "金融网站",
+      "group": "长桥",
       "origin": "bootstrap",
       "sourceUrl": null
     },
     {
       "rule": "DOMAIN-SUFFIX,api.longbridge.com",
-      "group": "金融网站",
+      "group": "长桥",
       "origin": "bootstrap",
       "sourceUrl": null
     },
     {
       "rule": "DOMAIN-SUFFIX,openapi.longbridge.com",
-      "group": "金融网站",
+      "group": "长桥",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,interactivebrokers.com",
+      "group": "IBKR",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,interactivebrokers.co.uk",
+      "group": "IBKR",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,interactivebrokers.com.hk",
+      "group": "IBKR",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,interactiveadvisors.com",
+      "group": "IBKR",
+      "origin": "bootstrap",
+      "sourceUrl": null
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,ibkr.com",
+      "group": "IBKR",
       "origin": "bootstrap",
       "sourceUrl": null
     },
@@ -1847,7 +1925,9 @@
       "domain": "finance",
       "title": "Financial platforms",
       "groups": [
-        "金融网站"
+        "金融网站",
+        "长桥",
+        "IBKR"
       ],
       "ruleSets": [],
       "dependsOn": [
@@ -2010,6 +2090,8 @@
         "微软服务",
         "苹果服务",
         "游戏平台",
+        "长桥",
+        "IBKR",
         "金融网站",
         "国外网站",
         "国内网站",
@@ -2069,6 +2151,8 @@
         "微软服务",
         "苹果服务",
         "游戏平台",
+        "长桥",
+        "IBKR",
         "金融网站",
         "国外网站",
         "国内网站",
@@ -2128,6 +2212,8 @@
         "微软服务",
         "苹果服务",
         "游戏平台",
+        "长桥",
+        "IBKR",
         "金融网站",
         "国外网站",
         "国内网站",
@@ -2184,6 +2270,8 @@
         "微软服务",
         "苹果服务",
         "游戏平台",
+        "长桥",
+        "IBKR",
         "金融网站",
         "国外网站",
         "国内网站",
@@ -2243,6 +2331,8 @@
         "微软服务",
         "苹果服务",
         "游戏平台",
+        "长桥",
+        "IBKR",
         "金融网站",
         "国外网站",
         "国内网站",
