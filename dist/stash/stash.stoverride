@@ -14,7 +14,7 @@ ipv6: false
 proxy-groups: #!replace
   - name: "全部节点"
     type: select
-    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png"
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Server.png"
     include-all: true
     filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset)).*$"
   - name: "自动选择"
@@ -77,7 +77,7 @@ proxy-groups: #!replace
       - "美国节点"
   - name: "AI平台"
     type: select
-    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/AI.png"
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ChatGPT.png"
     proxies:
       - "节点选择"
       - "自动选择"
@@ -172,7 +172,7 @@ proxy-groups: #!replace
       - "美国节点"
   - name: "国内网站"
     type: select
-    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Domestic.png"
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/China_Map.png"
     proxies:
       - "DIRECT"
       - "节点选择"
@@ -184,7 +184,7 @@ proxy-groups: #!replace
       - "DIRECT"
   - name: "漏网之鱼"
     type: select
-    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png"
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png"
     proxies:
       - "节点选择"
       - "自动选择"

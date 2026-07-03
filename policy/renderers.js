@@ -39,7 +39,7 @@ const ICON_URL_BY_GROUP = {
   金融网站: `${TWEMOJI_ICON_BASE_URL}/1f3e6.png`,
 };
 const STASH_ICON_FILENAME_BY_GROUP = {
-  全部节点: "Proxy.png",
+  全部节点: "Server.png",
   自动选择: "Speedtest.png",
   节点选择: "Auto.png",
   香港节点: "Hong_Kong.png",
@@ -52,7 +52,7 @@ const STASH_ICON_FILENAME_BY_GROUP = {
   马来西亚节点: "Malaysia.png",
   阿根廷节点: "Argentina.png",
   国外媒体: "ForeignMedia.png",
-  AI平台: "AI.png",
+  AI平台: "ChatGPT.png",
   即时通讯: "Telegram.png",
   微软服务: "Microsoft.png",
   苹果服务: "Apple_2.png",
@@ -60,9 +60,9 @@ const STASH_ICON_FILENAME_BY_GROUP = {
   香港优先: "Hong_Kong.png",
   媒体负载均衡: "Media.png",
   国外网站: "Global.png",
-  国内网站: "Domestic.png",
+  国内网站: "China_Map.png",
   广告拦截: "Advertising.png",
-  漏网之鱼: "Final.png",
+  漏网之鱼: "Rocket.png",
 };
 
 function toStashGroupName(name) {
