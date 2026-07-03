@@ -4,6 +4,7 @@ desc: Stash iOS 轻量分组、规则集、常见 HTTP 改写与脚本入口。
 homepage: https://github.com/ZacBi/Rules
 author: Rules contributors
 category: Policy
+icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Policy.png"
 mixed-port: 7890
 allow-lan: false
 mode: rule
@@ -27,8 +28,9 @@ proxy-groups: #!replace
     lazy: true
   - name: "节点选择"
     type: select
-    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png"
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
     proxies:
+      - "香港优先"
       - "自动选择"
       - "全部节点"
       - "香港节点"
@@ -41,10 +43,30 @@ proxy-groups: #!replace
       - "马来西亚节点"
       - "阿根廷节点"
       - "DIRECT"
+  - name: "香港优先"
+    type: fallback
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png"
+    include-all: true
+    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(香港|HK|Hong\\s*Kong)).*$"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 600
+    tolerance: 100
+    lazy: true
+  - name: "媒体负载均衡"
+    type: load-balance
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Media.png"
+    include-all: true
+    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(香港|HK|Hong\\s*Kong|台湾|TW|Taiwan|Taipei|日本|JP|Japan|Tokyo|Osaka|新加坡|狮城|SG|Singapore|美国|US|USA|United\\s*States|America|Los\\s*Angeles|San\\s*Jose|Seattle)).*$"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 600
+    tolerance: 100
+    lazy: true
+    strategy: consistent-hashing
   - name: "国外媒体"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ForeignMedia.png"
     proxies:
+      - "媒体负载均衡"
       - "节点选择"
       - "自动选择"
       - "全部节点"
@@ -66,7 +88,7 @@ proxy-groups: #!replace
       - "美国节点"
   - name: "Claude"
     type: select
-    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/AI.png"
+    icon: "https://unpkg.com/@lobehub/icons-static-png@1.91.0/light/claude-color.png"
     proxies:
       - "节点选择"
       - "自动选择"
@@ -126,6 +148,7 @@ proxy-groups: #!replace
       - "美国节点"
   - name: "金融网站"
     type: select
+    icon: "https://raw.githubusercontent.com/jdecked/twemoji/main/assets/72x72/1f3e6.png"
     proxies:
       - "节点选择"
       - "自动选择"

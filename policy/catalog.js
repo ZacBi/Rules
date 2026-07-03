@@ -192,6 +192,50 @@ const businessGroups = [
   },
 ];
 
+const stashEnhancementGroups = [
+  {
+    name: "香港优先",
+    type: "fallback",
+    match: regions.find((region) => region.key === "hong_kong").match,
+  },
+  {
+    name: "媒体负载均衡",
+    type: "load-balance",
+    strategy: "consistent-hashing",
+    match: [
+      "香港",
+      "HK",
+      "Hong\\s*Kong",
+      "台湾",
+      "TW",
+      "Taiwan",
+      "Taipei",
+      "日本",
+      "JP",
+      "Japan",
+      "Tokyo",
+      "Osaka",
+      "新加坡",
+      "狮城",
+      "SG",
+      "Singapore",
+      "美国",
+      "US",
+      "USA",
+      "United\\s*States",
+      "America",
+      "Los\\s*Angeles",
+      "San\\s*Jose",
+      "Seattle",
+    ].join("|"),
+  },
+];
+
+const stashPolicyChoices = {
+  节点选择: ["香港优先"],
+  国外媒体: ["媒体负载均衡"],
+};
+
 const rawRuleSets = [
   {
     key: "advertising",
@@ -1324,6 +1368,8 @@ function buildModuleIndex() {
     strategyGroups,
     serviceCheckGroups,
     businessGroups,
+    stashEnhancementGroups,
+    stashPolicyChoices,
     regions,
     ruleSets: normalizedRuleSets,
     routingRules,
@@ -1352,6 +1398,8 @@ module.exports = {
   strategyGroups,
   serviceCheckGroups,
   businessGroups,
+  stashEnhancementGroups,
+  stashPolicyChoices,
   rulesets: normalizedRuleSets,
   surgeRuleSetLocation,
 };

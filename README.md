@@ -32,6 +32,12 @@ https://raw.githubusercontent.com/ZacBi/Rules/master/dist/surge/rules.dconf
 https://raw.githubusercontent.com/ZacBi/Rules/master/dist/quantumultx/rules.conf
 ```
 
+Stash 一键安装覆写：
+
+```text
+https://link.stash.ws/install-override/raw.githubusercontent.com/ZacBi/Rules/master/dist/stash/stash.stoverride
+```
+
 ## 使用方式
 
 推荐链路：
@@ -62,7 +68,18 @@ https://raw.githubusercontent.com/ZacBi/Rules/master/dist/quantumultx/rules.conf
    https://raw.githubusercontent.com/ZacBi/Rules/master/dist/stash/stash.stoverride
    ```
 
+   也可以在 iPhone 上使用一键安装链接：
+
+   ```text
+   https://link.stash.ws/install-override/raw.githubusercontent.com/ZacBi/Rules/master/dist/stash/stash.stoverride
+   ```
+
 Stash 入口只下发策略组、远程规则集、小规模 rewrite/script/MITM。当前默认运行时能力包括 APP 更新检查屏蔽和 TestFlight 下载修正；更重的广告复写、解锁、面板或私有脚本应在本地或 `Script Hub` 中单独启用。
+
+Stash 专属增强组：
+
+- `香港优先`：`fallback` 组，按香港节点正则引用可用节点，适合手动固定香港线路时使用。
+- `媒体负载均衡`：`load-balance` 组，使用 `consistent-hashing`，适合 YouTube、Netflix、Spotify、TikTok 等媒体流量；不默认用于金融或登录敏感站点。
 
 如果 Stash 日志出现 `couldn't find ip`，优先检查本地 DNS 与 Fake IP 设置。DNS 策略和私有 nameserver 不并入公开主入口。
 

@@ -29,13 +29,19 @@ function runtimeModulesByKind(index, kind, options = {}) {
 }
 
 const QURE_ICON_BASE_URL = "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color";
+const LOBE_ICON_BASE_URL = "https://unpkg.com/@lobehub/icons-static-png@1.91.0/light";
+const TWEMOJI_ICON_BASE_URL = "https://raw.githubusercontent.com/jdecked/twemoji/main/assets/72x72";
 const NOISE_POLICY_PATTERN = "剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset";
 const RESERVED_POLICY_PATTERN = "全部节点|自动选择|节点选择|DIRECT|REJECT";
 const QUANTUMULTX_RESOURCE_UPDATE_INTERVAL = 172800;
+const ICON_URL_BY_GROUP = {
+  Claude: `${LOBE_ICON_BASE_URL}/claude-color.png`,
+  金融网站: `${TWEMOJI_ICON_BASE_URL}/1f3e6.png`,
+};
 const STASH_ICON_FILENAME_BY_GROUP = {
   全部节点: "Proxy.png",
   自动选择: "Speedtest.png",
-  节点选择: "Proxy.png",
+  节点选择: "Auto.png",
   香港节点: "Hong_Kong.png",
   台湾节点: "Taiwan.png",
   日本节点: "Japan.png",
@@ -47,11 +53,12 @@ const STASH_ICON_FILENAME_BY_GROUP = {
   阿根廷节点: "Argentina.png",
   国外媒体: "ForeignMedia.png",
   AI平台: "AI.png",
-  Claude: "AI.png",
   即时通讯: "Telegram.png",
   微软服务: "Microsoft.png",
   苹果服务: "Apple_2.png",
   游戏平台: "Game.png",
+  香港优先: "Hong_Kong.png",
+  媒体负载均衡: "Media.png",
   国外网站: "Global.png",
   国内网站: "Domestic.png",
   广告拦截: "Advertising.png",
@@ -63,11 +70,17 @@ function toStashGroupName(name) {
 }
 
 function stashGroupIcon(name) {
+  if (ICON_URL_BY_GROUP[name]) {
+    return ICON_URL_BY_GROUP[name];
+  }
   const fileName = STASH_ICON_FILENAME_BY_GROUP[name];
   return fileName ? `${QURE_ICON_BASE_URL}/${fileName}` : null;
 }
 
 function quantumultxPolicyIcon(name) {
+  if (ICON_URL_BY_GROUP[name]) {
+    return ICON_URL_BY_GROUP[name];
+  }
   const fileName = STASH_ICON_FILENAME_BY_GROUP[name];
   return fileName ? `${QURE_ICON_BASE_URL}/${fileName}` : null;
 }
@@ -114,6 +127,7 @@ function renderStashGroupHeader(name, type) {
 function renderStashStrategyGroup(index, group) {
   const healthCheck = index.defaultHealthCheck;
   const lines = renderStashGroupHeader(group.name, group.type);
+  const extraChoices = (index.stashPolicyChoices && index.stashPolicyChoices[group.name]) || [];
 
   if (group.mode === "all-proxies") {
     lines.push("    include-all: true", `    filter: ${yamlScalar(stashPolicyFilter())}`);
@@ -128,7 +142,7 @@ function renderStashStrategyGroup(index, group) {
     return lines.join("\n");
   }
 
-  lines.push("    proxies:", ...uniq(group.proxies).map((proxy) => `      - ${yamlScalar(toStashGroupName(proxy))}`));
+  lines.push("    proxies:", ...uniq([...extraChoices, ...group.proxies]).map((proxy) => `      - ${yamlScalar(toStashGroupName(proxy))}`));
   return lines.join("\n");
 }
 
@@ -157,11 +171,31 @@ function renderStashServiceCheckGroup(group) {
   ].join("\n");
 }
 
-function renderStashBusinessGroup(group) {
+function renderStashEnhancementGroup(index, group) {
+  const healthCheck = index.defaultHealthCheck;
+  const lines = [
+    ...renderStashGroupHeader(group.name, group.type),
+    "    include-all: true",
+    `    filter: ${yamlScalar(stashPolicyFilter(group.match))}`,
+    `    url: ${yamlScalar(healthCheck.url)}`,
+    `    interval: ${healthCheck.interval}`,
+    `    tolerance: ${healthCheck.tolerance}`,
+    "    lazy: true",
+  ];
+
+  if (group.strategy) {
+    lines.push(`    strategy: ${group.strategy}`);
+  }
+
+  return lines.join("\n");
+}
+
+function renderStashBusinessGroup(index, group) {
+  const extraChoices = (index.stashPolicyChoices && index.stashPolicyChoices[group.name]) || [];
   return [
     ...renderStashGroupHeader(group.name, "select"),
     "    proxies:",
-    ...uniq(group.proxies).map((proxy) => `      - ${yamlScalar(toStashGroupName(proxy))}`),
+    ...uniq([...extraChoices, ...group.proxies]).map((proxy) => `      - ${yamlScalar(toStashGroupName(proxy))}`),
   ].join("\n");
 }
 
@@ -252,6 +286,7 @@ function renderStashEntry(index) {
     "homepage: https://github.com/ZacBi/Rules",
     "author: Rules contributors",
     "category: Policy",
+    `icon: ${yamlScalar(`${QURE_ICON_BASE_URL}/Policy.png`)}`,
     "mixed-port: 7890",
     "allow-lan: false",
     "mode: rule",
@@ -261,7 +296,8 @@ function renderStashEntry(index) {
     "proxy-groups: #!replace",
     ...index.strategyGroups.map((group) => renderStashStrategyGroup(index, group)),
     ...index.serviceCheckGroups.map((group) => renderStashServiceCheckGroup(group)),
-    ...index.businessGroups.map((group) => renderStashBusinessGroup(group)),
+    ...index.stashEnhancementGroups.map((group) => renderStashEnhancementGroup(index, group)),
+    ...index.businessGroups.map((group) => renderStashBusinessGroup(index, group)),
     ...index.regions.map((region) => renderStashRegionGroup(index, region)),
     "",
     "rule-providers: #!replace",
@@ -625,11 +661,14 @@ function renderQuantumultxInlineRule(rule) {
 }
 
 function renderQuantumultxEntry(index) {
+  const healthCheck = index.defaultHealthCheck;
   const lines = [
     "; Generated from the unified strategy model",
     "; Import server subscriptions separately, then enable this policy and filter profile.",
     "",
     "[general]",
+    `server_check_url=${healthCheck.url}`,
+    `server_check_timeout=${healthCheck.timeout * 1000}`,
     "",
     "[dns]",
     "no-ipv6",
