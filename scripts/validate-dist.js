@@ -87,10 +87,19 @@ function validateQuantumultx() {
   if (/sub-store-org\/Sub-Store|QX\.snippet|QX-Task\.json/.test(text)) {
     errors.push(`${file}: Sub-Store addon must stay out of the default QX profile`);
   }
-  for (const group of ["全部节点", "自动选择", "节点选择", "国外媒体", "AI平台", "漏网之鱼"]) {
-    const pattern = new RegExp(`^(?:static|url-latency-benchmark)=${group},.*img-url=https://raw\\.githubusercontent\\.com/Koolson/Qure/master/IconSet/Color/`, "m");
+  const qxIconFiles = {
+    全部节点: "Server.png",
+    自动选择: "Speedtest.png",
+    节点选择: "Auto.png",
+    国外媒体: "ForeignMedia.png",
+    AI平台: "ChatGPT.png",
+    国内网站: "China_Map.png",
+    漏网之鱼: "Rocket.png",
+  };
+  for (const [group, iconFile] of Object.entries(qxIconFiles)) {
+    const pattern = new RegExp(`^(?:static|url-latency-benchmark)=${group},.*img-url=https://raw\\.githubusercontent\\.com/Koolson/Qure/master/IconSet/Color/${iconFile.replace(".", "\\.")}$`, "m");
     if (!pattern.test(text)) {
-      errors.push(`${file}: missing Qure Color img-url for ${group}`);
+      errors.push(`${file}: missing expected Qure Color img-url for ${group}`);
     }
   }
 
@@ -214,6 +223,18 @@ function validateStash() {
   }
   if (!/name: "Claude"[\s\S]*?icon: "https:\/\/unpkg\.com\/@lobehub\/icons-static-png@1\.91\.0\/light\/claude-color\.png"/.test(text)) {
     errors.push(`${file}: missing Claude dedicated icon`);
+  }
+  const stashIconFiles = {
+    全部节点: "Server.png",
+    AI平台: "ChatGPT.png",
+    国内网站: "China_Map.png",
+    漏网之鱼: "Rocket.png",
+  };
+  for (const [group, iconFile] of Object.entries(stashIconFiles)) {
+    const pattern = new RegExp(`name: "${group}"[\\s\\S]*?icon: "https://raw\\.githubusercontent\\.com/Koolson/Qure/master/IconSet/Color/${iconFile.replace(".", "\\.")}"`);
+    if (!pattern.test(text)) {
+      errors.push(`${file}: missing expected icon for ${group}`);
+    }
   }
   if (!/name: "金融网站"[\s\S]*?icon: "https:\/\/raw\.githubusercontent\.com\/jdecked\/twemoji\/main\/assets\/72x72\/1f3e6\.png"/.test(text)) {
     errors.push(`${file}: missing finance bank icon`);
