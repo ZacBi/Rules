@@ -50,8 +50,14 @@ function validateQuantumultx() {
     }
   }
 
-  if (/server_check_url|geo_location_checker|resource_parser_url|network_check_url/.test(text)) {
+  if (/geo_location_checker|resource_parser_url|network_check_url/.test(text)) {
     errors.push(`${file}: contains general URL key that should stay user-local`);
+  }
+  if (!/^server_check_url=https:\/\/www\.gstatic\.com\/generate_204$/m.test(text)) {
+    errors.push(`${file}: missing baseline server_check_url`);
+  }
+  if (!/^server_check_timeout=3000$/m.test(text)) {
+    errors.push(`${file}: missing baseline server_check_timeout`);
   }
   const emptyPublicSections = [
     ["server_remote", "filter_remote"],
@@ -199,6 +205,18 @@ function validateStash() {
   }
   if (!/type: url-test/.test(text) || !/name: "自动选择"/.test(text)) {
     errors.push(`${file}: missing automatic url-test group`);
+  }
+  if (!/name: "香港优先"[\s\S]*?type: fallback/.test(text)) {
+    errors.push(`${file}: missing Stash Hong Kong fallback group`);
+  }
+  if (!/name: "媒体负载均衡"[\s\S]*?type: load-balance[\s\S]*?strategy: consistent-hashing/.test(text)) {
+    errors.push(`${file}: missing Stash media load-balance group`);
+  }
+  if (!/name: "Claude"[\s\S]*?icon: "https:\/\/unpkg\.com\/@lobehub\/icons-static-png@1\.91\.0\/light\/claude-color\.png"/.test(text)) {
+    errors.push(`${file}: missing Claude dedicated icon`);
+  }
+  if (!/name: "金融网站"[\s\S]*?icon: "https:\/\/raw\.githubusercontent\.com\/jdecked\/twemoji\/main\/assets\/72x72\/1f3e6\.png"/.test(text)) {
+    errors.push(`${file}: missing finance bank icon`);
   }
   if (!/MATCH,漏网之鱼/.test(text)) {
     errors.push(`${file}: missing MATCH fallback rule`);
