@@ -29,8 +29,11 @@ function runtimeModulesByKind(index, kind, options = {}) {
 }
 
 const QURE_ICON_BASE_URL = "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color";
+const QURE_ICON_CDN_BASE_URL = "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color";
 const LOBE_ICON_BASE_URL = "https://unpkg.com/@lobehub/icons-static-png@1.91.0/light";
+const LOBE_ICON_CDN_BASE_URL = "https://cdn.jsdelivr.net/npm/@lobehub/icons-static-png@1.91.0/light";
 const TWEMOJI_ICON_BASE_URL = "https://raw.githubusercontent.com/jdecked/twemoji/main/assets/72x72";
+const TWEMOJI_ICON_CDN_BASE_URL = "https://cdn.jsdelivr.net/gh/jdecked/twemoji@main/assets/72x72";
 const NOISE_POLICY_PATTERN = "剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset";
 const RESERVED_POLICY_PATTERN = "全部节点|自动选择|节点选择|DIRECT|REJECT";
 const QUANTUMULTX_RESOURCE_UPDATE_INTERVAL = 172800;
@@ -79,11 +82,14 @@ function stashGroupIcon(name) {
 }
 
 function quantumultxPolicyIcon(name) {
-  if (ICON_URL_BY_GROUP[name]) {
-    return ICON_URL_BY_GROUP[name];
+  if (name === "Claude") {
+    return `${LOBE_ICON_CDN_BASE_URL}/claude-color.png`;
+  }
+  if (name === "金融网站") {
+    return `${TWEMOJI_ICON_CDN_BASE_URL}/1f3e6.png`;
   }
   const fileName = STASH_ICON_FILENAME_BY_GROUP[name];
-  return fileName ? `${QURE_ICON_BASE_URL}/${fileName}` : null;
+  return fileName ? `${QURE_ICON_CDN_BASE_URL}/${fileName}` : null;
 }
 
 function stashPolicyFilter(match = null) {
