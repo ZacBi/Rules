@@ -99,10 +99,16 @@ function validateQuantumultx() {
     漏网之鱼: "Rocket.png",
   };
   for (const [group, iconFile] of Object.entries(qxIconFiles)) {
-    const pattern = new RegExp(`^(?:static|available|round-robin|url-latency-benchmark)=${group},.*img-url=https://raw\\.githubusercontent\\.com/Koolson/Qure/master/IconSet/Color/${iconFile.replace(".", "\\.")}$`, "m");
+    const pattern = new RegExp(`^(?:static|available|round-robin|url-latency-benchmark)=${group},.*img-url=https://cdn\\.jsdelivr\\.net/gh/Koolson/Qure@master/IconSet/Color/${iconFile.replace(".", "\\.")}$`, "m");
     if (!pattern.test(text)) {
-      errors.push(`${file}: missing expected Qure Color img-url for ${group}`);
+      errors.push(`${file}: missing expected Qure CDN img-url for ${group}`);
     }
+  }
+  if (!/^static=Claude,.*img-url=https:\/\/cdn\.jsdelivr\.net\/npm\/@lobehub\/icons-static-png@1\.91\.0\/light\/claude-color\.png$/m.test(text)) {
+    errors.push(`${file}: missing Claude CDN icon`);
+  }
+  if (!/^static=金融网站,.*img-url=https:\/\/cdn\.jsdelivr\.net\/gh\/jdecked\/twemoji@main\/assets\/72x72\/1f3e6\.png$/m.test(text)) {
+    errors.push(`${file}: missing finance CDN icon`);
   }
   if (!/^available=香港优先, server-tag-regex=/m.test(text)) {
     errors.push(`${file}: missing Quantumult X Hong Kong available policy`);
