@@ -197,22 +197,24 @@ const MODULE_INDEX = {
     {
       "name": "香港优先",
       "type": "fallback",
+      "hidden": true,
       "match": "香港|HK|Hong\\s*Kong"
     },
     {
       "name": "媒体负载均衡",
       "type": "load-balance",
+      "hidden": true,
       "strategy": "consistent-hashing",
       "match": "香港|HK|Hong\\s*Kong|台湾|TW|Taiwan|Taipei|日本|JP|Japan|Tokyo|Osaka|新加坡|狮城|SG|Singapore|美国|US|USA|United\\s*States|America|Los\\s*Angeles|San\\s*Jose|Seattle"
     }
   ],
   "stashPolicyChoices": {
-    "节点选择": [
-      "香港优先"
-    ],
-    "国外媒体": [
-      "媒体负载均衡"
-    ]
+    "国外媒体": {
+      "after": "自动选择",
+      "choices": [
+        "媒体负载均衡"
+      ]
+    }
   },
   "quantumultxEnhancementGroups": [
     {

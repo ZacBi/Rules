@@ -232,8 +232,20 @@ function validateStash() {
   if (!/name: "香港优先"[\s\S]*?type: fallback/.test(text)) {
     errors.push(`${file}: missing Stash Hong Kong fallback group`);
   }
+  if (!/name: "香港优先"[\s\S]*?hidden: true/.test(text)) {
+    errors.push(`${file}: Stash Hong Kong fallback group should stay hidden`);
+  }
   if (!/name: "媒体负载均衡"[\s\S]*?type: load-balance[\s\S]*?strategy: consistent-hashing/.test(text)) {
     errors.push(`${file}: missing Stash media load-balance group`);
+  }
+  if (!/name: "媒体负载均衡"[\s\S]*?hidden: true/.test(text)) {
+    errors.push(`${file}: Stash media load-balance group should stay hidden`);
+  }
+  if (/name: "节点选择"[\s\S]*?proxies:\n(?:      - "[^"]+"\n)*?      - "香港优先"/.test(text)) {
+    errors.push(`${file}: 节点选择 should not default to Hong Kong fallback`);
+  }
+  if (!/name: "国外媒体"[\s\S]*?proxies:\n      - "节点选择"\n      - "自动选择"\n      - "媒体负载均衡"/.test(text)) {
+    errors.push(`${file}: 国外媒体 should keep media load-balance as a secondary option`);
   }
   if (!/name: "Claude"[\s\S]*?icon: "https:\/\/unpkg\.com\/@lobehub\/icons-static-png@1\.91\.0\/light\/claude-color\.png"/.test(text)) {
     errors.push(`${file}: missing Claude dedicated icon`);

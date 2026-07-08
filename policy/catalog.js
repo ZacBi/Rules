@@ -196,11 +196,13 @@ const stashEnhancementGroups = [
   {
     name: "香港优先",
     type: "fallback",
+    hidden: true,
     match: regions.find((region) => region.key === "hong_kong").match,
   },
   {
     name: "媒体负载均衡",
     type: "load-balance",
+    hidden: true,
     strategy: "consistent-hashing",
     match: [
       "香港",
@@ -232,8 +234,10 @@ const stashEnhancementGroups = [
 ];
 
 const stashPolicyChoices = {
-  节点选择: ["香港优先"],
-  国外媒体: ["媒体负载均衡"],
+  国外媒体: {
+    after: "自动选择",
+    choices: ["媒体负载均衡"],
+  },
 };
 
 const quantumultxEnhancementGroups = [

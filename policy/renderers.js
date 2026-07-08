@@ -125,10 +125,39 @@ function renderStashGroupHeader(name, type) {
   return lines;
 }
 
+function applyStashPolicyChoices(proxies, choicesConfig) {
+  if (!choicesConfig) {
+    return proxies;
+  }
+  if (Array.isArray(choicesConfig)) {
+    return [...choicesConfig, ...proxies];
+  }
+
+  const choices = choicesConfig.choices || [];
+  if (!choices.length) {
+    return proxies;
+  }
+  if (!choicesConfig.after) {
+    return [...choices, ...proxies];
+  }
+
+  const result = [];
+  for (const proxy of proxies) {
+    result.push(proxy);
+    if (proxy === choicesConfig.after) {
+      result.push(...choices);
+    }
+  }
+  if (!proxies.includes(choicesConfig.after)) {
+    result.unshift(...choices);
+  }
+  return result;
+}
+
 function renderStashStrategyGroup(index, group) {
   const healthCheck = index.defaultHealthCheck;
   const lines = renderStashGroupHeader(group.name, group.type);
-  const extraChoices = (index.stashPolicyChoices && index.stashPolicyChoices[group.name]) || [];
+  const choicesConfig = index.stashPolicyChoices && index.stashPolicyChoices[group.name];
 
   if (group.mode === "all-proxies") {
     lines.push("    include-all: true", `    filter: ${yamlScalar(stashPolicyFilter())}`);
@@ -143,7 +172,10 @@ function renderStashStrategyGroup(index, group) {
     return lines.join("\n");
   }
 
-  lines.push("    proxies:", ...uniq([...extraChoices, ...group.proxies]).map((proxy) => `      - ${yamlScalar(toStashGroupName(proxy))}`));
+  lines.push(
+    "    proxies:",
+    ...uniq(applyStashPolicyChoices(group.proxies, choicesConfig)).map((proxy) => `      - ${yamlScalar(toStashGroupName(proxy))}`)
+  );
   return lines.join("\n");
 }
 
@@ -187,16 +219,19 @@ function renderStashEnhancementGroup(index, group) {
   if (group.strategy) {
     lines.push(`    strategy: ${group.strategy}`);
   }
+  if (group.hidden) {
+    lines.push("    hidden: true");
+  }
 
   return lines.join("\n");
 }
 
 function renderStashBusinessGroup(index, group) {
-  const extraChoices = (index.stashPolicyChoices && index.stashPolicyChoices[group.name]) || [];
+  const choicesConfig = index.stashPolicyChoices && index.stashPolicyChoices[group.name];
   return [
     ...renderStashGroupHeader(group.name, "select"),
     "    proxies:",
-    ...uniq([...extraChoices, ...group.proxies]).map((proxy) => `      - ${yamlScalar(toStashGroupName(proxy))}`),
+    ...uniq(applyStashPolicyChoices(group.proxies, choicesConfig)).map((proxy) => `      - ${yamlScalar(toStashGroupName(proxy))}`),
   ].join("\n");
 }
 
