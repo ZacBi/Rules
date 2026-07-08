@@ -30,7 +30,6 @@ proxy-groups: #!replace
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"
     proxies:
-      - "香港优先"
       - "自动选择"
       - "全部节点"
       - "香港节点"
@@ -52,6 +51,7 @@ proxy-groups: #!replace
     interval: 600
     tolerance: 100
     lazy: true
+    hidden: true
   - name: "媒体负载均衡"
     type: load-balance
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Media.png"
@@ -62,13 +62,14 @@ proxy-groups: #!replace
     tolerance: 100
     lazy: true
     strategy: consistent-hashing
+    hidden: true
   - name: "国外媒体"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ForeignMedia.png"
     proxies:
-      - "媒体负载均衡"
       - "节点选择"
       - "自动选择"
+      - "媒体负载均衡"
       - "全部节点"
       - "香港节点"
       - "台湾节点"
