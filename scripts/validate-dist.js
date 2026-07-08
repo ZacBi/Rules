@@ -91,16 +91,30 @@ function validateQuantumultx() {
     全部节点: "Server.png",
     自动选择: "Speedtest.png",
     节点选择: "Auto.png",
+    香港优先: "Hong_Kong.png",
+    媒体轮询: "Media.png",
     国外媒体: "ForeignMedia.png",
     AI平台: "ChatGPT.png",
     国内网站: "China_Map.png",
     漏网之鱼: "Rocket.png",
   };
   for (const [group, iconFile] of Object.entries(qxIconFiles)) {
-    const pattern = new RegExp(`^(?:static|url-latency-benchmark)=${group},.*img-url=https://raw\\.githubusercontent\\.com/Koolson/Qure/master/IconSet/Color/${iconFile.replace(".", "\\.")}$`, "m");
+    const pattern = new RegExp(`^(?:static|available|round-robin|url-latency-benchmark)=${group},.*img-url=https://raw\\.githubusercontent\\.com/Koolson/Qure/master/IconSet/Color/${iconFile.replace(".", "\\.")}$`, "m");
     if (!pattern.test(text)) {
       errors.push(`${file}: missing expected Qure Color img-url for ${group}`);
     }
+  }
+  if (!/^available=香港优先, server-tag-regex=/m.test(text)) {
+    errors.push(`${file}: missing Quantumult X Hong Kong available policy`);
+  }
+  if (!/^round-robin=媒体轮询, server-tag-regex=/m.test(text)) {
+    errors.push(`${file}: missing Quantumult X media round-robin policy`);
+  }
+  if (!/^static=节点选择, 香港优先,/m.test(text)) {
+    errors.push(`${file}: 节点选择 should include Quantumult X Hong Kong helper`);
+  }
+  if (!/^static=国外媒体, 媒体轮询,/m.test(text)) {
+    errors.push(`${file}: 国外媒体 should include Quantumult X media helper`);
   }
 
   text.split(/\r?\n/).forEach((line, lineIndex) => {
@@ -108,7 +122,7 @@ function validateQuantumultx() {
     if (/blackmatrix7\/ios_rule_script/.test(line) && !line.includes("opt-parser=false")) {
       errors.push(`${file}:${lineNumber}: blackmatrix7 remote missing opt-parser=false`);
     }
-    if (/^static\s=|^url-latency-benchmark\s=/.test(line)) {
+    if (/^(?:static|available|round-robin|url-latency-benchmark)\s=/.test(line)) {
       errors.push(`${file}:${lineNumber}: policy assignment has space before "="`);
     }
     if (/^(DOMAIN|DOMAIN-SUFFIX|IP-CIDR|IP-CIDR6|FINAL),/.test(line)) {
@@ -278,6 +292,63 @@ function validateMihomo() {
   return errors;
 }
 
+function sameItems(left, right) {
+  const leftSet = new Set(left);
+  const rightSet = new Set(right);
+  return left.length === leftSet.size
+    && right.length === rightSet.size
+    && left.length === right.length
+    && left.every((item) => rightSet.has(item));
+}
+
+function validateModuleIndexGroups() {
+  const file = "dist/modules/index.json";
+  const index = JSON.parse(readText(file));
+  const errors = [];
+  const strategyGroups = index.strategyGroups.map((group) => group.name);
+  const baseGroups = [
+    ...strategyGroups,
+    ...index.serviceCheckGroups.map((group) => group.name),
+    ...index.regions.map((region) => region.groupName),
+    ...index.businessGroups.map((group) => group.name),
+  ];
+  const stashGroups = [
+    ...strategyGroups,
+    ...index.serviceCheckGroups.map((group) => group.name),
+    ...index.stashEnhancementGroups.map((group) => group.name),
+    ...index.businessGroups.map((group) => group.name),
+    ...index.regions.map((region) => region.groupName),
+  ];
+  const quantumultxGroups = [
+    ...strategyGroups,
+    ...index.serviceCheckGroups.map((group) => group.name),
+    ...index.quantumultxEnhancementGroups.map((group) => group.name),
+    ...index.regions.map((region) => region.groupName),
+    ...index.businessGroups.map((group) => group.name),
+  ];
+  const expectations = {
+    "client.stash.entry": stashGroups,
+    "client.mihomo.entry": baseGroups,
+    "client.clash-party.entry": baseGroups,
+    "client.surge.entry": baseGroups,
+    "client.quantumultx.entry": quantumultxGroups,
+  };
+  const modulesById = new Map(index.modules.map((module) => [module.id, module]));
+
+  for (const [id, expected] of Object.entries(expectations)) {
+    const module = modulesById.get(id);
+    if (!module) {
+      errors.push(`${file}: missing ${id}`);
+      continue;
+    }
+    if (!sameItems(module.groups, expected)) {
+      errors.push(`${file}: ${id} group metadata does not match generated policy groups`);
+    }
+  }
+
+  return errors;
+}
+
 function validatePublicSafety() {
   const files = [
     "dist/quantumultx/rules.conf",
@@ -311,6 +382,7 @@ function main() {
     surge: validateSurge,
     stash: validateStash,
     mihomo: validateMihomo,
+    moduleIndexGroups: validateModuleIndexGroups,
     public: validatePublicSafety,
   };
   const requested = process.argv.slice(2);
@@ -339,5 +411,6 @@ module.exports = {
   validateSurge,
   validateStash,
   validateMihomo,
+  validateModuleIndexGroups,
   validatePublicSafety,
 };

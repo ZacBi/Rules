@@ -130,6 +130,11 @@ Surge 推荐使用 detached profile，把私有节点源和公开策略片段分
 
 默认入口保留空的节点、rewrite、task、backend、MITM section，只负责公开安全的策略组和分流规则。
 
+Quantumult X 专属增强组：
+
+- `香港优先`：`available` 策略，按香港节点正则选择首个可用节点。
+- `媒体轮询`：`round-robin` 策略，按媒体常用地区节点轮询连接，适合流媒体流量；不默认用于金融或登录敏感站点。
+
 如需在 Quantumult X 内启用 Sub-Store 运行时能力，可另行引用：
 
 ```text
@@ -204,6 +209,7 @@ RULES_GITHUB_REPO='owner/repo' node scripts/build.js
 - 优先引用远程规则集，不复制大型 ruleset 到仓库。
 - 小型补充规则只在确有必要时进入公开产物。
 - 客户端专属能力必须显式建模，不伪装成通用能力。
+- 客户端策略组数量不需要机械对齐；差异应来自各端原生能力，例如 Stash 的 `fallback/load-balance`、Quantumult X 的 `available/round-robin`、Surge 的 detached profile 片段。
 - 公开文档不写个人订阅、token、Cookie、本机路径或私有验证材料。
 - 宽泛规则集不能挂到具体业务组；业务组应使用精准域名或成熟上游专项规则。
 
