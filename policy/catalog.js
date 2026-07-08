@@ -236,6 +236,24 @@ const stashPolicyChoices = {
   国外媒体: ["媒体负载均衡"],
 };
 
+const quantumultxEnhancementGroups = [
+  {
+    name: "香港优先",
+    type: "available",
+    match: regions.find((region) => region.key === "hong_kong").match,
+  },
+  {
+    name: "媒体轮询",
+    type: "round-robin",
+    match: stashEnhancementGroups.find((group) => group.name === "媒体负载均衡").match,
+  },
+];
+
+const quantumultxPolicyChoices = {
+  节点选择: ["香港优先"],
+  国外媒体: ["媒体轮询"],
+};
+
 const rawRuleSets = [
   {
     key: "advertising",
@@ -1159,6 +1177,27 @@ const scenarioModules = [
 ];
 
 const entryComposition = uniq(["base.core", ...scenarioModules.map((module) => module.id)]);
+const strategyGroupNames = strategyGroups.map((group) => group.name);
+const policyGroupNames = uniq([
+  ...strategyGroupNames,
+  ...serviceCheckGroupNames,
+  ...regionGroupNames,
+  ...businessGroupNames,
+]);
+const stashPolicyGroupNames = uniq([
+  ...strategyGroupNames,
+  ...serviceCheckGroupNames,
+  ...stashEnhancementGroups.map((group) => group.name),
+  ...businessGroupNames,
+  ...regionGroupNames,
+]);
+const quantumultxPolicyGroupNames = uniq([
+  ...strategyGroupNames,
+  ...serviceCheckGroupNames,
+  ...quantumultxEnhancementGroups.map((group) => group.name),
+  ...regionGroupNames,
+  ...businessGroupNames,
+]);
 
 const clientModules = [
   moduleTemplate({
@@ -1167,11 +1206,7 @@ const clientModules = [
     domain: "stash",
     title: "Stash entry override",
     dependsOn: entryComposition,
-    groups: uniq([
-      ...strategyGroups.map((group) => group.name),
-      ...serviceCheckGroupNames,
-      ...businessGroupNames,
-    ]),
+    groups: stashPolicyGroupNames,
     output: {
       path: "dist/stash/stash.stoverride",
       format: "stash-override",
@@ -1190,11 +1225,7 @@ const clientModules = [
     domain: "mihomo",
     title: "Mihomo entry override",
     dependsOn: entryComposition,
-    groups: uniq([
-      ...strategyGroups.map((group) => group.name),
-      ...serviceCheckGroupNames,
-      ...businessGroupNames,
-    ]),
+    groups: policyGroupNames,
     output: {
       path: "dist/mihomo/override.js",
       format: "mihomo-override-js",
@@ -1213,11 +1244,7 @@ const clientModules = [
     domain: "clash-party",
     title: "Clash Party remote override",
     dependsOn: entryComposition,
-    groups: uniq([
-      ...strategyGroups.map((group) => group.name),
-      ...serviceCheckGroupNames,
-      ...businessGroupNames,
-    ]),
+    groups: policyGroupNames,
     output: {
       path: "dist/mihomo/clash-party.js",
       format: "clash-party-override-js",
@@ -1237,11 +1264,7 @@ const clientModules = [
     domain: "surge",
     title: "Surge entry module",
     dependsOn: entryComposition,
-    groups: uniq([
-      ...strategyGroups.map((group) => group.name),
-      ...serviceCheckGroupNames,
-      ...businessGroupNames,
-    ]),
+    groups: policyGroupNames,
     output: {
       path: "dist/surge/module.sgmodule",
       format: "surge-module",
@@ -1260,11 +1283,7 @@ const clientModules = [
     domain: "quantumultx",
     title: "Quantumult X lightweight lazy profile",
     dependsOn: entryComposition,
-    groups: uniq([
-      ...strategyGroups.map((group) => group.name),
-      ...serviceCheckGroupNames,
-      ...businessGroupNames,
-    ]),
+    groups: quantumultxPolicyGroupNames,
     output: {
       path: "dist/quantumultx/rules.conf",
       format: "quantumultx-profile",
@@ -1370,6 +1389,8 @@ function buildModuleIndex() {
     businessGroups,
     stashEnhancementGroups,
     stashPolicyChoices,
+    quantumultxEnhancementGroups,
+    quantumultxPolicyChoices,
     regions,
     ruleSets: normalizedRuleSets,
     routingRules,
@@ -1400,6 +1421,8 @@ module.exports = {
   businessGroups,
   stashEnhancementGroups,
   stashPolicyChoices,
+  quantumultxEnhancementGroups,
+  quantumultxPolicyChoices,
   rulesets: normalizedRuleSets,
   surgeRuleSetLocation,
 };

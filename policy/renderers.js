@@ -59,6 +59,7 @@ const STASH_ICON_FILENAME_BY_GROUP = {
   游戏平台: "Game.png",
   香港优先: "Hong_Kong.png",
   媒体负载均衡: "Media.png",
+  媒体轮询: "Media.png",
   国外网站: "Global.png",
   国内网站: "China_Map.png",
   广告拦截: "Advertising.png",
@@ -599,6 +600,7 @@ function withQuantumultxPolicyIcon(line, name) {
 
 function renderQuantumultxPolicyGroup(group, index) {
   const healthCheck = index.defaultHealthCheck;
+  const extraChoices = (index.quantumultxPolicyChoices && index.quantumultxPolicyChoices[group.name]) || [];
   if (group.mode === "all-proxies") {
     const filter = quantumultxPolicyFilter();
     if (group.type === "url-test") {
@@ -611,7 +613,14 @@ function renderQuantumultxPolicyGroup(group, index) {
   }
 
   return withQuantumultxPolicyIcon(
-    `static=${group.name}, ${uniq(group.proxies).map(toQuantumultxPolicyName).join(", ")}`,
+    `static=${group.name}, ${uniq([...extraChoices, ...group.proxies]).map(toQuantumultxPolicyName).join(", ")}`,
+    group.name
+  );
+}
+
+function renderQuantumultxEnhancementGroup(group) {
+  return withQuantumultxPolicyIcon(
+    `${group.type}=${group.name}, server-tag-regex=${quantumultxPolicyFilter(group.match)}`,
     group.name
   );
 }
@@ -632,9 +641,10 @@ function renderQuantumultxServiceCheckGroup(group) {
   );
 }
 
-function renderQuantumultxBusinessGroup(group) {
+function renderQuantumultxBusinessGroup(index, group) {
+  const extraChoices = (index.quantumultxPolicyChoices && index.quantumultxPolicyChoices[group.name]) || [];
   return withQuantumultxPolicyIcon(
-    `static=${group.name}, ${uniq(group.proxies).map(toQuantumultxPolicyName).join(", ")}`,
+    `static=${group.name}, ${uniq([...extraChoices, ...group.proxies]).map(toQuantumultxPolicyName).join(", ")}`,
     group.name
   );
 }
@@ -678,8 +688,9 @@ function renderQuantumultxEntry(index) {
     "[policy]",
     ...index.strategyGroups.map((group) => renderQuantumultxPolicyGroup(group, index)),
     ...index.serviceCheckGroups.map((group) => renderQuantumultxServiceCheckGroup(group)),
+    ...index.quantumultxEnhancementGroups.map((group) => renderQuantumultxEnhancementGroup(group)),
     ...index.regions.map((region) => renderQuantumultxRegionGroup(region, index)),
-    ...index.businessGroups.map((group) => renderQuantumultxBusinessGroup(group)),
+    ...index.businessGroups.map((group) => renderQuantumultxBusinessGroup(index, group)),
     "",
     "[server_remote]",
     "",
