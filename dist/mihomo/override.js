@@ -2179,6 +2179,8 @@ const MODULE_INDEX = {
         "全部节点",
         "自动选择",
         "节点选择",
+        "香港优先",
+        "媒体负载均衡",
         "香港节点",
         "台湾节点",
         "日本节点",
@@ -2247,6 +2249,8 @@ const MODULE_INDEX = {
         "全部节点",
         "自动选择",
         "节点选择",
+        "香港优先",
+        "媒体负载均衡",
         "香港节点",
         "台湾节点",
         "日本节点",
@@ -2700,6 +2704,27 @@ function main(config = {}) {
     });
   }
 
+  function buildEnhancementGroups(proxyNames) {
+    return MODULE_INDEX.stashEnhancementGroups.map((group) => {
+      const matched = proxyNames.filter((name) => new RegExp(group.match, "i").test(name));
+      const generated = {
+        name: group.name,
+        type: group.type,
+        proxies: matched.length ? uniq(matched) : ["节点选择"],
+        url: defaultUrl,
+        interval: defaultInterval,
+        tolerance: defaultTolerance,
+      };
+      if (group.strategy) {
+        generated.strategy = group.strategy;
+      }
+      if (group.hidden) {
+        generated.hidden = true;
+      }
+      return generated;
+    });
+  }
+
   function buildServiceCheckGroups() {
     return MODULE_INDEX.serviceCheckGroups.map((group) => ({
       name: group.name,
@@ -2715,7 +2740,10 @@ function main(config = {}) {
     return MODULE_INDEX.businessGroups.map((group) => ({
       name: group.name,
       type: group.type,
-      proxies: uniq(group.proxies),
+      proxies: uniq([
+        ...((MODULE_INDEX.stashPolicyChoices[group.name] && MODULE_INDEX.stashPolicyChoices[group.name].choices) || []),
+        ...group.proxies,
+      ]),
     }));
   }
 
@@ -2746,6 +2774,7 @@ function main(config = {}) {
   config["proxy-groups"] = [
     ...buildStrategyGroups(proxyNames),
     ...buildServiceCheckGroups(),
+    ...buildEnhancementGroups(proxyNames),
     ...buildRegionGroups(proxyNames),
     ...buildBusinessGroups(),
   ];

@@ -330,6 +330,13 @@ function validateModuleIndexGroups() {
     ...index.regions.map((region) => region.groupName),
     ...index.businessGroups.map((group) => group.name),
   ];
+  const mihomoGroups = [
+    ...strategyGroups,
+    ...index.serviceCheckGroups.map((group) => group.name),
+    ...index.stashEnhancementGroups.map((group) => group.name),
+    ...index.regions.map((region) => region.groupName),
+    ...index.businessGroups.map((group) => group.name),
+  ];
   const stashGroups = [
     ...strategyGroups,
     ...index.serviceCheckGroups.map((group) => group.name),
@@ -346,8 +353,8 @@ function validateModuleIndexGroups() {
   ];
   const expectations = {
     "client.stash.entry": stashGroups,
-    "client.mihomo.entry": baseGroups,
-    "client.clash-party.entry": baseGroups,
+    "client.mihomo.entry": mihomoGroups,
+    "client.clash-party.entry": mihomoGroups,
     "client.surge.entry": baseGroups,
     "client.quantumultx.entry": quantumultxGroups,
   };
