@@ -139,6 +139,7 @@ proxy-groups: #!replace
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png"
     proxies:
+      - "DIRECT"
       - "节点选择"
       - "自动选择"
       - "全部节点"

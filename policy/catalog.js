@@ -163,7 +163,7 @@ const businessGroups = [
   {
     name: "游戏平台",
     type: "select",
-    proxies: [...defaultProxyGroupNames, ...coreRegionGroupNames],
+    proxies: ["DIRECT", ...defaultProxyGroupNames, ...coreRegionGroupNames],
   },
   {
     name: "金融网站",
