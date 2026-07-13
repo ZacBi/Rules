@@ -1188,6 +1188,13 @@ const policyGroupNames = uniq([
   ...regionGroupNames,
   ...businessGroupNames,
 ]);
+const mihomoPolicyGroupNames = uniq([
+  ...strategyGroupNames,
+  ...serviceCheckGroupNames,
+  ...stashEnhancementGroups.map((group) => group.name),
+  ...regionGroupNames,
+  ...businessGroupNames,
+]);
 const stashPolicyGroupNames = uniq([
   ...strategyGroupNames,
   ...serviceCheckGroupNames,
@@ -1229,7 +1236,7 @@ const clientModules = [
     domain: "mihomo",
     title: "Mihomo entry override",
     dependsOn: entryComposition,
-    groups: policyGroupNames,
+    groups: mihomoPolicyGroupNames,
     output: {
       path: "dist/mihomo/override.js",
       format: "mihomo-override-js",
@@ -1248,7 +1255,7 @@ const clientModules = [
     domain: "clash-party",
     title: "Clash Party remote override",
     dependsOn: entryComposition,
-    groups: policyGroupNames,
+    groups: mihomoPolicyGroupNames,
     output: {
       path: "dist/mihomo/clash-party.js",
       format: "clash-party-override-js",
