@@ -2737,14 +2737,28 @@ function main(config = {}) {
   }
 
   function buildBusinessGroups() {
-    return MODULE_INDEX.businessGroups.map((group) => ({
-      name: group.name,
-      type: group.type,
-      proxies: uniq([
-        ...((MODULE_INDEX.stashPolicyChoices[group.name] && MODULE_INDEX.stashPolicyChoices[group.name].choices) || []),
-        ...group.proxies,
-      ]),
-    }));
+    return MODULE_INDEX.businessGroups.map((group) => {
+      const choicesConfig = MODULE_INDEX.stashPolicyChoices[group.name];
+      const choices = Array.isArray(choicesConfig)
+        ? choicesConfig
+        : ((choicesConfig && choicesConfig.choices) || []);
+      const proxies = [...group.proxies];
+      if (choices.length && choicesConfig && choicesConfig.after) {
+        const afterIndex = proxies.indexOf(choicesConfig.after);
+        if (afterIndex >= 0) {
+          proxies.splice(afterIndex + 1, 0, ...choices);
+        } else {
+          proxies.unshift(...choices);
+        }
+      } else {
+        proxies.unshift(...choices);
+      }
+      return {
+        name: group.name,
+        type: group.type,
+        proxies: uniq(proxies),
+      };
+    });
   }
 
   function buildRuleProviders() {
