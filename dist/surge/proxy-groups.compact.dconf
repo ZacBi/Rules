@@ -1,3 +1,4 @@
+[Proxy Group]
 全部节点 = select, include-all-proxies=true, policy-regex-filter='^(?!(?:全部节点|自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset)).*$', hidden=true
 自动选择 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:全部节点|自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3, hidden=true
 节点选择 = select, 自动选择, 全部节点, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 英国节点, 澳洲节点, 马来西亚节点, 阿根廷节点, DIRECT
