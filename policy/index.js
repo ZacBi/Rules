@@ -48,7 +48,7 @@ function buildArtifacts() {
       },
       {
         path: moduleIndex.entrypoints.surgeRules.outputPath,
-        content: renderSurgeRules(moduleIndex),
+        content: renderSurgeRules(moduleIndex, { includeFinal: false }),
       },
       {
         path: moduleIndex.entrypoints.quantumultx.outputPath,
