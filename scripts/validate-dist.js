@@ -191,8 +191,8 @@ function validateSurge() {
 
   const proxyGroupsFile = "dist/surge/proxy-groups.dconf";
   const proxyGroupsText = readText(proxyGroupsFile);
-  if (/^\[Proxy Group\]$/m.test(proxyGroupsText)) {
-    errors.push(`${proxyGroupsFile}: standalone include must not contain [Proxy Group]`);
+  if (!sectionNames(proxyGroupsText).includes("Proxy Group")) {
+    errors.push(`${proxyGroupsFile}: missing [Proxy Group]`);
   }
   if (!/^节点选择 = select,/m.test(proxyGroupsText) || /hidden=true/.test(proxyGroupsText)) {
     errors.push(`${proxyGroupsFile}: expected full visible proxy groups`);
@@ -200,8 +200,8 @@ function validateSurge() {
 
   const compactProxyGroupsFile = "dist/surge/proxy-groups.compact.dconf";
   const compactProxyGroupsText = readText(compactProxyGroupsFile);
-  if (/^\[Proxy Group\]$/m.test(compactProxyGroupsText)) {
-    errors.push(`${compactProxyGroupsFile}: standalone include must not contain [Proxy Group]`);
+  if (!sectionNames(compactProxyGroupsText).includes("Proxy Group")) {
+    errors.push(`${compactProxyGroupsFile}: missing [Proxy Group]`);
   }
   if (!/^节点选择 = select,/m.test(compactProxyGroupsText) || !/^香港节点 = .*hidden=true$/m.test(compactProxyGroupsText)) {
     errors.push(`${compactProxyGroupsFile}: missing compact hidden proxy groups`);
@@ -209,8 +209,8 @@ function validateSurge() {
 
   const rulesFile = "dist/surge/rules.dconf";
   const rulesText = readText(rulesFile);
-  if (/^\[Rule\]$/m.test(rulesText)) {
-    errors.push(`${rulesFile}: standalone include must not contain [Rule]`);
+  if (!sectionNames(rulesText).includes("Rule")) {
+    errors.push(`${rulesFile}: missing [Rule]`);
   }
   if (!/^RULE-SET,LAN,DIRECT$/m.test(rulesText) || !/^FINAL,漏网之鱼$/m.test(rulesText)) {
     errors.push(`${rulesFile}: missing core Surge rules`);
