@@ -176,6 +176,14 @@ const MODULE_INDEX = {
       ]
     },
     {
+      "name": "字节跳动",
+      "type": "select",
+      "proxies": [
+        "DIRECT",
+        "节点选择"
+      ]
+    },
+    {
       "name": "广告拦截",
       "type": "select",
       "proxies": [
@@ -373,6 +381,28 @@ const MODULE_INDEX = {
       },
       "paths": {
         "mihomo": "./ruleset/ChinaMax_Domain.yaml"
+      },
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge",
+        "quantumultx"
+      ]
+    },
+    {
+      "id": "bytedance",
+      "sourceName": "ByteDance",
+      "group": "字节跳动",
+      "behavior": "classical",
+      "origin": "blackmatrix7",
+      "sourceUrl": null,
+      "urls": {
+        "mihomo": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ByteDance/ByteDance.yaml",
+        "surge": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ByteDance/ByteDance.list",
+        "quantumultx": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/ByteDance/ByteDance.list"
+      },
+      "paths": {
+        "mihomo": "./ruleset/ByteDance.yaml"
       },
       "supportedClients": [
         "stash",
@@ -2045,6 +2075,36 @@ const MODULE_INDEX = {
       "notes": []
     },
     {
+      "id": "scenario.bytedance",
+      "layer": "scenario",
+      "domain": "bytedance",
+      "title": "ByteDance employee direct routing",
+      "groups": [
+        "字节跳动"
+      ],
+      "ruleSets": [
+        "bytedance"
+      ],
+      "dependsOn": [
+        "base.core"
+      ],
+      "output": null,
+      "supportedClients": [
+        "stash",
+        "mihomo",
+        "surge",
+        "quantumultx"
+      ],
+      "capabilities": {
+        "routing": true,
+        "rewrite": false,
+        "script": false,
+        "mitm": false
+      },
+      "conflicts": [],
+      "notes": []
+    },
+    {
       "id": "scenario.ads",
       "layer": "scenario",
       "domain": "ads",
@@ -2121,6 +2181,7 @@ const MODULE_INDEX = {
         "金融网站",
         "国外网站",
         "国内网站",
+        "字节跳动",
         "广告拦截",
         "漏网之鱼",
         "香港节点",
@@ -2146,6 +2207,7 @@ const MODULE_INDEX = {
         "scenario.finance",
         "scenario.web",
         "scenario.domestic",
+        "scenario.bytedance",
         "scenario.ads",
         "scenario.fallback"
       ],
@@ -2198,6 +2260,7 @@ const MODULE_INDEX = {
         "金融网站",
         "国外网站",
         "国内网站",
+        "字节跳动",
         "广告拦截",
         "漏网之鱼"
       ],
@@ -2214,6 +2277,7 @@ const MODULE_INDEX = {
         "scenario.finance",
         "scenario.web",
         "scenario.domestic",
+        "scenario.bytedance",
         "scenario.ads",
         "scenario.fallback"
       ],
@@ -2266,6 +2330,7 @@ const MODULE_INDEX = {
         "金融网站",
         "国外网站",
         "国内网站",
+        "字节跳动",
         "广告拦截",
         "漏网之鱼"
       ],
@@ -2282,6 +2347,7 @@ const MODULE_INDEX = {
         "scenario.finance",
         "scenario.web",
         "scenario.domestic",
+        "scenario.bytedance",
         "scenario.ads",
         "scenario.fallback"
       ],
@@ -2331,6 +2397,7 @@ const MODULE_INDEX = {
         "金融网站",
         "国外网站",
         "国内网站",
+        "字节跳动",
         "广告拦截",
         "漏网之鱼"
       ],
@@ -2347,6 +2414,7 @@ const MODULE_INDEX = {
         "scenario.finance",
         "scenario.web",
         "scenario.domestic",
+        "scenario.bytedance",
         "scenario.ads",
         "scenario.fallback"
       ],
@@ -2401,6 +2469,7 @@ const MODULE_INDEX = {
         "金融网站",
         "国外网站",
         "国内网站",
+        "字节跳动",
         "广告拦截",
         "漏网之鱼"
       ],
@@ -2417,6 +2486,7 @@ const MODULE_INDEX = {
         "scenario.finance",
         "scenario.web",
         "scenario.domestic",
+        "scenario.bytedance",
         "scenario.ads",
         "scenario.fallback"
       ],
@@ -2486,6 +2556,7 @@ const MODULE_INDEX = {
         "scenario.finance",
         "scenario.web",
         "scenario.domestic",
+        "scenario.bytedance",
         "scenario.ads",
         "scenario.fallback"
       ],
@@ -2506,6 +2577,7 @@ const MODULE_INDEX = {
         "scenario.finance",
         "scenario.web",
         "scenario.domestic",
+        "scenario.bytedance",
         "scenario.ads",
         "scenario.fallback"
       ],
@@ -2526,6 +2598,7 @@ const MODULE_INDEX = {
         "scenario.finance",
         "scenario.web",
         "scenario.domestic",
+        "scenario.bytedance",
         "scenario.ads",
         "scenario.fallback"
       ],
@@ -2546,6 +2619,7 @@ const MODULE_INDEX = {
         "scenario.finance",
         "scenario.web",
         "scenario.domestic",
+        "scenario.bytedance",
         "scenario.ads",
         "scenario.fallback"
       ],
@@ -2566,6 +2640,7 @@ const MODULE_INDEX = {
         "scenario.finance",
         "scenario.web",
         "scenario.domestic",
+        "scenario.bytedance",
         "scenario.ads",
         "scenario.fallback"
       ],
@@ -2586,6 +2661,7 @@ const MODULE_INDEX = {
         "scenario.finance",
         "scenario.web",
         "scenario.domestic",
+        "scenario.bytedance",
         "scenario.ads",
         "scenario.fallback"
       ],
@@ -2606,6 +2682,7 @@ const MODULE_INDEX = {
         "scenario.finance",
         "scenario.web",
         "scenario.domestic",
+        "scenario.bytedance",
         "scenario.ads",
         "scenario.fallback"
       ],
@@ -2626,6 +2703,7 @@ const MODULE_INDEX = {
         "scenario.finance",
         "scenario.web",
         "scenario.domestic",
+        "scenario.bytedance",
         "scenario.ads",
         "scenario.fallback"
       ],

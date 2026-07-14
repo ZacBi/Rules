@@ -21,5 +21,6 @@ Claude = select, 节点选择, 自动选择, 全部节点, 香港节点, 台湾�
 金融网站 = select, 节点选择, 自动选择, 全部节点, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点
 国外网站 = select, 节点选择, 自动选择, 全部节点, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点
 国内网站 = select, DIRECT, 节点选择, hidden=true
+字节跳动 = select, DIRECT, 节点选择
 广告拦截 = select, REJECT, DIRECT, hidden=true
 漏网之鱼 = select, 节点选择, 自动选择, DIRECT

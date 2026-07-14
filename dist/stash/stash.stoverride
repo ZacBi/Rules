@@ -177,6 +177,11 @@ proxy-groups: #!replace
     proxies:
       - "DIRECT"
       - "节点选择"
+  - name: "字节跳动"
+    type: select
+    proxies:
+      - "DIRECT"
+      - "节点选择"
   - name: "广告拦截"
     type: select
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png"
@@ -296,6 +301,12 @@ rule-providers: #!replace
     behavior: domain
     url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax_Domain.yaml"
     path: "./ruleset/ChinaMax_Domain.yaml"
+    interval: 86400
+  bytedance:
+    type: http
+    behavior: classical
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ByteDance/ByteDance.yaml"
+    path: "./ruleset/ByteDance.yaml"
     interval: 86400
   chinamedia:
     type: http
@@ -523,6 +534,7 @@ rules: #!replace
   - "RULE-SET,lan,国内网站"
   - "RULE-SET,bilibili,国内网站"
   - "RULE-SET,china,国内网站"
+  - "RULE-SET,bytedance,字节跳动"
   - "RULE-SET,chinamedia,国内网站"
   - "RULE-SET,openai,AI平台"
   - "RULE-SET,claude,Claude"
