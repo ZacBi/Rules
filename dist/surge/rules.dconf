@@ -74,3 +74,4 @@ RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/r
 RULE-SET,https://raw.githubusercontent.com/ZacBi/Rules/master/rules/longbridge.list,金融网站,extended-matching
 RULE-SET,https://raw.githubusercontent.com/ZacBi/Rules/master/rules/ibkr.list,金融网站,extended-matching
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/TigerFintech/TigerFintech.list,金融网站,extended-matching
+FINAL,漏网之鱼

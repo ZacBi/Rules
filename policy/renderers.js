@@ -593,20 +593,15 @@ function renderSurgeProxyGroups(index, { compact = false } = {}) {
   ].join("\n");
 }
 
-function renderSurgeRules(index, { includeFinal = true } = {}) {
-  const lines = [
+function renderSurgeRules(index) {
+  return [
     "[Rule]",
     "RULE-SET,LAN,DIRECT",
     ...index.inlineRules,
     ...index.routingRules.map((route) => renderRouteRule(route.rule, route.group)),
     ...index.ruleSets.map((ruleSet) => `RULE-SET,${ruleSet.urls.surge},${ruleSet.group},extended-matching`),
-  ];
-
-  if (includeFinal) {
-    lines.push("FINAL,漏网之鱼");
-  }
-
-  return lines.join("\n");
+    "FINAL,漏网之鱼",
+  ].join("\n");
 }
 
 function renderSurgeEntry(index) {
