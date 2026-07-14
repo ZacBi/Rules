@@ -181,6 +181,11 @@ const businessGroups = [
     proxies: ["DIRECT", "节点选择"],
   },
   {
+    name: "字节跳动",
+    type: "select",
+    proxies: ["DIRECT", "节点选择"],
+  },
+  {
     name: "广告拦截",
     type: "select",
     proxies: ["REJECT", "DIRECT"],
@@ -283,6 +288,12 @@ const rawRuleSets = [
     mihomoFile: "ChinaMax_Domain",
     group: "国内网站",
     behavior: "domain",
+  },
+  {
+    key: "bytedance",
+    sourceName: "ByteDance",
+    group: "字节跳动",
+    behavior: "classical",
   },
   {
     key: "chinamedia",
@@ -1149,6 +1160,18 @@ const scenarioModules = [
     title: "Domestic routing",
     groups: ["国内网站"],
     ruleSets: ["bilibili", "chinamedia"],
+    dependsOn: ["base.core"],
+    capabilities: {
+      routing: true,
+    },
+  }),
+  moduleTemplate({
+    id: "scenario.bytedance",
+    layer: "scenario",
+    domain: "bytedance",
+    title: "ByteDance employee direct routing",
+    groups: ["字节跳动"],
+    ruleSets: ["bytedance"],
     dependsOn: ["base.core"],
     capabilities: {
       routing: true,
