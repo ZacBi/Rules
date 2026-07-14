@@ -532,7 +532,6 @@ function renderSurgeProxyGroups(index, { compact = false } = {}) {
   const allPolicyRegex = surgePolicyFilter();
   const hiddenGroups = compact ? compactSurgeHiddenGroups : new Set();
   return [
-    "[Proxy Group]",
     ...index.strategyGroups.map((group) =>
       hideSurgePolicyGroup(renderSurgeStrategyGroup(group, healthCheck, allPolicyRegex), hiddenGroups.has(group.name))
     ),
@@ -556,7 +555,6 @@ function renderSurgeProxyGroups(index, { compact = false } = {}) {
 
 function renderSurgeRules(index) {
   return [
-    "[Rule]",
     "RULE-SET,LAN,DIRECT",
     ...index.inlineRules,
     ...index.routingRules.map((route) => renderRouteRule(route.rule, route.group)),
@@ -597,8 +595,10 @@ function renderSurgeEntry(index) {
     "ipv6 = false",
     "enhanced-mode-by-rule = true",
     "",
+    "[Proxy Group]",
     renderSurgeProxyGroups(index),
     "",
+    "[Rule]",
     renderSurgeRules(index),
   ];
 
