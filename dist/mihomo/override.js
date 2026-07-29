@@ -2751,7 +2751,8 @@ function main(config = {}) {
         name: region.groupName,
         type: "url-test",
         hidden: true,
-        proxies: matched.length ? uniq(matched) : ["节点选择"],
+        // 空地区组回退到内置出口，避免与节点选择中的地区引用形成环。
+        proxies: matched.length ? uniq(matched) : ["DIRECT"],
         url: defaultUrl,
         interval: defaultInterval,
         tolerance: defaultTolerance,
