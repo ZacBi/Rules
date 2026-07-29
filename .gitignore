@@ -54,5 +54,4 @@ yarn-error.log*
 .cursor/
 .qoder/
 
-
-tests/
+log/

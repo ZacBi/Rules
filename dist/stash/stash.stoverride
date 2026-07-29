@@ -180,6 +180,7 @@ proxy-groups: #!replace
       - "节点选择"
   - name: "字节跳动"
     type: select
+    icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png"
     proxies:
       - "DIRECT"
       - "节点选择"
