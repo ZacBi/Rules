@@ -1,5 +1,9 @@
 "use strict";
 
+function latinToken(value) {
+  return `(?:^|[^A-Za-z])${value}(?:$|[^A-Za-z])`;
+}
+
 const defaultHealthCheck = {
   url: "https://www.gstatic.com/generate_204",
   interval: 600,
@@ -12,64 +16,60 @@ const regions = [
     key: "hong_kong",
     name: "香港",
     groupName: "香港节点",
-    match: "香港|HK|Hong\\s*Kong",
+    match: `香港|${latinToken("HK")}|Hong\\s*Kong`,
   },
   {
     key: "taiwan",
     name: "台湾",
     groupName: "台湾节点",
-    match: "台湾|TW|Taiwan|Taipei",
+    match: `台湾|${latinToken("TW")}|Taiwan|Taipei`,
   },
   {
     key: "japan",
     name: "日本",
     groupName: "日本节点",
-    match: "日本|JP|Japan|Tokyo|Osaka",
+    match: `日本|${latinToken("JP")}|Japan|Tokyo|Osaka`,
   },
   {
     key: "singapore",
     name: "新加坡",
     groupName: "新加坡节点",
-    match: "新加坡|狮城|SG|Singapore",
+    match: `新加坡|狮城|${latinToken("SG")}|Singapore`,
   },
   {
     key: "united_states",
     name: "美国",
     groupName: "美国节点",
-    match: "美国|US|USA|United\\s*States|America|Los\\s*Angeles|San\\s*Jose|Seattle",
+    match: `美国|${latinToken("US")}|${latinToken("USA")}|United\\s*States|North\\s*America|Los\\s*Angeles|San\\s*Jose|Seattle`,
   },
   {
     key: "united_kingdom",
     name: "英国",
     groupName: "英国节点",
-    match: "英国|UK|United\\s*Kingdom|Britain|England|London|Manchester",
+    match: `英国|${latinToken("UK")}|United\\s*Kingdom|Britain|England|London|Manchester`,
   },
   {
     key: "australia",
     name: "澳洲",
     groupName: "澳洲节点",
-    match: "澳洲|澳大利亚|AU|Australia|Sydney|Melbourne|Perth",
+    match: `澳洲|澳大利亚|${latinToken("AU")}|Australia|Sydney|Melbourne|Perth`,
   },
   {
     key: "malaysia",
     name: "马来西亚",
     groupName: "马来西亚节点",
-    match: "马来西亚|MY|Malaysia|Kuala\\s*Lumpur",
+    match: `马来西亚|${latinToken("MY")}|Malaysia|Kuala\\s*Lumpur`,
   },
   {
     key: "argentina",
     name: "阿根廷",
     groupName: "阿根廷节点",
-    match: "阿根廷|AR|Argentina|Buenos\\s*Aires",
+    match: `阿根廷|${latinToken("AR")}|Argentina|Buenos\\s*Aires`,
   },
 ];
 
-const RULES_GITHUB_REPO = process.env.RULES_GITHUB_REPO || null;
-const RULES_RAW_BASE = RULES_GITHUB_REPO
-  ? `https://raw.githubusercontent.com/${RULES_GITHUB_REPO}/master`
-  : null;
-const PROJECT_RAW_BASE =
-  RULES_RAW_BASE || "https://raw.githubusercontent.com/ZacBi/Rules/master";
+const PROJECT_RAW_BASE = "https://raw.githubusercontent.com/ZacBi/Rules/master";
+const BLACKMATRIX_RUNTIME_REVISION = "2ba8dfe636e64b41d4857a621fec35868ab50e08";
 
 function pickRegionGroupNames(keys) {
   const wanted = new Set(keys);
@@ -209,32 +209,10 @@ const stashEnhancementGroups = [
     type: "load-balance",
     hidden: true,
     strategy: "consistent-hashing",
-    match: [
-      "香港",
-      "HK",
-      "Hong\\s*Kong",
-      "台湾",
-      "TW",
-      "Taiwan",
-      "Taipei",
-      "日本",
-      "JP",
-      "Japan",
-      "Tokyo",
-      "Osaka",
-      "新加坡",
-      "狮城",
-      "SG",
-      "Singapore",
-      "美国",
-      "US",
-      "USA",
-      "United\\s*States",
-      "America",
-      "Los\\s*Angeles",
-      "San\\s*Jose",
-      "Seattle",
-    ].join("|"),
+    match: regions
+      .filter((region) => mediaRegionGroupNames.includes(region.groupName))
+      .map((region) => region.match)
+      .join("|"),
   },
 ];
 
@@ -487,20 +465,6 @@ const rawRuleSets = [
   },
 ];
 
-if (RULES_RAW_BASE) {
-  rawRuleSets.splice(rawRuleSets.findIndex((ruleSet) => ruleSet.key === "youtube"), 0, {
-    key: "cursor",
-    sourceName: "Cursor",
-    group: "AI平台",
-    behavior: "classical",
-    mihomoUrl: `${RULES_RAW_BASE}/mihomo/ruleset/Cursor.yaml`,
-    mihomoPath: "./ruleset/Cursor.yaml",
-    surgeUrl: `${RULES_RAW_BASE}/mihomo/ruleset/Cursor.list`,
-    quantumultxUrl: `${RULES_RAW_BASE}/mihomo/ruleset/Cursor.list`,
-    surgeLocalRelativeToSurgeDir: "../mihomo/ruleset/Cursor.list",
-  });
-}
-
 function uniq(items) {
   return [...new Set((items || []).filter(Boolean))];
 }
@@ -523,19 +487,9 @@ function withDerivedUrls(entry) {
   };
 }
 
-function surgeRuleSetLocation(ruleSet) {
-  if (
-    ruleSet.surgeLocalRelativeToSurgeDir &&
-    !RULES_GITHUB_REPO
-  ) {
-    return ruleSet.surgeLocalRelativeToSurgeDir;
-  }
-  return ruleSet.surgeUrl;
-}
-
 const supportedClients = ["stash", "mihomo", "surge", "quantumultx"];
 
-const runtimeModules = [
+const rawRuntimeModules = [
   {
     id: "runtime.ai.assistant",
     kind: "script",
@@ -610,9 +564,9 @@ const runtimeModules = [
     kind: "rewrite",
     domain: "utility",
     title: "app-upgrade-check-block",
-    emitByDefault: true,
+    emitByDefault: false,
     sourceMode: "remote-derived",
-    sourceUrl: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rewrite/Stash/Upgrade/Upgrade.stoverride",
+    sourceUrl: `https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/${BLACKMATRIX_RUNTIME_REVISION}/rewrite/Stash/Upgrade/Upgrade.stoverride`,
     supportedClients: ["stash"],
     support: {
       supportLevel: {
@@ -657,10 +611,10 @@ const runtimeModules = [
     ui: {
       title: "Block common app upgrade checks",
       surface: "rewrite",
-      defaultState: "enabled",
+      defaultState: "opt-in",
       riskLevel: "medium",
       requiresMitm: true,
-      defaultEnabled: true,
+      defaultEnabled: false,
       iosPerformanceCost: "low",
       performanceNote: "Small Stash rewrite subset derived from upstream; HTTPS matches require MITM hosts.",
     },
@@ -670,7 +624,7 @@ const runtimeModules = [
     kind: "rewrite",
     domain: "google",
     title: "google-no-country-redirect",
-    emitByDefault: true,
+    emitByDefault: false,
     sourceMode: "local",
     sourceUrl: "https://stash.wiki/http-engine/rewrite",
     supportedClients: ["stash"],
@@ -698,10 +652,10 @@ const runtimeModules = [
     ui: {
       title: "Google no country redirect",
       surface: "rewrite",
-      defaultState: "enabled",
+      defaultState: "opt-in",
       riskLevel: "medium",
       requiresMitm: true,
-      defaultEnabled: true,
+      defaultEnabled: false,
       iosPerformanceCost: "low",
       performanceNote: "Narrow redirect for Google Hong Kong URLs; HTTPS matching requires MITM for www.google.com.hk.",
     },
@@ -711,9 +665,9 @@ const runtimeModules = [
     kind: "script",
     domain: "apple",
     title: "testflight-download-fix",
-    emitByDefault: true,
+    emitByDefault: false,
     sourceMode: "remote",
-    sourceUrl: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/external/Stash/TestFlight/TestFlight.stoverride",
+    sourceUrl: `https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/${BLACKMATRIX_RUNTIME_REVISION}/external/Stash/TestFlight/TestFlight.stoverride`,
     supportedClients: ["stash"],
     support: {
       supportLevel: {
@@ -739,17 +693,17 @@ const runtimeModules = [
         argument: "",
         binaryMode: false,
         maxSize: 1048576,
-        url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/source/javascript/043922e05c79445b6da818d0864c1b7d.js",
+        url: `https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/${BLACKMATRIX_RUNTIME_REVISION}/source/javascript/043922e05c79445b6da818d0864c1b7d.js`,
       },
       hostnames: ["testflight.apple.com"],
     },
     ui: {
       title: "TestFlight download fix",
       surface: "script",
-      defaultState: "enabled",
+      defaultState: "opt-in",
       riskLevel: "medium",
       requiresMitm: true,
-      defaultEnabled: true,
+      defaultEnabled: false,
       iosPerformanceCost: "medium",
       performanceNote: "Requires request body and MITM only for TestFlight install requests.",
     },
@@ -864,6 +818,33 @@ const runtimeModules = [
   },
 ];
 
+const runtimeModules = rawRuntimeModules.map((module) => {
+  const supportLevel = Object.fromEntries(
+    supportedClients.map((client) => [
+      client,
+      module.support.supportLevel[client] ?? (client === "quantumultx" ? "metadata-only" : "unsupported"),
+    ])
+  );
+  const notes = Object.fromEntries(
+    supportedClients.map((client) => [
+      client,
+      module.support.notes[client]
+        ?? (client === "quantumultx"
+          ? "Metadata only; not emitted by the default Quantumult X profile."
+          : "Unsupported by this runtime module."),
+    ])
+  );
+
+  return {
+    ...module,
+    supportedClients: supportedClients.filter((client) => supportLevel[client] !== "unsupported"),
+    support: {
+      supportLevel,
+      notes,
+    },
+  };
+});
+
 const runtimeSupportMatrix = {
   stash: {
     rewrite: "full",
@@ -893,7 +874,7 @@ function withRuleSetMetadata(entry) {
     sourceName: entry.sourceName,
     group: entry.group,
     behavior: entry.behavior,
-    origin: entry.origin ?? (entry.key === "cursor" ? "project" : "blackmatrix7"),
+    origin: entry.origin ?? "blackmatrix7",
     sourceUrl: entry.sourceUrl ?? null,
     urls: {
       mihomo: entry.mihomoUrl,
@@ -1007,12 +988,6 @@ const aiRoutingRules = [
   "DOMAIN,ios.chat.openai.com",
   "DOMAIN,android.chat.openai.com",
   "DOMAIN-SUFFIX,auth.openai.com",
-  "DOMAIN-SUFFIX,challenges.cloudflare.com",
-  "DOMAIN-SUFFIX,workos.com",
-  "DOMAIN-SUFFIX,statsigapi.net",
-  "DOMAIN-SUFFIX,featuregates.org",
-  "DOMAIN-SUFFIX,appattest.apple.com",
-  "DOMAIN-SUFFIX,devicecheck.apple.com",
 ].map((rule) => ({
   rule,
   group: "AI平台",
@@ -1051,7 +1026,7 @@ const scenarioModules = [
     domain: "ai",
     title: "AI platforms",
     groups: ["AI平台", "Claude"],
-    ruleSets: uniq(["openai", "claude", "anthropic", "gemini", "copilot", RULES_GITHUB_REPO ? "cursor" : null]),
+    ruleSets: ["openai", "claude", "anthropic", "gemini", "copilot"],
     dependsOn: ["base.core"],
     capabilities: {
       routing: true,
@@ -1458,5 +1433,4 @@ module.exports = {
   quantumultxEnhancementGroups,
   quantumultxPolicyChoices,
   rulesets: normalizedRuleSets,
-  surgeRuleSetLocation,
 };

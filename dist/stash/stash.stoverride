@@ -1,16 +1,10 @@
 # Generated from the unified strategy model
 name: Rules 策略分流
-desc: Stash iOS 轻量分组、规则集、常见 HTTP 改写与脚本入口。
+desc: Stash iOS 轻量策略组与规则集入口。
 homepage: https://github.com/ZacBi/Rules
 author: Rules contributors
 category: Policy
 icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Policy.png"
-mixed-port: 7890
-allow-lan: false
-mode: rule
-log-level: info
-ipv6: false
-
 proxy-groups: #!replace
   - name: "全部节点"
     type: select
@@ -46,7 +40,7 @@ proxy-groups: #!replace
     type: fallback
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png"
     include-all: true
-    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(香港|HK|Hong\\s*Kong)).*$"
+    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(香港|(?:^|[^A-Za-z])HK(?:$|[^A-Za-z])|Hong\\s*Kong)).*$"
     url: "https://www.gstatic.com/generate_204"
     interval: 600
     tolerance: 100
@@ -56,7 +50,7 @@ proxy-groups: #!replace
     type: load-balance
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Media.png"
     include-all: true
-    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(香港|HK|Hong\\s*Kong|台湾|TW|Taiwan|Taipei|日本|JP|Japan|Tokyo|Osaka|新加坡|狮城|SG|Singapore|美国|US|USA|United\\s*States|America|Los\\s*Angeles|San\\s*Jose|Seattle)).*$"
+    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(香港|(?:^|[^A-Za-z])HK(?:$|[^A-Za-z])|Hong\\s*Kong|台湾|(?:^|[^A-Za-z])TW(?:$|[^A-Za-z])|Taiwan|Taipei|日本|(?:^|[^A-Za-z])JP(?:$|[^A-Za-z])|Japan|Tokyo|Osaka|新加坡|狮城|(?:^|[^A-Za-z])SG(?:$|[^A-Za-z])|Singapore|美国|(?:^|[^A-Za-z])US(?:$|[^A-Za-z])|(?:^|[^A-Za-z])USA(?:$|[^A-Za-z])|United\\s*States|North\\s*America|Los\\s*Angeles|San\\s*Jose|Seattle)).*$"
     url: "https://www.gstatic.com/generate_204"
     interval: 600
     tolerance: 100
@@ -201,7 +195,7 @@ proxy-groups: #!replace
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png"
     include-all: true
-    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(香港|HK|Hong\\s*Kong)).*$"
+    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(香港|(?:^|[^A-Za-z])HK(?:$|[^A-Za-z])|Hong\\s*Kong)).*$"
     url: "https://www.gstatic.com/generate_204"
     interval: 600
     tolerance: 100
@@ -210,7 +204,7 @@ proxy-groups: #!replace
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png"
     include-all: true
-    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(台湾|TW|Taiwan|Taipei)).*$"
+    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(台湾|(?:^|[^A-Za-z])TW(?:$|[^A-Za-z])|Taiwan|Taipei)).*$"
     url: "https://www.gstatic.com/generate_204"
     interval: 600
     tolerance: 100
@@ -219,7 +213,7 @@ proxy-groups: #!replace
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png"
     include-all: true
-    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(日本|JP|Japan|Tokyo|Osaka)).*$"
+    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(日本|(?:^|[^A-Za-z])JP(?:$|[^A-Za-z])|Japan|Tokyo|Osaka)).*$"
     url: "https://www.gstatic.com/generate_204"
     interval: 600
     tolerance: 100
@@ -228,7 +222,7 @@ proxy-groups: #!replace
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png"
     include-all: true
-    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(新加坡|狮城|SG|Singapore)).*$"
+    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(新加坡|狮城|(?:^|[^A-Za-z])SG(?:$|[^A-Za-z])|Singapore)).*$"
     url: "https://www.gstatic.com/generate_204"
     interval: 600
     tolerance: 100
@@ -237,7 +231,7 @@ proxy-groups: #!replace
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States_Map.png"
     include-all: true
-    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(美国|US|USA|United\\s*States|America|Los\\s*Angeles|San\\s*Jose|Seattle)).*$"
+    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(美国|(?:^|[^A-Za-z])US(?:$|[^A-Za-z])|(?:^|[^A-Za-z])USA(?:$|[^A-Za-z])|United\\s*States|North\\s*America|Los\\s*Angeles|San\\s*Jose|Seattle)).*$"
     url: "https://www.gstatic.com/generate_204"
     interval: 600
     tolerance: 100
@@ -246,7 +240,7 @@ proxy-groups: #!replace
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_Kingdom.png"
     include-all: true
-    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(英国|UK|United\\s*Kingdom|Britain|England|London|Manchester)).*$"
+    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(英国|(?:^|[^A-Za-z])UK(?:$|[^A-Za-z])|United\\s*Kingdom|Britain|England|London|Manchester)).*$"
     url: "https://www.gstatic.com/generate_204"
     interval: 600
     tolerance: 100
@@ -255,7 +249,7 @@ proxy-groups: #!replace
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Australia.png"
     include-all: true
-    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(澳洲|澳大利亚|AU|Australia|Sydney|Melbourne|Perth)).*$"
+    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(澳洲|澳大利亚|(?:^|[^A-Za-z])AU(?:$|[^A-Za-z])|Australia|Sydney|Melbourne|Perth)).*$"
     url: "https://www.gstatic.com/generate_204"
     interval: 600
     tolerance: 100
@@ -264,7 +258,7 @@ proxy-groups: #!replace
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Malaysia.png"
     include-all: true
-    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(马来西亚|MY|Malaysia|Kuala\\s*Lumpur)).*$"
+    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(马来西亚|(?:^|[^A-Za-z])MY(?:$|[^A-Za-z])|Malaysia|Kuala\\s*Lumpur)).*$"
     url: "https://www.gstatic.com/generate_204"
     interval: 600
     tolerance: 100
@@ -273,7 +267,7 @@ proxy-groups: #!replace
     type: url-test
     icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Argentina.png"
     include-all: true
-    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(阿根廷|AR|Argentina|Buenos\\s*Aires)).*$"
+    filter: "(?i)^(?!.*(剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(阿根廷|(?:^|[^A-Za-z])AR(?:$|[^A-Za-z])|Argentina|Buenos\\s*Aires)).*$"
     url: "https://www.gstatic.com/generate_204"
     interval: 600
     tolerance: 100
@@ -526,12 +520,6 @@ rules: #!replace
   - "DOMAIN,ios.chat.openai.com,AI平台"
   - "DOMAIN,android.chat.openai.com,AI平台"
   - "DOMAIN-SUFFIX,auth.openai.com,AI平台"
-  - "DOMAIN-SUFFIX,challenges.cloudflare.com,AI平台"
-  - "DOMAIN-SUFFIX,workos.com,AI平台"
-  - "DOMAIN-SUFFIX,statsigapi.net,AI平台"
-  - "DOMAIN-SUFFIX,featuregates.org,AI平台"
-  - "DOMAIN-SUFFIX,appattest.apple.com,AI平台"
-  - "DOMAIN-SUFFIX,devicecheck.apple.com,AI平台"
   - "RULE-SET,advertising,广告拦截"
   - "RULE-SET,lan,国内网站"
   - "RULE-SET,bilibili,国内网站"
@@ -568,47 +556,3 @@ rules: #!replace
   - "RULE-SET,ibkr,金融网站"
   - "RULE-SET,tigerfintech,金融网站"
   - "MATCH,漏网之鱼"
-
-http:
-  url-rewrite:
-    # app-upgrade-check-block
-    - "^https?:\\/\\/api\\.ishansong\\.com\\/app\\/check\\/v\\d+\\/check - reject"
-    - "^https?:\\/\\/api\\.m\\.jd\\.com\\/openUpgrade - reject"
-    - "^https?:\\/\\/apimobile\\.meituan\\.com\\/appupdate\\/mach\\/checkUpdate? - reject"
-    - "^https?:\\/\\/apprn\\.pizzahut\\.com\\.cn\\/updateCheck\\? - reject"
-    - "^https?:\\/\\/capis(-?\\w*)?\\.didapinche\\.com\\/publish\\/api\\/upgrade - reject"
-    - "^https?:\\/\\/ccsp-egmas\\.sf-express\\.com\\/cx-app-base\\/base\\/app\\/appVersion\\/detectionUpgrade - reject"
-    - "^https?:\\/\\/fmapp\\.chinafamilymart\\.com\\.cn\\/api\\/app\\/biz\\/base\\/appversion\\/latest - reject"
-    - "^https?:\\/\\/m\\.client\\.10010\\.com\\/mobileService\\/(activity|customer)\\/(accountListData|get_client_adv|get_startadv) - reject"
-    - "^https?:\\/\\/sso\\.lxjapp\\.com\\/\\/chims\\/servlet\\/csGetLatestSoftwareVersionServlet - reject"
-    - "^https?:\\/\\/www\\.meituan\\.com\\/api\\/v\\d\\/appstatus\\? - reject"
-    # google-no-country-redirect
-    - "^https?:\\/\\/www\\.google\\.com\\.hk\\/?$ https://www.google.com/ncr 302"
-    - "^https?:\\/\\/www\\.google\\.com\\.hk\\/(.*) https://www.google.com/$1 302"
-  script:
-    - match: "^https?:\\/\\/testflight\\.apple\\.com\\/v\\d\\/accounts\\/.+?\\/install$"
-      name: "testflight-download-fix"
-      type: request
-      require-body: true
-      timeout: 30
-      argument: ""
-      binary-mode: false
-      max-size: 1048576
-  mitm:
-    - "api.ishansong.com"
-    - "api.m.jd.com"
-    - "apimobile.meituan.com"
-    - "apprn.pizzahut.com.cn"
-    - "capis*.didapinche.com"
-    - "ccsp-egmas.sf-express.com"
-    - "fmapp.chinafamilymart.com.cn"
-    - "m.client.10010.com"
-    - "sso.lxjapp.com"
-    - "www.meituan.com"
-    - "www.google.com.hk"
-    - "testflight.apple.com"
-
-script-providers:
-  testflight-download-fix:
-    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/source/javascript/043922e05c79445b6da818d0864c1b7d.js"
-    interval: 86400
