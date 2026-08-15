@@ -91,6 +91,7 @@ function validateQuantumultx() {
     国外媒体: "ForeignMedia.png",
     AI平台: "ChatGPT.png",
     国内网站: "China_Map.png",
+    字节跳动: "TikTok.png",
     漏网之鱼: "Rocket.png",
   };
   for (const [group, iconFile] of Object.entries(qxIconFiles)) {
@@ -128,6 +129,9 @@ function validateQuantumultx() {
     }
     if (/^(DOMAIN|DOMAIN-SUFFIX|IP-CIDR|IP-CIDR6|FINAL),/.test(line)) {
       errors.push(`${file}:${lineNumber}: filter type should be lower-case`);
+    }
+    if (/^(?:domain|domain-suffix),/.test(line)) {
+      errors.push(`${file}:${lineNumber}: Clash domain filter type must be converted to Quantumult X host syntax`);
     }
   });
 

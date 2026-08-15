@@ -50,3 +50,5 @@ yarn-error.log*
 .agents/
 .cursor/
 .qoder/
+
+log/

@@ -21,18 +21,19 @@
 澳洲节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:全部节点|自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:澳洲|澳大利亚|(?:^|[^A-Za-z])AU(?:$|[^A-Za-z])|Australia|Sydney|Melbourne|Perth)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
 马来西亚节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:全部节点|自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:马来西亚|(?:^|[^A-Za-z])MY(?:$|[^A-Za-z])|Malaysia|Kuala\s*Lumpur)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
 阿根廷节点 = url-test, include-all-proxies=true, policy-regex-filter='^(?!(?:全部节点|自动选择|节点选择|DIRECT|REJECT)$)(?!.*(?:剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset))(?=.*(?:阿根廷|(?:^|[^A-Za-z])AR(?:$|[^A-Za-z])|Argentina|Buenos\s*Aires)).*$', url=https://www.gstatic.com/generate_204, interval=600, tolerance=100, timeout=3
-国外媒体 = select, 节点选择, 自动选择, 全部节点, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点
-AI平台 = select, 节点选择, 自动选择, 全部节点, 香港节点, 日本节点, 新加坡节点, 美国节点
+国外媒体 = select, 节点选择, 自动选择, 全部节点, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, icon-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ForeignMedia.png
+AI平台 = select, 节点选择, 自动选择, 全部节点, 香港节点, 日本节点, 新加坡节点, 美国节点, icon-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ChatGPT.png
 Claude = select, 节点选择, 自动选择, 全部节点, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 英国节点, 澳洲节点, 马来西亚节点, 阿根廷节点
-即时通讯 = select, 节点选择, 自动选择, 全部节点, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点
-微软服务 = select, DIRECT, 节点选择, 自动选择, 全部节点, 香港节点, 日本节点, 新加坡节点, 美国节点
-苹果服务 = select, DIRECT, 节点选择, 自动选择, 全部节点
-游戏平台 = select, DIRECT, 节点选择, 自动选择, 全部节点, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点
+即时通讯 = select, 节点选择, 自动选择, 全部节点, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, icon-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png
+微软服务 = select, DIRECT, 节点选择, 自动选择, 全部节点, 香港节点, 日本节点, 新加坡节点, 美国节点, icon-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png
+苹果服务 = select, DIRECT, 节点选择, 自动选择, 全部节点, icon-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_2.png
+游戏平台 = select, DIRECT, 节点选择, 自动选择, 全部节点, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, icon-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png
 金融网站 = select, 节点选择, 自动选择, 全部节点, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点
-国外网站 = select, 节点选择, 自动选择, 全部节点, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点
-国内网站 = select, DIRECT, 节点选择
-广告拦截 = select, REJECT, DIRECT
-漏网之鱼 = select, 节点选择, 自动选择, DIRECT
+国外网站 = select, 节点选择, 自动选择, 全部节点, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, icon-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png
+国内网站 = select, DIRECT, 节点选择, icon-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/China_Map.png
+字节跳动 = select, DIRECT, 节点选择, icon-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png
+广告拦截 = select, REJECT, DIRECT, icon-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png
+漏网之鱼 = select, 节点选择, 自动选择, DIRECT, icon-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png
 
 [Rule]
 RULE-SET,LAN,DIRECT
@@ -73,6 +74,7 @@ RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/r
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Lan/Lan.list,国内网站,extended-matching
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/BiliBili/BiliBili.list,国内网站,extended-matching
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ChinaMax/ChinaMax.list,国内网站,extended-matching
+RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ByteDance/ByteDance.list,字节跳动,extended-matching
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ChinaMedia/ChinaMedia.list,国内网站,extended-matching
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/OpenAI/OpenAI.list,AI平台,extended-matching
 RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Claude/Claude.list,Claude,extended-matching

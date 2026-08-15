@@ -65,6 +65,7 @@ const STASH_ICON_FILENAME_BY_GROUP = {
   媒体轮询: "Media.png",
   国外网站: "Global.png",
   国内网站: "China_Map.png",
+  字节跳动: "TikTok.png",
   广告拦截: "Advertising.png",
   漏网之鱼: "Rocket.png",
 };
@@ -561,6 +562,11 @@ function hideSurgePolicyGroup(line, hidden) {
   return hidden ? `${line}, hidden=true` : line;
 }
 
+function surgePolicyIcon(name) {
+  const fileName = STASH_ICON_FILENAME_BY_GROUP[name];
+  return fileName ? `${QURE_ICON_BASE_URL}/${fileName}` : null;
+}
+
 function renderSurgeProxyGroups(index, { compact = false } = {}) {
   const healthCheck = index.defaultHealthCheck;
   const allPolicyRegex = surgePolicyFilter();
@@ -582,9 +588,11 @@ function renderSurgeProxyGroups(index, { compact = false } = {}) {
         compact
       )
     ),
-    ...index.businessGroups.map((group) =>
-      hideSurgePolicyGroup(`${group.name} = select, ${uniq(group.proxies).join(", ")}`, hiddenGroups.has(group.name))
-    ),
+    ...index.businessGroups.map((group) => {
+      const icon = surgePolicyIcon(group.name);
+      const line = `${group.name} = select, ${uniq(group.proxies).join(", ")}${icon ? `, icon-url=${icon}` : ""}`;
+      return hideSurgePolicyGroup(line, hiddenGroups.has(group.name));
+    }),
   ].join("\n");
 }
 
@@ -719,9 +727,20 @@ function renderQuantumultxBusinessGroup(index, group) {
   );
 }
 
+// Quantumult X 的域名规则名与 Clash 不同，不能只做大小写转换。
+function toQuantumultxRuleType(type) {
+  const mappedTypes = {
+    DOMAIN: "host",
+    "DOMAIN-SUFFIX": "host-suffix",
+    "DOMAIN-KEYWORD": "host-keyword",
+    "IP-CIDR6": "ip6-cidr",
+  };
+  return mappedTypes[type] || type.toLowerCase();
+}
+
 function renderQuantumultxRouteRule(rule, groupName) {
   const parts = rule.split(",");
-  parts[0] = parts[0].toLowerCase();
+  parts[0] = toQuantumultxRuleType(parts[0]);
   return `${parts.join(",")},${toQuantumultxPolicyName(groupName)}`;
 }
 
@@ -731,11 +750,7 @@ function renderQuantumultxInlineRule(rule) {
     return rule;
   }
   const policyIndex = parts[parts.length - 1] === "no-resolve" ? parts.length - 2 : parts.length - 1;
-  if (parts[0] === "IP-CIDR6") {
-    parts[0] = "ip6-cidr";
-  } else {
-    parts[0] = parts[0].toLowerCase();
-  }
+  parts[0] = toQuantumultxRuleType(parts[0]);
   parts[policyIndex] = toQuantumultxPolicyName(parts[policyIndex]);
   return parts.join(",");
 }
