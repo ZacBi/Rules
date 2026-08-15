@@ -199,14 +199,14 @@ const MODULE_INDEX = {
       "name": "香港优先",
       "type": "fallback",
       "hidden": true,
-      "match": "香港|HK|Hong\\s*Kong"
+      "match": "香港|(?:^|[^A-Za-z])HK(?:$|[^A-Za-z])|Hong\\s*Kong"
     },
     {
       "name": "媒体负载均衡",
       "type": "load-balance",
       "hidden": true,
       "strategy": "consistent-hashing",
-      "match": "香港|HK|Hong\\s*Kong|台湾|TW|Taiwan|Taipei|日本|JP|Japan|Tokyo|Osaka|新加坡|狮城|SG|Singapore|美国|US|USA|United\\s*States|America|Los\\s*Angeles|San\\s*Jose|Seattle"
+      "match": "香港|(?:^|[^A-Za-z])HK(?:$|[^A-Za-z])|Hong\\s*Kong|台湾|(?:^|[^A-Za-z])TW(?:$|[^A-Za-z])|Taiwan|Taipei|日本|(?:^|[^A-Za-z])JP(?:$|[^A-Za-z])|Japan|Tokyo|Osaka|新加坡|狮城|(?:^|[^A-Za-z])SG(?:$|[^A-Za-z])|Singapore|美国|(?:^|[^A-Za-z])US(?:$|[^A-Za-z])|(?:^|[^A-Za-z])USA(?:$|[^A-Za-z])|United\\s*States|North\\s*America|Los\\s*Angeles|San\\s*Jose|Seattle"
     }
   ],
   "stashPolicyChoices": {
@@ -221,12 +221,12 @@ const MODULE_INDEX = {
     {
       "name": "香港优先",
       "type": "available",
-      "match": "香港|HK|Hong\\s*Kong"
+      "match": "香港|(?:^|[^A-Za-z])HK(?:$|[^A-Za-z])|Hong\\s*Kong"
     },
     {
       "name": "媒体轮询",
       "type": "round-robin",
-      "match": "香港|HK|Hong\\s*Kong|台湾|TW|Taiwan|Taipei|日本|JP|Japan|Tokyo|Osaka|新加坡|狮城|SG|Singapore|美国|US|USA|United\\s*States|America|Los\\s*Angeles|San\\s*Jose|Seattle"
+      "match": "香港|(?:^|[^A-Za-z])HK(?:$|[^A-Za-z])|Hong\\s*Kong|台湾|(?:^|[^A-Za-z])TW(?:$|[^A-Za-z])|Taiwan|Taipei|日本|(?:^|[^A-Za-z])JP(?:$|[^A-Za-z])|Japan|Tokyo|Osaka|新加坡|狮城|(?:^|[^A-Za-z])SG(?:$|[^A-Za-z])|Singapore|美国|(?:^|[^A-Za-z])US(?:$|[^A-Za-z])|(?:^|[^A-Za-z])USA(?:$|[^A-Za-z])|United\\s*States|North\\s*America|Los\\s*Angeles|San\\s*Jose|Seattle"
     }
   ],
   "quantumultxPolicyChoices": {
@@ -242,55 +242,55 @@ const MODULE_INDEX = {
       "key": "hong_kong",
       "name": "香港",
       "groupName": "香港节点",
-      "match": "香港|HK|Hong\\s*Kong"
+      "match": "香港|(?:^|[^A-Za-z])HK(?:$|[^A-Za-z])|Hong\\s*Kong"
     },
     {
       "key": "taiwan",
       "name": "台湾",
       "groupName": "台湾节点",
-      "match": "台湾|TW|Taiwan|Taipei"
+      "match": "台湾|(?:^|[^A-Za-z])TW(?:$|[^A-Za-z])|Taiwan|Taipei"
     },
     {
       "key": "japan",
       "name": "日本",
       "groupName": "日本节点",
-      "match": "日本|JP|Japan|Tokyo|Osaka"
+      "match": "日本|(?:^|[^A-Za-z])JP(?:$|[^A-Za-z])|Japan|Tokyo|Osaka"
     },
     {
       "key": "singapore",
       "name": "新加坡",
       "groupName": "新加坡节点",
-      "match": "新加坡|狮城|SG|Singapore"
+      "match": "新加坡|狮城|(?:^|[^A-Za-z])SG(?:$|[^A-Za-z])|Singapore"
     },
     {
       "key": "united_states",
       "name": "美国",
       "groupName": "美国节点",
-      "match": "美国|US|USA|United\\s*States|America|Los\\s*Angeles|San\\s*Jose|Seattle"
+      "match": "美国|(?:^|[^A-Za-z])US(?:$|[^A-Za-z])|(?:^|[^A-Za-z])USA(?:$|[^A-Za-z])|United\\s*States|North\\s*America|Los\\s*Angeles|San\\s*Jose|Seattle"
     },
     {
       "key": "united_kingdom",
       "name": "英国",
       "groupName": "英国节点",
-      "match": "英国|UK|United\\s*Kingdom|Britain|England|London|Manchester"
+      "match": "英国|(?:^|[^A-Za-z])UK(?:$|[^A-Za-z])|United\\s*Kingdom|Britain|England|London|Manchester"
     },
     {
       "key": "australia",
       "name": "澳洲",
       "groupName": "澳洲节点",
-      "match": "澳洲|澳大利亚|AU|Australia|Sydney|Melbourne|Perth"
+      "match": "澳洲|澳大利亚|(?:^|[^A-Za-z])AU(?:$|[^A-Za-z])|Australia|Sydney|Melbourne|Perth"
     },
     {
       "key": "malaysia",
       "name": "马来西亚",
       "groupName": "马来西亚节点",
-      "match": "马来西亚|MY|Malaysia|Kuala\\s*Lumpur"
+      "match": "马来西亚|(?:^|[^A-Za-z])MY(?:$|[^A-Za-z])|Malaysia|Kuala\\s*Lumpur"
     },
     {
       "key": "argentina",
       "name": "阿根廷",
       "groupName": "阿根廷节点",
-      "match": "阿根廷|AR|Argentina|Buenos\\s*Aires"
+      "match": "阿根廷|(?:^|[^A-Za-z])AR(?:$|[^A-Za-z])|Argentina|Buenos\\s*Aires"
     }
   ],
   "ruleSets": [
@@ -1217,42 +1217,6 @@ const MODULE_INDEX = {
       "group": "AI平台",
       "origin": "openai-docs",
       "sourceUrl": "https://help.openai.com/en/articles/9247338-network-recommendations-for-chatgpt-errors-on-web-and-apps"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,challenges.cloudflare.com",
-      "group": "AI平台",
-      "origin": "openai-docs",
-      "sourceUrl": "https://help.openai.com/en/articles/9247338-network-recommendations-for-chatgpt-errors-on-web-and-apps"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,workos.com",
-      "group": "AI平台",
-      "origin": "openai-docs",
-      "sourceUrl": "https://help.openai.com/en/articles/9247338-network-recommendations-for-chatgpt-errors-on-web-and-apps"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,statsigapi.net",
-      "group": "AI平台",
-      "origin": "openai-docs",
-      "sourceUrl": "https://help.openai.com/en/articles/9247338-network-recommendations-for-chatgpt-errors-on-web-and-apps"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,featuregates.org",
-      "group": "AI平台",
-      "origin": "openai-docs",
-      "sourceUrl": "https://help.openai.com/en/articles/9247338-network-recommendations-for-chatgpt-errors-on-web-and-apps"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,appattest.apple.com",
-      "group": "AI平台",
-      "origin": "openai-docs",
-      "sourceUrl": "https://help.openai.com/en/articles/9247338-network-recommendations-for-chatgpt-errors-on-web-and-apps"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,devicecheck.apple.com",
-      "group": "AI平台",
-      "origin": "openai-docs",
-      "sourceUrl": "https://help.openai.com/en/articles/9247338-network-recommendations-for-chatgpt-errors-on-web-and-apps"
     }
   ],
   "runtimeModules": [
@@ -1266,20 +1230,21 @@ const MODULE_INDEX = {
       "sourceUrl": null,
       "supportedClients": [
         "stash",
-        "mihomo",
         "surge",
         "quantumultx"
       ],
       "support": {
         "supportLevel": {
           "stash": "partial",
+          "mihomo": "unsupported",
           "surge": "partial",
-          "mihomo": "unsupported"
+          "quantumultx": "metadata-only"
         },
         "notes": {
           "stash": "Metadata only until a maintained upstream script URL is selected.",
+          "mihomo": "No equivalent cross-client script runtime is emitted by override.js.",
           "surge": "Metadata only until a maintained upstream script URL is selected.",
-          "mihomo": "No equivalent cross-client script runtime is emitted by override.js."
+          "quantumultx": "Metadata only; not emitted by the default Quantumult X profile."
         }
       },
       "dependencies": [
@@ -1307,20 +1272,21 @@ const MODULE_INDEX = {
       "sourceMode": "local",
       "supportedClients": [
         "stash",
-        "mihomo",
         "surge",
         "quantumultx"
       ],
       "support": {
         "supportLevel": {
           "stash": "partial",
+          "mihomo": "unsupported",
           "surge": "partial",
-          "mihomo": "unsupported"
+          "quantumultx": "metadata-only"
         },
         "notes": {
           "stash": "Metadata only. The previous broad redirect dropped useful URL state and is intentionally not emitted.",
+          "mihomo": "Mihomo and Clash Party do not consume Stash or Surge HTTP rewrite sections.",
           "surge": "Metadata only. The previous broad redirect dropped useful URL state and is intentionally not emitted.",
-          "mihomo": "Mihomo and Clash Party do not consume Stash or Surge HTTP rewrite sections."
+          "quantumultx": "Metadata only; not emitted by the default Quantumult X profile."
         }
       },
       "dependencies": [
@@ -1344,22 +1310,25 @@ const MODULE_INDEX = {
       "kind": "rewrite",
       "domain": "utility",
       "title": "app-upgrade-check-block",
-      "emitByDefault": true,
+      "emitByDefault": false,
       "sourceMode": "remote-derived",
-      "sourceUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rewrite/Stash/Upgrade/Upgrade.stoverride",
+      "sourceUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/2ba8dfe636e64b41d4857a621fec35868ab50e08/rewrite/Stash/Upgrade/Upgrade.stoverride",
       "supportedClients": [
-        "stash"
+        "stash",
+        "quantumultx"
       ],
       "support": {
         "supportLevel": {
           "stash": "full",
+          "mihomo": "unsupported",
           "surge": "unsupported",
-          "mihomo": "unsupported"
+          "quantumultx": "metadata-only"
         },
         "notes": {
           "stash": "Derived from blackmatrix7 ios_rule_script Stash Upgrade rewrite.",
+          "mihomo": "No equivalent runtime rewrite is emitted by override.js.",
           "surge": "Use the upstream Surge module directly if needed.",
-          "mihomo": "No equivalent runtime rewrite is emitted by override.js."
+          "quantumultx": "Metadata only; not emitted by the default Quantumult X profile."
         }
       },
       "dependencies": [
@@ -1395,10 +1364,10 @@ const MODULE_INDEX = {
       "ui": {
         "title": "Block common app upgrade checks",
         "surface": "rewrite",
-        "defaultState": "enabled",
+        "defaultState": "opt-in",
         "riskLevel": "medium",
         "requiresMitm": true,
-        "defaultEnabled": true,
+        "defaultEnabled": false,
         "iosPerformanceCost": "low",
         "performanceNote": "Small Stash rewrite subset derived from upstream; HTTPS matches require MITM hosts."
       }
@@ -1408,22 +1377,25 @@ const MODULE_INDEX = {
       "kind": "rewrite",
       "domain": "google",
       "title": "google-no-country-redirect",
-      "emitByDefault": true,
+      "emitByDefault": false,
       "sourceMode": "local",
       "sourceUrl": "https://stash.wiki/http-engine/rewrite",
       "supportedClients": [
-        "stash"
+        "stash",
+        "quantumultx"
       ],
       "support": {
         "supportLevel": {
           "stash": "full",
+          "mihomo": "unsupported",
           "surge": "unsupported",
-          "mihomo": "unsupported"
+          "quantumultx": "metadata-only"
         },
         "notes": {
           "stash": "Keeps Google Hong Kong entry URLs on google.com without changing DNS or routing policy.",
+          "mihomo": "No equivalent runtime rewrite is emitted by override.js.",
           "surge": "Use a client-side URL rewrite module if needed.",
-          "mihomo": "No equivalent runtime rewrite is emitted by override.js."
+          "quantumultx": "Metadata only; not emitted by the default Quantumult X profile."
         }
       },
       "dependencies": [
@@ -1442,10 +1414,10 @@ const MODULE_INDEX = {
       "ui": {
         "title": "Google no country redirect",
         "surface": "rewrite",
-        "defaultState": "enabled",
+        "defaultState": "opt-in",
         "riskLevel": "medium",
         "requiresMitm": true,
-        "defaultEnabled": true,
+        "defaultEnabled": false,
         "iosPerformanceCost": "low",
         "performanceNote": "Narrow redirect for Google Hong Kong URLs; HTTPS matching requires MITM for www.google.com.hk."
       }
@@ -1455,22 +1427,25 @@ const MODULE_INDEX = {
       "kind": "script",
       "domain": "apple",
       "title": "testflight-download-fix",
-      "emitByDefault": true,
+      "emitByDefault": false,
       "sourceMode": "remote",
-      "sourceUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/external/Stash/TestFlight/TestFlight.stoverride",
+      "sourceUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/2ba8dfe636e64b41d4857a621fec35868ab50e08/external/Stash/TestFlight/TestFlight.stoverride",
       "supportedClients": [
-        "stash"
+        "stash",
+        "quantumultx"
       ],
       "support": {
         "supportLevel": {
           "stash": "full",
+          "mihomo": "unsupported",
           "surge": "unsupported",
-          "mihomo": "unsupported"
+          "quantumultx": "metadata-only"
         },
         "notes": {
           "stash": "Uses the script provider URL from blackmatrix7 ios_rule_script external Stash TestFlight.",
+          "mihomo": "No equivalent runtime script is emitted by override.js.",
           "surge": "Use the upstream Surge module directly if needed.",
-          "mihomo": "No equivalent runtime script is emitted by override.js."
+          "quantumultx": "Metadata only; not emitted by the default Quantumult X profile."
         }
       },
       "dependencies": [
@@ -1487,7 +1462,7 @@ const MODULE_INDEX = {
           "argument": "",
           "binaryMode": false,
           "maxSize": 1048576,
-          "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/source/javascript/043922e05c79445b6da818d0864c1b7d.js"
+          "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/2ba8dfe636e64b41d4857a621fec35868ab50e08/source/javascript/043922e05c79445b6da818d0864c1b7d.js"
         },
         "hostnames": [
           "testflight.apple.com"
@@ -1496,10 +1471,10 @@ const MODULE_INDEX = {
       "ui": {
         "title": "TestFlight download fix",
         "surface": "script",
-        "defaultState": "enabled",
+        "defaultState": "opt-in",
         "riskLevel": "medium",
         "requiresMitm": true,
-        "defaultEnabled": true,
+        "defaultEnabled": false,
         "iosPerformanceCost": "medium",
         "performanceNote": "Requires request body and MITM only for TestFlight install requests."
       }
@@ -1513,20 +1488,21 @@ const MODULE_INDEX = {
       "sourceMode": "local",
       "supportedClients": [
         "stash",
-        "mihomo",
         "surge",
         "quantumultx"
       ],
       "support": {
         "supportLevel": {
           "stash": "full",
+          "mihomo": "unsupported",
           "surge": "full",
-          "mihomo": "unsupported"
+          "quantumultx": "metadata-only"
         },
         "notes": {
           "stash": "Rendered as MITM hostnames.",
+          "mihomo": "MITM is not emitted from the generic Mihomo override.",
           "surge": "Rendered as MITM hostname append list.",
-          "mihomo": "MITM is not emitted from the generic Mihomo override."
+          "quantumultx": "Metadata only; not emitted by the default Quantumult X profile."
         }
       },
       "dependencies": [
@@ -1558,20 +1534,21 @@ const MODULE_INDEX = {
       "sourceMode": "local",
       "supportedClients": [
         "stash",
-        "mihomo",
         "surge",
         "quantumultx"
       ],
       "support": {
         "supportLevel": {
           "stash": "full",
+          "mihomo": "unsupported",
           "surge": "full",
-          "mihomo": "unsupported"
+          "quantumultx": "metadata-only"
         },
         "notes": {
           "stash": "Rendered as MITM hostnames.",
+          "mihomo": "MITM is not emitted from the generic Mihomo override.",
           "surge": "Rendered as MITM hostname append list.",
-          "mihomo": "MITM is not emitted from the generic Mihomo override."
+          "quantumultx": "Metadata only; not emitted by the default Quantumult X profile."
         }
       },
       "dependencies": [
@@ -1603,20 +1580,21 @@ const MODULE_INDEX = {
       "sourceMode": "local",
       "supportedClients": [
         "stash",
-        "mihomo",
         "surge",
         "quantumultx"
       ],
       "support": {
         "supportLevel": {
           "stash": "full",
+          "mihomo": "unsupported",
           "surge": "full",
-          "mihomo": "unsupported"
+          "quantumultx": "metadata-only"
         },
         "notes": {
           "stash": "Rendered as MITM hostnames.",
+          "mihomo": "MITM is not emitted from the generic Mihomo override.",
           "surge": "Rendered as MITM hostname append list.",
-          "mihomo": "MITM is not emitted from the generic Mihomo override."
+          "quantumultx": "Metadata only; not emitted by the default Quantumult X profile."
         }
       },
       "dependencies": [
@@ -2661,9 +2639,10 @@ function main(config = {}) {
   const defaultUrl = MODULE_INDEX.defaultHealthCheck.url;
   const defaultInterval = MODULE_INDEX.defaultHealthCheck.interval;
   const defaultTolerance = MODULE_INDEX.defaultHealthCheck.tolerance;
+  const noisePattern = new RegExp("剩余|流量|到期|过期|套餐|官网|订阅|更新|重置|用户|倍率|余额|Traffic|Expire|Expiry|Subscription|Reset", "i");
 
   function buildProxyNames(config) {
-    return uniq((config.proxies || []).map((proxy) => proxy && proxy.name));
+    return uniq((config.proxies || []).map((proxy) => proxy && proxy.name)).filter((name) => !noisePattern.test(name));
   }
 
   function buildRegionGroups(proxyNames) {
@@ -2673,7 +2652,7 @@ function main(config = {}) {
         name: region.groupName,
         type: "url-test",
         hidden: true,
-        proxies: matched.length ? uniq(matched) : ["节点选择"],
+        proxies: matched.length ? uniq(matched) : ["自动选择"],
         url: defaultUrl,
         interval: defaultInterval,
         tolerance: defaultTolerance,
@@ -2711,7 +2690,7 @@ function main(config = {}) {
       const generated = {
         name: group.name,
         type: group.type,
-        proxies: matched.length ? uniq(matched) : ["节点选择"],
+        proxies: matched.length ? uniq(matched) : ["自动选择"],
         url: defaultUrl,
         interval: defaultInterval,
         tolerance: defaultTolerance,

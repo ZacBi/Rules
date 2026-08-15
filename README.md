@@ -74,7 +74,7 @@ https://link.stash.ws/install-override/raw.githubusercontent.com/ZacBi/Rules/mas
    https://link.stash.ws/install-override/raw.githubusercontent.com/ZacBi/Rules/master/dist/stash/stash.stoverride
    ```
 
-Stash 入口只下发策略组、远程规则集、小规模 rewrite/script/MITM。当前默认运行时能力包括 APP 更新检查屏蔽和 TestFlight 下载修正；更重的广告复写、解锁、面板或私有脚本应在本地或 `Script Hub` 中单独启用。
+Stash 主入口只下发策略组和远程规则集，不修改端口、LAN、日志、IPv6 或 DNS，也不默认启用 rewrite、script、MITM。APP 更新检查屏蔽、Google 重定向、TestFlight 下载修正等运行时能力只保留在模块索引中，按需通过可信上游或 `Script Hub` 单独启用。
 
 Stash 专属增强组：
 
@@ -128,7 +128,7 @@ Surge 推荐使用 detached profile，把私有节点源和公开策略片段分
    https://raw.githubusercontent.com/ZacBi/Rules/master/dist/quantumultx/rules.conf
    ```
 
-默认入口保留空的节点、rewrite、task、backend、MITM section，只负责公开安全的策略组和分流规则。
+默认入口保留空的 general、DNS、节点、rewrite、task、backend、MITM section，只负责公开安全的策略组和分流规则，不覆盖用户本地网络设置。
 
 Quantumult X 专属增强组：
 
@@ -169,11 +169,11 @@ https://raw.githubusercontent.com/ZacBi/Rules/master/dist/quantumultx/sub-store.
 - `Unsupported`：客户端入口不伪造该能力。
 - `Metadata only`：模块索引保留元数据，公开入口不默认渲染完整运行时能力。
 
-默认公开入口只启用低数量、低风险的运行时规则。宽泛 URL rewrite、TLS MITM、私有解锁脚本和面板脚本应保持本地化、可选化。
+默认公开入口不启用运行时规则。URL rewrite、TLS MITM、远程脚本、私有解锁脚本和面板脚本应保持本地化、可选化，并优先固定到不可变的上游版本。
 
 ## 构建与验证
 
-仓库无额外依赖，使用 Node.js 即可：
+仓库无 npm 依赖，使用 `.node-version` 指定的 Node.js 版本即可：
 
 ```bash
 node scripts/build.js
@@ -193,15 +193,9 @@ node --test
 git diff --check
 ```
 
+CI 还会使用固定 digest 的 Gitleaks 扫描 Git 历史，并用固定 digest 的 Mihomo 官方镜像导入生成配置；这两项需要 Docker，本地日常构建不需要。
+
 如果修改了 `policy/catalog.js`、`policy/renderers.js`、`policy/index.js` 或相关策略源，必须重新运行 `node scripts/build.js` 并提交生成后的 `dist/` 产物。
-
-如需让 Cursor 补充规则集指向自己的 fork，可在构建时设置：
-
-```bash
-RULES_GITHUB_REPO='owner/repo' node scripts/build.js
-```
-
-未设置时，公开产物不会包含 Cursor 补充规则集。
 
 ## 维护原则
 

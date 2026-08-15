@@ -2,6 +2,8 @@
 
 const fs = require("fs");
 
+const PRIVATE_MARKER_PATTERN = /Bearer\s+[A-Za-z0-9._-]+|Cookie\s*[:=]|\/Users\/[^/\s]+|\/home\/[^/\s]+|[A-Za-z]:\\Users\\[^\\\s]+|api[_-]?key\s*[:=]|password\s*[:=]|secret\s*[:=]|gh[pousr]_[A-Za-z0-9]{20,}|sk-[A-Za-z0-9_-]{16,}/i;
+
 function readText(path) {
   return fs.readFileSync(path, "utf8");
 }
@@ -53,13 +55,9 @@ function validateQuantumultx() {
   if (/geo_location_checker|resource_parser_url|network_check_url/.test(text)) {
     errors.push(`${file}: contains general URL key that should stay user-local`);
   }
-  if (!/^server_check_url=https:\/\/www\.gstatic\.com\/generate_204$/m.test(text)) {
-    errors.push(`${file}: missing baseline server_check_url`);
-  }
-  if (!/^server_check_timeout=3000$/m.test(text)) {
-    errors.push(`${file}: missing baseline server_check_timeout`);
-  }
   const emptyPublicSections = [
+    ["general", "dns"],
+    ["dns", "policy"],
     ["server_remote", "filter_remote"],
     ["rewrite_remote", "server_local"],
     ["server_local", "filter_local"],
@@ -75,11 +73,8 @@ function validateQuantumultx() {
       errors.push(`${file}: [${section}] must stay empty in the public profile`);
     }
   }
-  if (!/^no-ipv6$/m.test(text)) {
-    errors.push(`${file}: missing no-ipv6`);
-  }
-  if (!/^server=223\.5\.5\.5$/m.test(text) || !/^server=119\.29\.29\.29$/m.test(text)) {
-    errors.push(`${file}: missing baseline DNS servers`);
+  if (/^(?:server_check_url|server_check_timeout|no-ipv6|server=)/m.test(text)) {
+    errors.push(`${file}: contains user-local general or DNS settings`);
   }
   if (!text.includes("FILTER_REGION") || !text.includes("FILTER_LAN")) {
     errors.push(`${file}: missing built-in FILTER_REGION/FILTER_LAN`);
@@ -157,7 +152,7 @@ function validateQuantumultxSubStore() {
   if (!text.includes("https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/QX-Task.json")) {
     errors.push(`${file}: missing Sub-Store QX task resource`);
   }
-  if (/\/download\/|\/api\/|SUB_STORE|Bearer|Cookie|\/Users\/zacbi|api_key|password|secret|token/i.test(text)) {
+  if (/\/download\/|\/api\/|SUB_STORE/i.test(text) || PRIVATE_MARKER_PATTERN.test(text)) {
     errors.push(`${file}: contains private or instance-specific Sub-Store marker`);
   }
 
@@ -168,7 +163,7 @@ function validateSurge() {
   const file = "dist/surge/module.sgmodule";
   const text = readText(file);
   const errors = [];
-  const required = ["General", "Proxy Group", "Rule"];
+  const required = ["Proxy Group", "Rule"];
   const sections = sectionNames(text);
 
   for (const section of required) {
@@ -185,8 +180,11 @@ function validateSurge() {
   if (!/^FINAL,漏网之鱼$/m.test(text)) {
     errors.push(`${file}: missing FINAL rule`);
   }
-  if (/policy-path=|Bearer|Cookie|\/Users\/zacbi|api_key|password|secret|token/i.test(text)) {
+  if (/policy-path=/i.test(text) || PRIVATE_MARKER_PATTERN.test(text)) {
     errors.push(`${file}: contains forbidden public module marker`);
+  }
+  if (sections.includes("General")) {
+    errors.push(`${file}: public module must not override user-local [General] settings`);
   }
 
   const proxyGroupsFile = "dist/surge/proxy-groups.dconf";
@@ -274,8 +272,14 @@ function validateStash() {
   if (!/MATCH,漏网之鱼/.test(text)) {
     errors.push(`${file}: missing MATCH fallback rule`);
   }
-  if (/Bearer|Cookie|\/Users\/zacbi|api_key|password|secret|token/i.test(text)) {
+  if (PRIVATE_MARKER_PATTERN.test(text)) {
     errors.push(`${file}: contains private marker`);
+  }
+  if (/^(?:mixed-port|allow-lan|mode|log-level|ipv6):/m.test(text)) {
+    errors.push(`${file}: contains user-local network settings`);
+  }
+  if (/^http:$/m.test(text) || /^script-providers:$/m.test(text)) {
+    errors.push(`${file}: default entry must not enable opt-in runtime modules`);
   }
 
   return errors;
@@ -302,8 +306,37 @@ function validateMihomo() {
     if (!/"quantumultx": \{/.test(text) || !/"outputPath": "dist\/quantumultx\/rules\.conf"/.test(text)) {
       errors.push(`${file}: missing Quantumult X entrypoint metadata`);
     }
-    if (/Bearer|Cookie|\/Users\/zacbi|api_key|password|secret|token/i.test(text)) {
+    if (PRIVATE_MARKER_PATTERN.test(text)) {
       errors.push(`${file}: contains private marker`);
+    }
+  }
+
+  const { main: renderMihomoConfig } = require(`../dist/mihomo/override.js`);
+  const fixtures = [
+    [],
+    [{ name: "HK-01" }],
+    [{ name: "Australia-01" }, { name: "Russia-01" }, { name: "US-01" }],
+  ];
+
+  for (const proxies of fixtures) {
+    const groups = renderMihomoConfig({ proxies })["proxy-groups"];
+    const groupNames = new Set(groups.map((group) => group.name));
+    const references = new Map(
+      groups.map((group) => [group.name, (group.proxies || []).filter((proxy) => groupNames.has(proxy))])
+    );
+
+    function visit(name, stack = []) {
+      if (stack.includes(name)) {
+        errors.push(`${files[0]}: policy group cycle: ${[...stack, name].join(" -> ")}`);
+        return;
+      }
+      for (const referenced of references.get(name) || []) {
+        visit(referenced, [...stack, name]);
+      }
+    }
+
+    for (const group of groups) {
+      visit(group.name);
     }
   }
 
@@ -359,6 +392,164 @@ function validateModuleIndexGroups() {
     "client.quantumultx.entry": quantumultxGroups,
   };
   const modulesById = new Map(index.modules.map((module) => [module.id, module]));
+  const runtimeModulesById = new Map(index.runtimeModules.map((module) => [module.id, module]));
+  const ruleSetIds = new Set(index.ruleSets.map((ruleSet) => ruleSet.id));
+  const policyGroups = new Set(baseGroups);
+  const allPolicyReferences = new Set([
+    ...baseGroups,
+    ...index.stashEnhancementGroups.map((group) => group.name),
+    ...index.quantumultxEnhancementGroups.map((group) => group.name),
+    "DIRECT",
+    "REJECT",
+  ]);
+
+  if (modulesById.size !== index.modules.length) {
+    errors.push(`${file}: duplicate module ids`);
+  }
+  if (ruleSetIds.size !== index.ruleSets.length) {
+    errors.push(`${file}: duplicate rule-set ids`);
+  }
+  if (runtimeModulesById.size !== index.runtimeModules.length) {
+    errors.push(`${file}: duplicate runtime module ids`);
+  }
+
+  for (const module of index.modules) {
+    for (const dependency of module.dependsOn) {
+      if (!modulesById.has(dependency)) {
+        errors.push(`${file}: ${module.id} depends on unknown module ${dependency}`);
+      }
+    }
+    for (const ruleSet of module.ruleSets) {
+      if (!ruleSetIds.has(ruleSet)) {
+        errors.push(`${file}: ${module.id} references unknown rule set ${ruleSet}`);
+      }
+    }
+  }
+
+  const visiting = new Set();
+  const visited = new Set();
+  function visitModule(moduleId, stack = []) {
+    if (visiting.has(moduleId)) {
+      errors.push(`${file}: module dependency cycle: ${[...stack, moduleId].join(" -> ")}`);
+      return;
+    }
+    if (visited.has(moduleId)) {
+      return;
+    }
+    visiting.add(moduleId);
+    for (const dependency of modulesById.get(moduleId).dependsOn) {
+      if (modulesById.has(dependency)) {
+        visitModule(dependency, [...stack, moduleId]);
+      }
+    }
+    visiting.delete(moduleId);
+    visited.add(moduleId);
+  }
+  for (const moduleId of modulesById.keys()) {
+    visitModule(moduleId);
+  }
+
+  const supportedClients = Object.keys(index.runtimeSupportMatrix);
+  const supportLevels = new Set(["full", "partial", "metadata-only", "unsupported"]);
+  for (const runtimeModule of index.runtimeModules) {
+    for (const dependency of runtimeModule.dependencies) {
+      if (!modulesById.has(dependency) && !runtimeModulesById.has(dependency)) {
+        errors.push(`${file}: ${runtimeModule.id} depends on unknown module ${dependency}`);
+      }
+    }
+    for (const conflict of runtimeModule.conflicts) {
+      if (conflict === runtimeModule.id || !runtimeModulesById.has(conflict)) {
+        errors.push(`${file}: ${runtimeModule.id} has invalid conflict ${conflict}`);
+      }
+    }
+
+    const levels = runtimeModule.support.supportLevel;
+    const notes = runtimeModule.support.notes;
+    if (!sameItems(Object.keys(levels), supportedClients)) {
+      errors.push(`${file}: ${runtimeModule.id} supportLevel must cover every client`);
+    }
+    if (!sameItems(Object.keys(notes), supportedClients)) {
+      errors.push(`${file}: ${runtimeModule.id} support notes must cover every client`);
+    }
+    for (const [client, level] of Object.entries(levels)) {
+      if (!supportLevels.has(level)) {
+        errors.push(`${file}: ${runtimeModule.id} has invalid ${client} support level ${level}`);
+      }
+    }
+    const expectedSupportedClients = supportedClients.filter((client) => levels[client] !== "unsupported");
+    if (!sameItems(runtimeModule.supportedClients, expectedSupportedClients)) {
+      errors.push(`${file}: ${runtimeModule.id} supportedClients disagrees with supportLevel`);
+    }
+  }
+
+  const visitingRuntimeModules = new Set();
+  const visitedRuntimeModules = new Set();
+  function visitRuntimeModule(moduleId, stack = []) {
+    if (visitingRuntimeModules.has(moduleId)) {
+      errors.push(`${file}: runtime module dependency cycle: ${[...stack, moduleId].join(" -> ")}`);
+      return;
+    }
+    if (visitedRuntimeModules.has(moduleId)) {
+      return;
+    }
+    visitingRuntimeModules.add(moduleId);
+    for (const dependency of runtimeModulesById.get(moduleId).dependencies) {
+      if (runtimeModulesById.has(dependency)) {
+        visitRuntimeModule(dependency, [...stack, moduleId]);
+      }
+    }
+    visitingRuntimeModules.delete(moduleId);
+    visitedRuntimeModules.add(moduleId);
+  }
+  for (const moduleId of runtimeModulesById.keys()) {
+    visitRuntimeModule(moduleId);
+  }
+
+  for (const ruleSet of index.ruleSets) {
+    if (!policyGroups.has(ruleSet.group)) {
+      errors.push(`${file}: ${ruleSet.id} references unknown policy group ${ruleSet.group}`);
+    }
+  }
+  for (const route of index.routingRules) {
+    if (!policyGroups.has(route.group)) {
+      errors.push(`${file}: routing rule references unknown policy group ${route.group}`);
+    }
+  }
+  for (const group of [...index.strategyGroups, ...index.serviceCheckGroups, ...index.businessGroups]) {
+    for (const proxy of group.proxies || []) {
+      if (!allPolicyReferences.has(proxy)) {
+        errors.push(`${file}: ${group.name} references unknown policy ${proxy}`);
+      }
+    }
+  }
+  for (const choices of Object.values(index.stashPolicyChoices)) {
+    for (const proxy of Array.isArray(choices) ? choices : choices.choices || []) {
+      if (!allPolicyReferences.has(proxy)) {
+        errors.push(`${file}: Stash policy choices reference unknown policy ${proxy}`);
+      }
+    }
+  }
+  for (const choices of Object.values(index.quantumultxPolicyChoices)) {
+    for (const proxy of choices) {
+      if (!allPolicyReferences.has(proxy)) {
+        errors.push(`${file}: Quantumult X policy choices reference unknown policy ${proxy}`);
+      }
+    }
+  }
+  for (const [name, entrypoint] of Object.entries(index.entrypoints)) {
+    if (!modulesById.has(entrypoint.moduleId)) {
+      errors.push(`${file}: entrypoint ${name} references unknown module ${entrypoint.moduleId}`);
+    }
+    for (const moduleId of entrypoint.modules) {
+      if (!modulesById.has(moduleId)) {
+        errors.push(`${file}: entrypoint ${name} composes unknown module ${moduleId}`);
+      }
+    }
+  }
+  const outputPaths = Object.values(index.entrypoints).map((entrypoint) => entrypoint.outputPath);
+  if (new Set(outputPaths).size !== outputPaths.length) {
+    errors.push(`${file}: entrypoint output paths must be unique`);
+  }
 
   for (const [id, expected] of Object.entries(expectations)) {
     const module = modulesById.get(id);
@@ -388,11 +579,9 @@ function validatePublicSafety() {
     "dist/modules/index.json",
   ];
   const errors = [];
-  const pattern = /Bearer|Cookie|\/Users\/zacbi|api_key|password|secret|token/i;
-
   for (const file of files) {
     const text = readText(file);
-    if (pattern.test(text)) {
+    if (PRIVATE_MARKER_PATTERN.test(text)) {
       errors.push(`${file}: contains private marker`);
     }
   }

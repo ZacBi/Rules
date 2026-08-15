@@ -6,35 +6,48 @@ on:
       - master
     paths:
       - ".github/workflows/build-dist.yml"
+      - ".node-version"
+      - "dist/**"
       - "policy/**"
-      - "scripts/**"
-      - "mihomo/ruleset/Cursor.*"
       - "rules/**"
+      - "scripts/**"
+      - "tests/**"
       - "README.md"
   pull_request:
     paths:
       - ".github/workflows/build-dist.yml"
+      - ".node-version"
+      - "dist/**"
       - "policy/**"
-      - "scripts/**"
-      - "mihomo/ruleset/Cursor.*"
       - "rules/**"
+      - "scripts/**"
+      - "tests/**"
       - "README.md"
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+
+concurrency:
+  group: build-dist-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
-  build-dist:
+  validate:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          fetch-depth: 0
+
+      - name: Scan repository for secrets
+        run: docker run --rm --volume "${{ github.workspace }}:/repo:ro" zricethezav/gitleaks@sha256:b109bc5f8f76a38196a3e413704fc5b9e3c32360bce4e4b603bd6f45b3721dbb detect --source=/repo --no-banner --redact
 
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
-          node-version: "24"
+          node-version-file: ".node-version"
 
       - name: Build generated artifacts
         run: node scripts/build.js
@@ -43,29 +56,23 @@ jobs:
         run: |
           node --check scripts/build.js
           node --check scripts/validate-dist.js
+          node --check scripts/write-mihomo-smoke-config.js
           node --check policy/catalog.js
           node --check policy/index.js
           node --check policy/renderers.js
           node --check dist/mihomo/override.js
           node --check dist/mihomo/clash-party.js
 
-      - name: Validate Quantumult X profile
-        run: node scripts/validate-dist.js quantumultx
+      - name: Run tests
+        run: node --test
 
-      - name: Validate Quantumult X Sub-Store addon
-        run: node scripts/validate-dist.js quantumultxSubStore
+      - name: Validate generated artifacts
+        run: node scripts/validate-dist.js
 
-      - name: Validate Surge module
-        run: node scripts/validate-dist.js surge
-
-      - name: Validate Stash override
-        run: node scripts/validate-dist.js stash
-
-      - name: Validate Mihomo overrides
-        run: node scripts/validate-dist.js mihomo
-
-      - name: Check public artifact safety
-        run: node scripts/validate-dist.js public
+      - name: Validate Mihomo config with client
+        run: |
+          node scripts/write-mihomo-smoke-config.js /tmp/mihomo-smoke/config.yaml
+          docker run --rm --volume /tmp/mihomo-smoke:/root/.config/mihomo metacubex/mihomo@sha256:5e7bcc5e7a866afcc8b007ef827c9ba773f2f34b6d7311b6d39ed1751f37cfd5 -t -f /root/.config/mihomo/config.yaml
 
       - name: Check whitespace
         run: git diff --check
@@ -74,16 +81,33 @@ jobs:
         if: github.event_name == 'pull_request'
         run: git diff --exit-code
 
-      - name: Commit generated artifacts on master
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+  publish:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: ".node-version"
+
+      - name: Build generated artifacts
+        run: node scripts/build.js
+
+      - name: Commit generated artifacts
         run: |
-          if git diff --quiet; then
+          git add -- dist
+          if git diff --cached --quiet; then
             echo "Generated artifacts are up to date."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add dist/modules/index.json dist/stash/stash.stoverride dist/mihomo/override.js dist/mihomo/clash-party.js dist/surge/module.sgmodule dist/quantumultx/rules.conf dist/quantumultx/sub-store.conf
           git commit -m "chore: update generated policy artifacts [skip ci]"
           git push
